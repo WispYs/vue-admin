@@ -79,7 +79,8 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/table'
+import { fetchList } from '@/api/manage-list'
+// import mockData from '@/mock/mock-data'
 import Pagination from '@/components/Pagination'
 import FilterBar from '@/components/FilterBar'
 export default {
@@ -109,10 +110,15 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
+      // console.log(mockData.projectList)
+      // this.list = mockData.projectList.list
+      // this.total = mockData.projectList.total
+      // this.listLoading = false
+
       fetchList(this.listQuery).then(response => {
-        console.log(response.data)
-        this.list = response.data.list
-        this.total = response.data.total
+        console.log(response)
+        this.list = response.list
+        this.total = response.total
         this.listLoading = false
       })
     },

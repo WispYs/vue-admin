@@ -1,3 +1,3 @@
-const baseUrl = 'https://www.fastmock.site/mock/86cacbe18af0d012abfa54097eac5c4c/admin'
+const baseUrl = 'https://mock.yonyoucloud.com/mock/16292/vue-admin'
 
 export default baseUrl

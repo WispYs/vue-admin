@@ -1,8 +1,10 @@
 import request from '@/utils/request'
+import baseUrl from './url.js'
 
-export function getList(params) {
+export function fetchList(params) {
+  console.log(baseUrl)
   return request({
-    url: '/vue-admin-template/table/list',
+    url: `${baseUrl}/project`,
     method: 'get',
     params
   })

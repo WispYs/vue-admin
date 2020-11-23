@@ -63,3 +63,32 @@ div:focus {
 .app-container {
   padding: 20px;
 }
+
+/*滚动条*/
+::-webkit-scrollbar {
+  width: 6px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border: 0 solid #fff;
+}
+
+::-webkit-scrollbar-track-piece {
+  background-color: #fff;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+}
+
+::-webkit-scrollbar-track {
+  display: none;
+}
+
+/*IE浏览器右边滚动条遮住了部分内容*/
+html,
+body {
+  -ms-overflow-style: scrollbar;
+}

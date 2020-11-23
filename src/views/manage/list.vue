@@ -1,8 +1,11 @@
 <template>
-  <div class="app-container">
+  <div class="list">
+    <filter-bar />
     <el-table
+      ref="table"
       v-loading="listLoading"
       :data="list"
+      :height="tableHeight"
       element-loading-text="Loading"
       border
       fit
@@ -48,51 +51,77 @@
           <el-tag v-for="(item, index) in scope.row.pStatusArr" :key="index" class="status-tab" size="small" :type="item.status == 1 ? 'success' : 'info'">{{ item.name }}</el-tag>
         </template>
       </el-table-column>
+      <el-table-column label="项目问题汇总" width="140" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.issue }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="项目负责人" width="90" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.stakeholder }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="备注" width="140" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.remark }}</span>
+        </template>
+      </el-table-column>
       <el-table-column fixed="right" label="操作" width="100" align="center">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="handleClick(scope.row)">查看</el-button>
-          <router-link :to="'/example/edit/'+scope.row.id">
-            <el-button type="text" size="small">编辑</el-button>
-          </router-link>
-
+          <el-button type="text" size="small" @click="$router.push({name: 'Edit', params: {id: scope.row.id}})">编辑</el-button>
           <el-button class="delete" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
   </div>
 </template>
 
 <script>
-import { getList } from '@/api/table'
-
+import { fetchList } from '@/api/table'
+import Pagination from '@/components/Pagination'
+import FilterBar from '@/components/FilterBar'
 export default {
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
-  },
+  components: { Pagination, FilterBar },
   data() {
     return {
       list: null,
-      listLoading: true
+      listLoading: true,
+      total: 0,
+      listQuery: {
+        page: 1,
+        limit: 20
+      },
+      tableHeight: 300
     }
   },
   created() {
-    this.fetchData()
+    this.getList()
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.setTableHeight()
+      // 监听窗口大小变化
+      window.addEventListener('resize', this.setTableHeight, true)
+    })
   },
   methods: {
-    fetchData() {
+    getList() {
       this.listLoading = true
-      getList().then(response => {
+      fetchList(this.listQuery).then(response => {
         console.log(response.data)
-        this.list = response.data
+        this.list = response.data.list
+        this.total = response.data.total
         this.listLoading = false
       })
+    },
+    setTableHeight() {
+      const htmlHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+      // 150 = 导航栏 + 分页器的高度
+      if (this.$refs.table && this.$refs.table.$el) {
+        this.tableHeight = htmlHeight - this.$refs.table.$el.offsetTop - 170
+      }
     },
     handleClick(row) {
       console.log(row)
@@ -102,6 +131,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .list {
+    padding: 20px;
+  }
   .status-tab {
     margin: 4px;
   }

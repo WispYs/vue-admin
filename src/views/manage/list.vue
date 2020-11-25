@@ -124,7 +124,7 @@ export default {
     },
     setTableHeight() {
       const htmlHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
-      // 150 = 导航栏 + 分页器的高度
+      // 170 = 导航栏 + 分页器的高度
       if (this.$refs.table && this.$refs.table.$el) {
         this.tableHeight = htmlHeight - this.$refs.table.$el.offsetTop - 170
       }

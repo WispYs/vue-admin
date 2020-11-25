@@ -131,7 +131,7 @@
 import { mapGetters } from 'vuex'
 import BarChart from './components/BarChart'
 import PieChart from './components/PieChart'
-import { fetchNewsList } from '@/api/dashborad'
+import { fetchNewsList, fetchProjectProgress } from '@/api/dashborad'
 import mockDate from '@/mock/mock-data'
 export default {
   name: 'Dashboard',
@@ -145,7 +145,7 @@ export default {
       pieData: {},
       newsLists: {},
       calendarData: mockDate.calendarData,
-      projectProgress: mockDate.projectProgress,
+      projectProgress: [],
       value: new Date()
     }
   },
@@ -175,14 +175,21 @@ export default {
       ]
     }
     this.getNewsList()
+    this.getProgress()
   },
   methods: {
     getNewsList() {
       this.listLoading = true
       fetchNewsList().then(response => {
-        console.log(response)
         this.newsLists = response.item
         this.listLoading = false
+      })
+    },
+
+    getProgress() {
+      fetchProjectProgress().then(response => {
+        this.projectProgress = response.data
+        console.log(this.projectProgress)
       })
     },
     // Tooltip 文字提示

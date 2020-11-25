@@ -38,7 +38,6 @@ export default {
   watch: {
     options: {
       handler(options) {
-        console.dir(options)
         // if (options) {
         //   // 设置true清空echart缓存
         //   this.chart.setOption(options, true)

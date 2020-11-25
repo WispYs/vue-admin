@@ -8,3 +8,10 @@ export function fetchNewsList() {
     method: 'get'
   })
 }
+
+export function fetchProjectProgress() {
+  return request({
+    url: '/mock-api/project/progress',
+    method: 'get'
+  })
+}

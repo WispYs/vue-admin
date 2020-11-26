@@ -1,9 +1,19 @@
 <template>
   <div class="create-container">
     <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="项目名称" prop="name">
-        <el-input v-model="ruleForm.name" />
-      </el-form-item>
+      <el-row :gutter="24">
+        <el-col :xs="24" :sm="24" :md="12" :lg="12">
+          <el-form-item label="项目L号" prop="id">
+            <el-input v-model="ruleForm.id" />
+          </el-form-item>
+        </el-col>
+        <el-col :xs="24" :sm="24" :md="12" :lg="12">
+          <el-form-item label="项目名称" prop="name">
+            <el-input v-model="ruleForm.name" />
+          </el-form-item>
+        </el-col>
+      </el-row>
+
       <el-form-item label="项目类型" prop="region">
         <el-select v-model="ruleForm.region" placeholder="请选择项目类型">
           <el-option label="类型一" value="1" />
@@ -67,6 +77,7 @@ export default {
   data() {
     return {
       ruleForm: {
+        id: '',
         name: '',
         region: '',
         date1: '',

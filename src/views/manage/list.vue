@@ -5,13 +5,77 @@
       ref="table"
       v-loading="listLoading"
       :data="list"
-      :height="tableHeight"
       element-loading-text="Loading"
       border
       fit
       highlight-current-row
+      :cell-style="cellStyle"
+      header-cell-class-name="pre-line"
     >
-      <el-table-column align="center" label="ID" width="95">
+      <el-table-column type="expand">
+        <template slot-scope="scope">
+          <el-form label-position="left" inline class="table-expand">
+            <el-form-item label="项目名称">
+              <span>{{ scope.row.title }}</span>
+            </el-form-item>
+            <el-form-item label="销售负责人">
+              <span>{{ scope.row.salesman }}</span>
+            </el-form-item>
+            <el-form-item label="项目工程师">
+              <span>{{ scope.row.engineer }}</span>
+            </el-form-item>
+            <el-form-item label="反馈提货">
+              <span>{{ scope.row.pickFeedback ? '是' : '否' }}</span>
+            </el-form-item>
+            <el-form-item label="成套计划工时">
+              <span>{{ scope.row.hours }}小时</span>
+            </el-form-item>
+            <el-form-item label="成套剩余工时">
+              <span>{{ scope.row.surplusHours }}小时</span>
+            </el-form-item>
+            <el-form-item label="成套资料提交日期">
+              <span>{{ scope.row.dataSubmitTime }}</span>
+            </el-form-item>
+            <el-form-item label="材料提货时间">
+              <span>{{ scope.row.dataPickupTime }}</span>
+            </el-form-item>
+            <el-form-item label="材料要求到货时间">
+              <span>{{ scope.row.dataPlanTime }}</span>
+            </el-form-item>
+            <el-form-item label="成套计划启动时间">
+              <span>{{ scope.row.planStartTime }}</span>
+            </el-form-item>
+            <el-form-item label="成套计划完成时间">
+              <span>{{ scope.row.planFinishTime }}</span>
+            </el-form-item>
+            <el-form-item label="原计划发货日期">
+              <span>{{ scope.row.PlanDeliveryTime }}</span>
+            </el-form-item>
+
+            <el-form-item label="设计阶段-项目计划">
+              <el-tag v-for="(item, index) in scope.row.dStatusArr" :key="index" class="status-tab" size="small" :type="item.status == 1 ? 'success' : 'info'">{{ item.name }}</el-tag>
+            </el-form-item>
+            <el-form-item label="生产阶段-项目计划">
+              <el-tag v-for="(item, index) in scope.row.pStatusArr" :key="index" class="status-tab" size="small" :type="item.status == 1 ? 'success' : 'info'">{{ item.name }}</el-tag>
+            </el-form-item>
+            <el-form-item label="缺料反馈">
+              <span>{{ scope.row.lackFeedback }}</span>
+            </el-form-item>
+            <el-form-item label="项目问题汇总" class="lg-item">
+              <span>{{ scope.row.issue }}</span>
+            </el-form-item>
+            <el-form-item label="备注" class="lg-item">
+              <span>{{ scope.row.remark }}</span>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="序号" width="50">
+        <template slot-scope="scope">
+          {{ scope.$index+1 }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="项目L号" width="100" prop="id" sortable>
         <template slot-scope="scope">
           {{ scope.row.id }}
         </template>
@@ -21,52 +85,37 @@
           {{ scope.row.title }}
         </template>
       </el-table-column>
-      <el-table-column label="材料计划到货时间" width="140" align="center">
+      <el-table-column align="center" label="项目类型" width="120" prop="type" sortable>
         <template slot-scope="scope">
-          <span>{{ scope.row.dateTime1 }}</span>
+          {{ scope.row.type }}
         </template>
       </el-table-column>
-      <el-table-column label="成套计划完成时间" width="140" align="center">
+      <el-table-column align="center" label="柜体数量" width="120" prop="type" sortable>
         <template slot-scope="scope">
-          <span>{{ scope.row.dateTime2 }}</span>
+          {{ scope.row.cabinetNum }}
         </template>
       </el-table-column>
-      <el-table-column label="计划发货日期" width="140" align="center">
+      <el-table-column align="center" label="箱体数量" width="120" prop="type" sortable>
         <template slot-scope="scope">
-          <span>{{ scope.row.dateTime3 }}</span>
+          {{ scope.row.boxNum }}
         </template>
       </el-table-column>
-      <el-table-column label="实际发货日期" width="140" align="center">
+      <el-table-column align="center" :label="'折算\n标准柜'" width="65" prop="type">
         <template slot-scope="scope">
-          <span>{{ scope.row.dateTime4 }}</span>
+          {{ scope.row.cabinetAverage }}
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="设计阶段-项目状态" width="250" align="center">
+      <el-table-column align="center" :label="'成套\n计划工时'" width="90" prop="type">
         <template slot-scope="scope">
-          <el-tag v-for="(item, index) in scope.row.dStatusArr" :key="index" class="status-tab" size="small" :type="item.status == 1 ? 'success' : 'warning'">{{ item.name }}</el-tag>
+          {{ scope.row.hours }}
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="生产阶段-项目状态" width="250" align="center">
+      <el-table-column align="center" :label="'成套班组'" width="90" prop="type">
         <template slot-scope="scope">
-          <el-tag v-for="(item, index) in scope.row.pStatusArr" :key="index" class="status-tab" size="small" :type="item.status == 1 ? 'success' : 'info'">{{ item.name }}</el-tag>
+          {{ scope.row.team }}
         </template>
       </el-table-column>
-      <el-table-column label="项目问题汇总" width="140" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.issue }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="项目负责人" width="90" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.stakeholder }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="备注" width="140" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.remark }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column fixed="right" label="操作" width="100" align="center">
+      <el-table-column label="操作" width="150" align="center">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="handleClick(scope.row)">查看</el-button>
           <el-button type="text" size="small" @click="$router.push({name: 'Edit', params: {id: scope.row.id}})">编辑</el-button>
@@ -131,12 +180,16 @@ export default {
     },
     handleClick(row) {
       console.log(row)
+    },
+    // 表格单元格样式
+    cellStyle() {
+      return 'font-size: 13px'
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .list {
     padding: 20px;
   }
@@ -146,4 +199,37 @@ export default {
   .delete {
     color: #F56C6C;
   }
+  .table-expand {
+    .el-form-item {
+      font-size: 13px;
+      margin-right: 0;
+      margin-bottom: 0;
+      width: 50%;
+      &.lg-item {
+        width: 100%;
+      }
+      label {
+        position: relative;
+        width: 150px;
+        color: #999;
+        &::after {
+          position: absolute;
+          content: '：';
+          top: 50%;
+          right: 12px;
+          transform: translateY(-50%);
+        }
+      }
+      &__content {
+        font-size: 13px;
+        width: calc(100% - 150px);
+      }
+    }
+  }
+  .pre-line{
+    .cell {
+      white-space:pre-line;
+    }
+  }
 </style>
+

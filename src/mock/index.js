@@ -27,6 +27,6 @@ Mock.mock(RegExp(infoUrl + '.*'), 'get', {
 Mock.mock('/mock-api/project/progress', 'get', {
   'code': 20000,
   'data|5': [
-    { 'title': '@region@cword(3)项目', 'progress|1-100': 1 }
+    { 'title': '@region@cword(3,7)项目', 'progress|1-100': 1 }
   ]
 })

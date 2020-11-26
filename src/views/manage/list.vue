@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-    <filter-bar />
+    <filter-bar @search-click="queryData" @reset-click="queryData" />
     <el-table
       ref="table"
       v-loading="listLoading"
@@ -90,27 +90,27 @@
           {{ scope.row.type }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="柜体数量" width="120" prop="type" sortable>
+      <el-table-column align="center" label="柜体数量" width="120" prop="cabinetNum" sortable>
         <template slot-scope="scope">
           {{ scope.row.cabinetNum }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="箱体数量" width="120" prop="type" sortable>
+      <el-table-column align="center" label="箱体数量" width="120" prop="boxNum" sortable>
         <template slot-scope="scope">
           {{ scope.row.boxNum }}
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="'折算\n标准柜'" width="65" prop="type">
+      <el-table-column align="center" :label="'折算\n标准柜'" width="65">
         <template slot-scope="scope">
           {{ scope.row.cabinetAverage }}
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="'成套\n计划工时'" width="90" prop="type">
+      <el-table-column align="center" :label="'成套\n计划工时'" width="120">
         <template slot-scope="scope">
           {{ scope.row.hours }}
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="'成套班组'" width="90" prop="type">
+      <el-table-column align="center" :label="'成套班组'" width="120" prop="team" sortable>
         <template slot-scope="scope">
           {{ scope.row.team }}
         </template>
@@ -123,7 +123,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="__getList" />
   </div>
 </template>
 
@@ -147,7 +147,7 @@ export default {
     }
   },
   created() {
-    this.getList()
+    this.__getList()
   },
   mounted() {
     this.$nextTick(() => {
@@ -157,19 +157,21 @@ export default {
     })
   },
   methods: {
-    getList() {
+    __getList() {
       this.listLoading = true
-      // console.log(mockData.projectList)
-      // this.list = mockData.projectList.list
-      // this.total = mockData.projectList.total
-      // this.listLoading = false
-
       fetchList(this.listQuery).then(response => {
         console.log(response)
         this.list = response.list
         this.total = response.total
         this.listLoading = false
       })
+    },
+    queryData(filter) {
+      this.listQuery = Object.assign(filter, {
+        page: 1,
+        limit: 20
+      })
+      this.__getList()
     },
     setTableHeight() {
       const htmlHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight

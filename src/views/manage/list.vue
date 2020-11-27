@@ -117,9 +117,9 @@
       </el-table-column>
       <el-table-column label="操作" width="150" align="center">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="handleClick(scope.row)">查看</el-button>
+          <el-button type="text" size="small" @click="$router.push({name: 'Detail', params: {id: scope.row.id}})">查看</el-button>
           <el-button type="text" size="small" @click="$router.push({name: 'Edit', params: {id: scope.row.id}})">编辑</el-button>
-          <el-button class="delete" type="text" size="small">删除</el-button>
+          <el-button class="delete" type="text" size="small" @click="del">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -174,6 +174,11 @@ export default {
         limit: 20
       })
       this.__getList()
+    },
+    del() {
+      this.$alert('请联系管理员（何经理、王经理）进行删除操作', '', {
+        confirmButtonText: '确定'
+      })
     },
     setTableHeight() {
       const htmlHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight

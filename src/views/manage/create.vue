@@ -59,14 +59,14 @@
       </el-row>
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <el-form-item label="成套计划时间" prop="hours">
+          <el-form-item label="成套计划工时" prop="hours">
             <el-input v-model="projectForm.hours">
               <template slot="append">天</template>
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <el-form-item label="成套剩余时间" prop="surplusHours">
+          <el-form-item label="成套剩余工时" prop="surplusHours">
             <el-input v-model="projectForm.surplusHours">
               <template slot="append">天</template>
             </el-input>

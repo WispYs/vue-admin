@@ -84,6 +84,11 @@ export const constantRoutes = [
         path: 'edit/:id(\\d+)',
         name: 'Edit',
         component: () => import('@/views/manage/edit')
+      },
+      {
+        path: 'detail/:id(\\d+)',
+        name: 'Detail',
+        component: () => import('@/views/manage/detail')
       }
     ]
   },

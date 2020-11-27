@@ -1,6 +1,6 @@
 <template>
   <div class="list-container">
-    <filter-bar @search-click="queryData" @reset-click="queryData" />
+    <list-filter @search-click="queryData" @reset-click="queryData" />
     <el-table
       ref="table"
       v-loading="listLoading"
@@ -131,9 +131,9 @@
 import { fetchList } from '@/api/project'
 // import mockData from '@/mock/mock-data'
 import Pagination from '@/components/Pagination'
-import FilterBar from '@/components/FilterBar'
+import ListFilter from './components/ListFilter'
 export default {
-  components: { Pagination, FilterBar },
+  components: { Pagination, ListFilter },
   data() {
     return {
       dStatusOption: ['柜体订货', '主材订货', '辅材订货', '资料提交'],

@@ -105,8 +105,8 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="反馈提货" prop="delivery">
-        <el-switch v-model="projectForm.pickFeedback" />
+      <el-form-item label="反馈提货" prop="pickFeedback">
+        <el-switch v-model="projectForm.pickFeedback" :active-value="1" :inactive-value="0" />
       </el-form-item>
       <el-form-item label="设计阶段：" prop="dStatusArr">
         <el-checkbox-group v-model="projectForm.dStatusArr">
@@ -132,7 +132,7 @@
         <el-input v-model="projectForm.lackFeedback" type="textarea" :autosize="{ minRows: 3, maxRows: 6}" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('projectForm')">创建项目</el-button>
+        <el-button type="primary" @click="submitForm('projectForm')">提交</el-button>
         <el-button @click="resetForm('projectForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -140,7 +140,7 @@
 </template>
 
 <script>
-
+import { fetchInfo } from '@/api/project'
 export default {
   data() {
     const validateNumber = (name) => {
@@ -189,7 +189,18 @@ export default {
       }
     }
   },
+  mounted() {
+    this.__getInfo()
+  },
   methods: {
+    __getInfo() {
+      const projectId = this.$route.params.id
+      this.listLoading = true
+      fetchInfo(projectId).then(response => {
+        console.log(response)
+        this.projectForm = response.data
+      })
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {

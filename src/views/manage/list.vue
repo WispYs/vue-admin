@@ -16,7 +16,7 @@
         <template slot-scope="scope">
           <el-form label-position="left" inline class="table-expand">
             <el-form-item label="项目名称">
-              <span>{{ scope.row.title }}</span>
+              <span>{{ scope.row.name }}</span>
             </el-form-item>
             <el-form-item label="销售负责人">
               <span>{{ scope.row.salesman }}</span>
@@ -53,10 +53,10 @@
             </el-form-item>
 
             <el-form-item label="设计阶段-项目计划">
-              <el-tag v-for="(item, index) in scope.row.dStatusArr" :key="index" class="status-tab" size="small" :type="item.status == 1 ? 'success' : 'info'">{{ item.name }}</el-tag>
+              <el-tag v-for="(item, index) in dStatusOption" :key="index" class="status-tab" size="small" :type="scope.row.dStatusArr.indexOf(item) > -1 ? 'success' : 'info'">{{ item }}</el-tag>
             </el-form-item>
             <el-form-item label="生产阶段-项目计划">
-              <el-tag v-for="(item, index) in scope.row.pStatusArr" :key="index" class="status-tab" size="small" :type="item.status == 1 ? 'success' : 'info'">{{ item.name }}</el-tag>
+              <el-tag v-for="(item, index) in pStatusOption" :key="index" class="status-tab" size="small" :type="scope.row.pStatusArr.indexOf(item) > -1 ? 'success' : 'info'">{{ item }}</el-tag>
             </el-form-item>
             <el-form-item label="缺料反馈">
               <span>{{ scope.row.lackFeedback }}</span>
@@ -82,7 +82,7 @@
       </el-table-column>
       <el-table-column label="项目名称">
         <template slot-scope="scope">
-          {{ scope.row.title }}
+          {{ scope.row.name }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="项目类型" width="120" prop="type" sortable>
@@ -128,7 +128,7 @@
 </template>
 
 <script>
-import { fetchList } from '@/api/manage-list'
+import { fetchList } from '@/api/project'
 // import mockData from '@/mock/mock-data'
 import Pagination from '@/components/Pagination'
 import FilterBar from '@/components/FilterBar'
@@ -136,6 +136,8 @@ export default {
   components: { Pagination, FilterBar },
   data() {
     return {
+      dStatusOption: ['柜体订货', '主材订货', '辅材订货', '资料提交'],
+      pStatusOption: ['领料排版', '接线成套', '上电测试', '打包待发'],
       list: null,
       listLoading: true,
       total: 0,

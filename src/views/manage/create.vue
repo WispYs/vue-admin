@@ -105,8 +105,8 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="反馈提货" prop="delivery">
-        <el-switch v-model="projectForm.pickFeedback" />
+      <el-form-item label="反馈提货" prop="pickFeedback">
+        <el-switch v-model="projectForm.pickFeedback" :active-value="1" :inactive-value="0" />
       </el-form-item>
       <el-form-item label="设计阶段：" prop="dStatusArr">
         <el-checkbox-group v-model="projectForm.dStatusArr">

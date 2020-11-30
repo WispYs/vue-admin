@@ -1,6 +1,6 @@
 <template>
   <div class="list-container">
-    <list-filter @search-click="queryData" @reset-click="queryData" />
+    <list-filter :download-loading="downloadLoading" @search-click="queryData" @reset-click="queryData" @export-click="exportExcel" />
     <el-table
       ref="table"
       v-loading="listLoading"
@@ -134,18 +134,17 @@
 
 <script>
 import { fetchList } from '@/api/project'
+import { parseTime } from '@/utils'
+import ExcelFields from '@/utils/excel-fields'
 // import mockData from '@/mock/mock-data'
 import Pagination from '@/components/Pagination'
 import ListFilter from './components/ListFilter'
-
-// 导出 Excel 表格
-import FileSaver from 'file-saver'
-import XLSX from 'xlsx'
 
 export default {
   components: { Pagination, ListFilter },
   data() {
     return {
+      downloadLoading: false,
       dStatusOption: ['柜体订货', '主材订货', '辅材订货', '资料提交'],
       pStatusOption: ['领料排版', '接线成套', '上电测试', '打包待发'],
       list: null,
@@ -162,38 +161,14 @@ export default {
     this.__getList()
   },
   mounted() {
-    this.$nextTick(() => {
-      this.setTableHeight()
-      // 监听窗口大小变化
-      window.addEventListener('resize', this.setTableHeight, true)
-    })
+    // this.$nextTick(() => {
+    //   this.setTableHeight()
+    //   // 监听窗口大小变化
+    //   window.addEventListener('resize', this.setTableHeight, true)
+    // })
   },
   methods: {
-    // 定义导出Excel表格事件
-    exportExcel() {
-      /* 从表生成工作簿对象 */
-      var wb = XLSX.utils.table_to_book(this.$refs.table.$el)
-      /* 获取二进制字符串作为输出 */
-      const wbout = XLSX.write(wb, {
-        bookType: 'xlsx',
-        bookSST: true,
-        type: 'array'
-      })
-      try {
-        FileSaver.saveAs(
-          // Blob 对象表示一个不可变、原始数据的类文件对象。
-          // Blob 表示的不一定是JavaScript原生格式的数据。
-          // File 接口基于Blob，继承了 blob 的功能并将其扩展使其支持用户系统上的文件。
-          // 返回一个新创建的 Blob 对象，其内容由参数中给定的数组串联组成。
-          new Blob([wbout], { type: 'application/octet-stream' }),
-          // 设置导出文件名称
-          'data.xlsx'
-        )
-      } catch (e) {
-        if (typeof console !== 'undefined') console.log(e, wbout)
-      }
-      return wbout
-    },
+    // 获取列表数据
     __getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
@@ -203,6 +178,36 @@ export default {
         this.listLoading = false
       })
     },
+
+    // 导出Excel
+    exportExcel() {
+      this.downloadLoading = true
+      import('@/vendor/Export2Excel').then(excel => {
+        const tHeader = ExcelFields.title
+        const filterVal = ExcelFields.data
+        const list = this.list
+        const data = this.formatJson(filterVal, list)
+        excel.export_json_to_excel({
+          header: tHeader,
+          data,
+          filename: '20年项目实施计划表',
+          autoWidth: true,
+          bookType: 'xlsx'
+        })
+        this.downloadLoading = false
+      })
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v => filterVal.map(j => {
+        if (j === 'timestamp') {
+          return parseTime(v[j])
+        } else {
+          return v[j]
+        }
+      }))
+    },
+
+    // 查询数据
     queryData(filter) {
       this.listQuery = Object.assign(filter, {
         page: 1,
@@ -210,21 +215,23 @@ export default {
       })
       this.__getList()
     },
+
+    // 删除操作
     del() {
       this.$alert('请联系管理员（何经理、王经理）进行删除操作', '', {
         confirmButtonText: '确定'
       })
     },
-    setTableHeight() {
-      const htmlHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
-      // 170 = 导航栏 + 分页器的高度
-      if (this.$refs.table && this.$refs.table.$el) {
-        this.tableHeight = htmlHeight - this.$refs.table.$el.offsetTop - 170
-      }
-    },
-    handleClick(row) {
-      console.log(row)
-    },
+
+    // tabel自适应高度
+    // setTableHeight() {
+    //   const htmlHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+    //   // 170 = 导航栏 + 分页器的高度
+    //   if (this.$refs.table && this.$refs.table.$el) {
+    //     this.tableHeight = htmlHeight - this.$refs.table.$el.offsetTop - 170
+    //   }
+    // },
+
     // 表格单元格样式
     cellStyle() {
       return 'font-size: 13px'

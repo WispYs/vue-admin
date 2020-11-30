@@ -48,6 +48,7 @@
     <div class="filter-bar__item">
       <el-button type="primary" size="medium" @click="search()">搜索</el-button>
       <el-button type="primary" size="medium" @click="reset()">重置</el-button>
+      <el-button type="primary" size="medium" :loading="downloadLoading" @click="handleExport()">导出数据</el-button>
       <el-button type="primary" size="medium" @click="$router.push({name: 'Create'})">新增项目</el-button>
     </div>
 
@@ -56,6 +57,12 @@
 
 <script>
 export default {
+  props: {
+    downloadLoading: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       keywords: '',
@@ -132,13 +139,15 @@ export default {
         status: this.status
       }
     },
-
     search() {
       this.$emit('search-click', this.__getFilter())
     },
     reset() {
       this.__initFilter()
       this.$emit('reset-click', this.__getFilter())
+    },
+    handleExport() {
+      this.$emit('export-click')
     }
   }
 }

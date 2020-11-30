@@ -110,6 +110,18 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/publish',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Publish',
+        component: () => import('@/views/publish/index'),
+        meta: { title: '消息发布', icon: 'component' }
+      }
+    ]
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

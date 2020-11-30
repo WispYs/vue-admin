@@ -28,10 +28,10 @@
               <span>{{ scope.row.pickFeedback ? '是' : '否' }}</span>
             </el-form-item>
             <el-form-item label="成套计划工时">
-              <span>{{ scope.row.hours }}小时</span>
+              <span>{{ scope.row.hours }}天</span>
             </el-form-item>
             <el-form-item label="成套剩余工时">
-              <span>{{ scope.row.surplusHours }}小时</span>
+              <span>{{ scope.row.surplusHours }}天</span>
             </el-form-item>
             <el-form-item label="成套资料提交日期">
               <span>{{ scope.row.dataSubmitTime }}</span>
@@ -48,10 +48,15 @@
             <el-form-item label="成套计划完成时间">
               <span>{{ scope.row.planFinishTime }}</span>
             </el-form-item>
-            <el-form-item label="原计划发货日期">
-              <span>{{ scope.row.PlanDeliveryTime }}</span>
+            <el-form-item label="计划发货日期">
+              <span>{{ scope.row.planDeliveryTime }}</span>
             </el-form-item>
-
+            <el-form-item label="实际发货日期">
+              <span>{{ scope.row.realDeliveryTime }}</span>
+            </el-form-item>
+            <el-form-item label="">
+              <span />
+            </el-form-item>
             <el-form-item label="设计阶段-项目计划">
               <el-tag v-for="(item, index) in dStatusOption" :key="index" class="status-tab" size="small" :type="scope.row.dStatusArr.indexOf(item) > -1 ? 'success' : 'info'">{{ item }}</el-tag>
             </el-form-item>
@@ -105,7 +110,7 @@
           {{ scope.row.cabinetAverage }}
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="'成套\n计划工时'" width="120">
+      <el-table-column align="center" :label="'成套\n计划工时（天）'" width="120">
         <template slot-scope="scope">
           {{ scope.row.hours }}
         </template>

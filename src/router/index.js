@@ -89,6 +89,12 @@ export const constantRoutes = [
         name: 'Completed',
         component: () => import('@/views/manage/completed'),
         meta: { title: '已完成项目' }
+      },
+      {
+        path: 'weekplan',
+        name: 'Weekplan',
+        component: () => import('@/views/manage/weekplan'),
+        meta: { title: '本周计划发货项目' }
       }
     ]
   },

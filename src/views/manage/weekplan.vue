@@ -1,6 +1,6 @@
 <template>
   <div class="list-container">
-    <list-filter @search-click="queryData" @reset-click="queryData" />
+    <completed-filter @search-click="queryData" @reset-click="queryData" />
     <el-table
       ref="table"
       v-loading="listLoading"
@@ -28,25 +28,10 @@
               <span>{{ scope.row.pickFeedback ? '是' : '否' }}</span>
             </el-form-item>
             <el-form-item label="成套计划工时">
-              <span>{{ scope.row.hours }}天</span>
+              <span>{{ scope.row.hours }}小时</span>
             </el-form-item>
             <el-form-item label="成套剩余工时">
-              <span>{{ scope.row.surplusHours }}天</span>
-            </el-form-item>
-            <el-form-item label="成套资料提交日期">
-              <span>{{ scope.row.dataSubmitTime }}</span>
-            </el-form-item>
-            <el-form-item label="材料提货时间">
-              <span>{{ scope.row.dataPickupTime }}</span>
-            </el-form-item>
-            <el-form-item label="材料要求到货时间">
-              <span>{{ scope.row.dataPlanTime }}</span>
-            </el-form-item>
-            <el-form-item label="成套计划启动时间">
-              <span>{{ scope.row.planStartTime }}</span>
-            </el-form-item>
-            <el-form-item label="成套计划完成时间">
-              <span>{{ scope.row.planFinishTime }}</span>
+              <span>{{ scope.row.surplusHours }}小时</span>
             </el-form-item>
             <el-form-item label="计划发货日期">
               <span>{{ scope.row.planDeliveryTime }}</span>
@@ -54,17 +39,8 @@
             <el-form-item label="实际发货日期">
               <span>{{ scope.row.realDeliveryTime }}</span>
             </el-form-item>
-            <el-form-item label="">
-              <span />
-            </el-form-item>
-            <el-form-item label="设计阶段-项目计划">
-              <el-tag v-for="(item, index) in dStatusOption" :key="index" class="status-tab" size="small" :type="scope.row.dStatusArr.indexOf(item) > -1 ? 'success' : 'info'">{{ item }}</el-tag>
-            </el-form-item>
-            <el-form-item label="生产阶段-项目计划">
-              <el-tag v-for="(item, index) in pStatusOption" :key="index" class="status-tab" size="small" :type="scope.row.pStatusArr.indexOf(item) > -1 ? 'success' : 'info'">{{ item }}</el-tag>
-            </el-form-item>
-            <el-form-item label="缺料反馈">
-              <span>{{ scope.row.lackFeedback }}</span>
+            <el-form-item label="项目实际状态">
+              <span>{{ scope.row.status }}</span>
             </el-form-item>
             <el-form-item label="项目问题汇总" class="lg-item">
               <span>{{ scope.row.issue }}</span>
@@ -136,14 +112,9 @@
 import { fetchList } from '@/api/project'
 // import mockData from '@/mock/mock-data'
 import Pagination from '@/components/Pagination'
-import ListFilter from './components/ListFilter'
-
-// 导出 Excel 表格
-import FileSaver from 'file-saver'
-import XLSX from 'xlsx'
-
+import CompletedFilter from './components/CompletedFilter'
 export default {
-  components: { Pagination, ListFilter },
+  components: { Pagination, CompletedFilter },
   data() {
     return {
       dStatusOption: ['柜体订货', '主材订货', '辅材订货', '资料提交'],
@@ -169,31 +140,6 @@ export default {
     })
   },
   methods: {
-    // 定义导出Excel表格事件
-    exportExcel() {
-      /* 从表生成工作簿对象 */
-      var wb = XLSX.utils.table_to_book(this.$refs.table.$el)
-      /* 获取二进制字符串作为输出 */
-      const wbout = XLSX.write(wb, {
-        bookType: 'xlsx',
-        bookSST: true,
-        type: 'array'
-      })
-      try {
-        FileSaver.saveAs(
-          // Blob 对象表示一个不可变、原始数据的类文件对象。
-          // Blob 表示的不一定是JavaScript原生格式的数据。
-          // File 接口基于Blob，继承了 blob 的功能并将其扩展使其支持用户系统上的文件。
-          // 返回一个新创建的 Blob 对象，其内容由参数中给定的数组串联组成。
-          new Blob([wbout], { type: 'application/octet-stream' }),
-          // 设置导出文件名称
-          'data.xlsx'
-        )
-      } catch (e) {
-        if (typeof console !== 'undefined') console.log(e, wbout)
-      }
-      return wbout
-    },
     __getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {

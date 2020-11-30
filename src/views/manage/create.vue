@@ -131,6 +131,9 @@
       <el-form-item label="缺料反馈" prop="lackFeedback">
         <el-input v-model="projectForm.lackFeedback" type="textarea" :autosize="{ minRows: 3, maxRows: 6}" />
       </el-form-item>
+      <el-form-item label="备注" prop="remark">
+        <el-input v-model="projectForm.remark" type="textarea" :autosize="{ minRows: 3, maxRows: 6}" />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('projectForm')">创建项目</el-button>
         <el-button @click="resetForm('projectForm')">重置</el-button>

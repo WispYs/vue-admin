@@ -56,44 +56,44 @@ export const constantRoutes = [
   },
 
   {
-    path: '/manage',
+    path: '/project',
     component: Layout,
-    redirect: '/manage/list',
-    name: 'Manage',
+    redirect: '/project/list',
+    name: 'Project',
     meta: { title: '项目管理', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'list',
         name: 'List',
-        component: () => import('@/views/manage/list'),
+        component: () => import('@/views/project/list'),
         meta: { title: '项目列表' }
       },
       {
         path: 'create',
         name: 'Create',
-        component: () => import('@/views/manage/create'),
+        component: () => import('@/views/project/create'),
         meta: { title: '新建项目' }
       },
       {
         path: 'edit/:id(\\d+)',
         name: 'Edit',
-        component: () => import('@/views/manage/edit')
+        component: () => import('@/views/project/edit')
       },
       {
         path: 'detail/:id(\\d+)',
         name: 'Detail',
-        component: () => import('@/views/manage/detail')
+        component: () => import('@/views/project/detail')
       },
       {
         path: 'completed',
         name: 'Completed',
-        component: () => import('@/views/manage/completed'),
+        component: () => import('@/views/project/completed'),
         meta: { title: '已完成项目' }
       },
       {
         path: 'weekplan',
         name: 'Weekplan',
-        component: () => import('@/views/manage/weekplan'),
+        component: () => import('@/views/project/weekplan'),
         meta: { title: '本周计划发货项目' }
       }
     ]

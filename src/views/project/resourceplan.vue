@@ -1,5 +1,5 @@
 <template>
-  <div class="list-container">
+  <div class="resource-container">
     <completed-filter @search-click="queryData" @reset-click="queryData" />
     <el-table
       ref="table"
@@ -180,7 +180,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .list-container {
+  .resource-container {
     padding: 20px;
   }
   .status-tab {

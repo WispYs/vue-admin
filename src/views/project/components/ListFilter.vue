@@ -4,9 +4,9 @@
       <label>关键字：</label>
       <el-input v-model="keywords" class="filter-item" style="width: 240px" placeholder="项目编号/名称/负责人/班组" suffix-icon="el-icon-search" />
     </div>
-    <div class="filter-bar__item">
+    <div v-if="filterType == 'all'" class="filter-bar__item">
       <label>项目状态：</label>
-      <el-select v-model="status" placeholder="请选择项目状态">
+      <el-select v-model="pro_status" placeholder="请选择项目状态">
         <el-option
           v-for="item in statusOption"
           :key="item.value"
@@ -16,9 +16,9 @@
       </el-select>
     </div>
     <div class="filter-bar__item">
-      <label>计划完成时间：</label>
+      <label>计划发货时间：</label>
       <el-date-picker
-        v-model="planTime"
+        v-model="deliver_time"
         class="filter-item"
         type="daterange"
         align="right"
@@ -31,9 +31,9 @@
       />
     </div>
     <div class="filter-bar__item">
-      <label>实际完成时间：</label>
+      <label>实际发货时间：</label>
       <el-date-picker
-        v-model="realTime"
+        v-model="deliverd_date"
         class="filter-item"
         type="daterange"
         align="right"
@@ -48,7 +48,7 @@
     <div class="filter-bar__item">
       <el-button type="primary" size="medium" @click="search()">搜索</el-button>
       <el-button type="primary" size="medium" @click="reset()">重置</el-button>
-      <el-button type="primary" size="medium" :loading="downloadLoading" @click="handleExport()">导出数据</el-button>
+      <!--<el-button type="primary" size="medium" :loading="downloadLoading" @click="handleExport()">导出数据</el-button> -->
       <el-button type="primary" size="medium" @click="$router.push({name: 'Create'})">新增项目</el-button>
     </div>
 
@@ -61,18 +61,22 @@ export default {
     downloadLoading: {
       type: Boolean,
       default: false
+    },
+    filterType: {
+      type: String,
+      default: 'all'
     }
   },
   data() {
     return {
       keywords: '',
-      planTime: '',
-      planStartTime: '',
-      planEndTime: '',
-      realTime: '',
-      realStartTime: '',
-      realEndTime: '',
-      status: '',
+      deliver_time: '',
+      deliver_start_time: '',
+      deliver_end_time: '',
+      deliverd_date: '',
+      deliverd_start_date: '',
+      deliverd_end_date: '',
+      pro_status: '',
       statusOption: [
         {
           value: 0,
@@ -120,23 +124,23 @@ export default {
   methods: {
     __initFilter() {
       this.keywords = ''
-      this.planStartTime = ''
-      this.planEndTime = ''
-      this.planTime = ''
-      this.realStartTime = ''
-      this.realEndTime = ''
-      this.realTime = ''
-      this.status = ''
+      this.deliver_time = ''
+      this.deliver_start_time = ''
+      this.deliver_end_time = ''
+      this.deliverd_date = ''
+      this.deliverd_start_date = ''
+      this.deliverd_end_date = ''
+      this.pro_status = ''
     },
 
     __getFilter() {
       return {
         keywords: this.keywords,
-        planStartTime: this.planTime[0] ? this.planTime[0] : '',
-        planEndTime: this.planTime[0] ? this.planTime[1] : '',
-        realStartTime: this.realTime[0] ? this.realTime[0] : '',
-        realEndTime: this.realTime[0] ? this.realTime[1] : '',
-        status: this.status
+        deliver_start_time: this.deliver_time[0] ? this.deliver_time[0] : '',
+        deliver_end_time: this.deliver_time[0] ? this.deliver_time[1] : '',
+        deliverd_start_date: this.deliverd_date[0] ? this.deliverd_date[1] : '',
+        deliverd_end_date: this.deliverd_date[0] ? this.deliverd_date[1] : '',
+        pro_status: this.pro_status
       }
     },
     search() {

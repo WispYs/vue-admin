@@ -1,5 +1,5 @@
 <template>
-  <list-page page-type="completed" />
+  <list-page page-type="delived" />
 </template>
 
 <script>
@@ -9,3 +9,4 @@ export default {
   components: { ListPage }
 }
 </script>
+

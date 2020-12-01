@@ -1,5 +1,5 @@
 <template>
-  <list-page page-type="completed" />
+  <list-page page-type="weekPlanDeliver" />
 </template>
 
 <script>

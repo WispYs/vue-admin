@@ -2,34 +2,34 @@ export default {
   DesignStatus: [
     {
       name: '图纸设计',
-      fields: 'drawing_design'
+      fields: 'drawingDesign'
     }, {
       name: '柜体订货',
-      fields: 'cabinet_order'
+      fields: 'cabinetOrder'
     }, {
       name: '主材订货',
-      fields: 'material_main'
+      fields: 'materialMain'
     }, {
       name: '辅材订货',
-      fields: 'information_submit'
+      fields: 'informationSubmit'
     }, {
       name: '资料提交',
-      fields: 'material_auxiliary'
+      fields: 'materialAuxiliary'
     }
   ],
   ProduceStatus: [
     {
       name: '领料排版',
-      fields: 'picking_layout'
+      fields: 'pickingLayout'
     }, {
       name: '接线成套',
-      fields: 'wiring_set'
+      fields: 'wiringSet'
     }, {
       name: '上电测试',
-      fields: 'power_test'
+      fields: 'powerTest'
     }, {
       name: '打包待发',
-      fields: 'pack_delever'
+      fields: 'packDelever'
     }
   ]
 }

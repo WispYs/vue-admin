@@ -5,7 +5,9 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
-
+import completeRouter from './modules/complete'
+import implplanRouter from './modules/implplan'
+import workshopRouter from './modules/workshop'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -58,91 +60,66 @@ export const constantRoutes = [
   {
     path: '/project',
     component: Layout,
-    redirect: '/project/list',
+    redirect: '/project/implplan',
     name: 'Project',
     meta: { title: '项目管理', icon: 'el-icon-s-help' },
     children: [
-      {
-        path: 'create',
-        name: 'Create',
-        component: () => import('@/views/project/create'),
-        meta: { title: '新建项目' }
-      },
-      {
-        path: 'list',
-        name: 'List',
-        component: () => import('@/views/project/list'),
-        meta: { title: '项目实施计划表' }
-      },
-      {
-        path: 'edit/:id(\\d+)',
-        name: 'Edit',
-        component: () => import('@/views/project/edit')
-      },
-      {
-        path: 'detail/:id(\\d+)',
-        name: 'Detail',
-        component: () => import('@/views/project/detail')
-      },
-      {
-        path: 'completed',
-        name: 'Completed',
-        component: () => import('@/views/project/completed'),
-        meta: { title: '成套已完成项目' }
-      },
-      {
-        path: 'workshop',
-        name: 'Workshop',
-        component: () => import('@/views/project/workshop'),
-        meta: { title: '车间成套项目' }
-      },
-      {
-        path: 'delived',
-        name: 'Delived',
-        component: () => import('@/views/project/delived'),
-        meta: { title: '发货已完成项目' }
-      },
-      {
-        path: 'weekplandeliver',
-        name: 'WeekPlanDeliver',
-        component: () => import('@/views/project/week-plan-deliver'),
-        meta: { title: '本周计划发货项目' }
-      },
-      {
-        path: 'resourceplan',
-        name: 'Resourceplan',
-        component: () => import('@/views/project/resourceplan'),
-        meta: { title: '资源&负荷进度计划' }
-      }
+      implplanRouter,
+      completeRouter,
+      workshopRouter
+      // {
+      //   path: 'workshop',
+      //   name: 'Workshop',
+      //   component: () => import('@/views/project/workshop'),
+      //   meta: { title: '车间成套项目' }
+      // },
+      // {
+      //   path: 'delived',
+      //   name: 'Delived',
+      //   component: () => import('@/views/project/delived'),
+      //   meta: { title: '发货已完成项目' }
+      // },
+      // {
+      //   path: 'weekplandeliver',
+      //   name: 'WeekPlanDeliver',
+      //   component: () => import('@/views/project/week-plan-deliver'),
+      //   meta: { title: '本周计划发货项目' }
+      // },
+      // {
+      //   path: 'resourceplan',
+      //   name: 'Resourceplan',
+      //   component: () => import('@/views/project/resourceplan'),
+      //   meta: { title: '资源&负荷进度计划' }
+      // }
     ]
-  },
-  {
-    path: '/person',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Person',
-        component: () => import('@/views/person/index'),
-        meta: { title: '人员管理', icon: 'user' }
-      }
-    ]
-  },
-  {
-    path: '/publish',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Publish',
-        component: () => import('@/views/publish/index'),
-        meta: { title: '消息发布', icon: 'component' }
-      }
-    ]
-  },
+  }
+  // {
+  //   path: '/person',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'Person',
+  //       component: () => import('@/views/person/index'),
+  //       meta: { title: '人员管理', icon: 'user' }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/publish',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'Publish',
+  //       component: () => import('@/views/publish/index'),
+  //       meta: { title: '消息发布', icon: 'component' }
+  //     }
+  //   ]
+  // },
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({

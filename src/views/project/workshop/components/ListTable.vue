@@ -144,6 +144,7 @@ export default {
       return 'font-size: 13px'
     },
     // 表格中行根据项目状态添加 class
+    // 0:有风险,1:已延误，2：正常
     tableRowClassName({ row, rowIndex }) {
       const proRisk = Number(this.list[rowIndex].proRisk)
       if (proRisk === 0) {
@@ -160,6 +161,10 @@ export default {
 </script>
 
 <style lang="scss">
+  .el-table .pre-line {
+    background: #f5f7fa;
+  }
+
   .el-table .orange-row {
     background: oldlace;
   }
@@ -171,4 +176,5 @@ export default {
   .el-table .green-row {
     background: #f0f9eb;
   }
+
 </style>

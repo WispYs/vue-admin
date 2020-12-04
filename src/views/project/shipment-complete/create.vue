@@ -142,6 +142,7 @@ export default {
           { validator: isNumber, trigger: 'blur' }
         ],
         setWork: [
+          { required: true, message: '请输入成套工时', trigger: 'blur' },
           { validator: isNumber, trigger: 'blur' }
         ]
       }

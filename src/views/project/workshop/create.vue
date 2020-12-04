@@ -54,7 +54,7 @@
       </el-row>
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <el-form-item label="项目风险预警" prop="proRisk">
+          <el-form-item label="项目风险预警" prop="proRisk" label-width="110px">
             <el-select v-model="projectForm.proRisk" placeholder="请选择风险等级">
               <el-option label="有风险" value="0" />
               <el-option label="已延误" value="1" />
@@ -169,7 +169,10 @@ export default {
           { required: true, message: '请填写项目名称', trigger: 'blur' }
         ],
         cabinetNum: validateNumber('柜体数量'),
-        boxNum: validateNumber('箱体数量')
+        boxNum: validateNumber('箱体数量'),
+        proRisk: [
+          { required: true, message: '请选择风险等级', trigger: 'blur' }
+        ]
       }
     }
   },

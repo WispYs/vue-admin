@@ -55,14 +55,14 @@
       </el-row>
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <el-form-item label="成套计划工时" prop="setPlan">
+          <el-form-item label="成套计划工时" label-width="110px" prop="setPlan">
             <el-input v-model="projectForm.setPlan">
               <template slot="append">天</template>
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <el-form-item label="成套剩余工时" prop="setRemaining">
+          <el-form-item label="成套剩余工时" label-width="110px" prop="setRemaining">
             <el-input v-model="projectForm.setRemaining">
               <template slot="append">天</template>
             </el-input>
@@ -202,9 +202,11 @@ export default {
           { validator: isNumber, trigger: 'blur' }
         ],
         setPlan: [
+          { required: true, message: '请输入计划工时', trigger: 'blur' },
           { validator: isNumber, trigger: 'blur' }
         ],
         setRemaining: [
+          { required: true, message: '请输入剩余工时', trigger: 'blur' },
           { validator: isNumber, trigger: 'blur' }
         ]
       }

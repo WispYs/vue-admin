@@ -55,7 +55,7 @@
       </el-row>
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <el-form-item label="成套工时汇总" prop="setWork">
+          <el-form-item label="成套工时汇总" label-width="110px" prop="setWork">
             <el-input v-model="projectForm.setWork">
               <template slot="append">天</template>
             </el-input>
@@ -169,6 +169,7 @@ export default {
           { validator: isNumber, trigger: 'blur' }
         ],
         setWork: [
+          { required: true, message: '请输入成套工时', trigger: 'blur' },
           { validator: isNumber, trigger: 'blur' }
         ]
       }

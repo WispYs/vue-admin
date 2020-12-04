@@ -171,5 +171,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  .el-table .pre-line {
+    background: #f5f7fa;
+  }
 </style>

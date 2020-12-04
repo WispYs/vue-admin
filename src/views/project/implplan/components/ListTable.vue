@@ -26,10 +26,10 @@
             <span>{{ scope.row.feedbackPickup == '1' ? '是' : '否' }}</span>
           </el-form-item>
           <el-form-item label="成套计划工时">
-            <span>{{ formatTime(scope.row.setPlan) }}</span>
+            <span>{{ formatTime(scope.row.setPlan) }}天</span>
           </el-form-item>
           <el-form-item label="成套剩余工时">
-            <span>{{ formatTime(scope.row.setRemaining) }}</span>
+            <span>{{ formatTime(scope.row.setRemaining) }}天</span>
           </el-form-item>
           <el-form-item label="成套资料提交日期">
             <span>{{ formatDate(scope.row.submissionDate) }}</span>

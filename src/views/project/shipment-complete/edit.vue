@@ -56,7 +56,9 @@
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="成套工时" prop="setWork">
-            <el-input v-model="projectForm.setWork" />
+            <el-input v-model="projectForm.setWork">
+              <template slot="append">天</template>
+            </el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="18" :sm="8" :md="8" :lg="6">

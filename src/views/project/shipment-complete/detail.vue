@@ -45,7 +45,7 @@
     <el-row :gutter="24" class="detail-item">
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
         <label>成套工时：</label>
-        <span class="item-info">{{ projectForm.setWork }}</span>
+        <span class="item-info">{{ projectForm.setWork }}天</span>
       </el-col>
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
         <label>计划发货时间：</label>

@@ -41,7 +41,7 @@
     <el-row :gutter="24" class="detail-item">
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
         <label>项目风险预警：</label>
-        <span class="item-info">{{ formatRisk(projectForm.proRisk) }}</span>
+        <span class="item-info">{{ projectForm.proRisk }}</span>
       </el-col>
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
         <label>反馈提货：</label>
@@ -57,10 +57,12 @@
         <label>材料要求到货日期：</label>
         <span class="item-info">{{ projectForm.arrivalTime }}</span>
       </el-col>
-      <el-col :xs="18" :sm="8" :md="8" :lg="8">
+      <el-col :xs="18" :sm="8" :md="8" :lg="6">
         <label>成套计划启动时间：</label>
         <span class="item-info">{{ projectForm.startTime }}</span>
       </el-col>
+    </el-row>
+    <el-row :gutter="24" class="detail-item">
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
         <label>成套计划完成时间：</label>
         <span class="item-info">{{ projectForm.endTime }}</span>
@@ -70,16 +72,6 @@
         <span class="item-info">{{ projectForm.deliverTime }}</span>
       </el-col>
     </el-row>
-    <!-- <el-row :gutter="24" class="detail-item">
-      <label>设计阶段：</label>
-      <el-tag
-        v-for="(item, index) in ProStatusOption.DesignStatus"
-        :key="index"
-        :type="projectForm[item.fields] ? 'success' : 'info'"
-        class="status-tab"
-        size="small"
-      >{{ item.name }}</el-tag>
-    </el-row> -->
     <el-row :gutter="24" class="detail-item">
       <label>生产阶段：</label>
       <el-tag
@@ -144,6 +136,7 @@ export default {
       fetchWorkshopProDetail(proNo).then(response => {
         console.log(response)
         this.projectForm = Object.assign(response.data, {
+          proRisk: formatRisk(response.data.proRisk),
           submissionDate: formatYYMMDD(response.data.submissionDate),
           arrivalTime: formatYYMMDD(response.data.arrivalTime),
           startTime: formatYYMMDD(response.data.startTime),
@@ -158,9 +151,6 @@ export default {
     },
     formatStr2Boolean(str) {
       return str === '1'
-    },
-    formatRisk(status) {
-      return formatRisk(status)
     }
   }
 }

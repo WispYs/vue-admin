@@ -9,6 +9,7 @@ import completeRouter from './modules/complete'
 import implplanRouter from './modules/implplan'
 import workshopRouter from './modules/workshop'
 import shipmentCompleteRouter from './modules/shipment-complete'
+import weekplanRouter from './modules/weekplan'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -68,33 +69,10 @@ export const constantRoutes = [
       implplanRouter,
       completeRouter,
       workshopRouter,
-      shipmentCompleteRouter
-      // {
-      //   path: 'workshop',
-      //   name: 'Workshop',
-      //   component: () => import('@/views/project/workshop'),
-      //   meta: { title: '车间成套项目' }
-      // },
-      // {
-      //   path: 'delived',
-      //   name: 'Delived',
-      //   component: () => import('@/views/project/delived'),
-      //   meta: { title: '发货已完成项目' }
-      // },
-      // {
-      //   path: 'weekplandeliver',
-      //   name: 'WeekPlanDeliver',
-      //   component: () => import('@/views/project/week-plan-deliver'),
-      //   meta: { title: '本周计划发货项目' }
-      // },
-      // {
-      //   path: 'resourceplan',
-      //   name: 'Resourceplan',
-      //   component: () => import('@/views/project/resourceplan'),
-      //   meta: { title: '资源&负荷进度计划' }
-      // }
+      shipmentCompleteRouter,
+      weekplanRouter
     ]
-  }
+  },
   // {
   //   path: '/person',
   //   component: Layout,
@@ -121,7 +99,7 @@ export const constantRoutes = [
   // },
 
   // 404 page must be placed at the end !!!
-  // { path: '*', redirect: '/404', hidden: true }
+  { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({

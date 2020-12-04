@@ -74,7 +74,7 @@
         {{ scope.row.standardCabinet }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="成套工时" width="120" prop="setWork">
+    <el-table-column align="center" label="成套工时（天）" width="120" prop="setWork">
       <template slot-scope="scope">
         {{ formatTime(scope.row.setWork) }}
       </template>

@@ -63,17 +63,17 @@
         {{ scope.$index+1 }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="项目L号" width="100" prop="id" sortable>
+    <el-table-column align="center" label="项目L号" width="100" prop="proNo" sortable>
       <template slot-scope="scope">
         {{ scope.row.proNo }}
       </template>
     </el-table-column>
-    <el-table-column label="项目名称">
+    <el-table-column label="项目名称" prop="proName">
       <template slot-scope="scope">
         {{ scope.row.proName }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="项目类型" width="120" prop="type" sortable>
+    <el-table-column align="center" label="项目类型" width="120" prop="proType" sortable>
       <template slot-scope="scope">
         {{ scope.row.proType }}
       </template>
@@ -88,17 +88,17 @@
         {{ scope.row.boxNum }}
       </template>
     </el-table-column>
-    <el-table-column align="center" :label="'折算\n标准柜'" width="65">
+    <el-table-column align="center" :label="'折算\n标准柜'" width="65" prop="standardCabinet">
       <template slot-scope="scope">
         {{ scope.row.standardCabinet }}
       </template>
     </el-table-column>
-    <el-table-column align="center" :label="'成套\n工时汇总（天）'" width="120">
+    <el-table-column align="center" :label="'成套\n工时汇总（天）'" width="120" prop="setWork">
       <template slot-scope="scope">
         {{ formatTime(scope.row.setWork) }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="项目干系人" width="120">
+    <el-table-column align="center" label="项目干系人" width="120" prop="setLeader" sortable>
       <template slot-scope="scope">
         {{ scope.row.setLeader }}
       </template>

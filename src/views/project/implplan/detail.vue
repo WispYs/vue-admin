@@ -53,7 +53,7 @@
       </el-col>
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
         <label>反馈提货：</label>
-        <span class="item-info">{{ projectForm.feedbackPickup ? '是' : '否' }}</span>
+        <span class="item-info">{{ projectForm.feedbackPickup == '1' ? '是' : '否' }}</span>
       </el-col>
     </el-row>
     <el-row :gutter="24" class="detail-item">

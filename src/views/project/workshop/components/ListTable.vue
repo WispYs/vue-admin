@@ -72,17 +72,17 @@
         {{ scope.$index+1 }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="项目L号" width="100" prop="id" sortable>
+    <el-table-column align="center" label="项目L号" width="100" prop="proNo" sortable>
       <template slot-scope="scope">
         {{ scope.row.proNo }}
       </template>
     </el-table-column>
-    <el-table-column label="项目名称">
+    <el-table-column label="项目名称" prop="proName">
       <template slot-scope="scope">
         {{ scope.row.proName }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="项目类型" width="120" prop="type" sortable>
+    <el-table-column align="center" label="项目类型" width="120" prop="proType" sortable>
       <template slot-scope="scope">
         {{ scope.row.proType }}
       </template>
@@ -97,7 +97,7 @@
         {{ scope.row.boxNum }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="成套班组" width="120">
+    <el-table-column align="center" label="成套班组" width="120" prop="setLeader" sortable>
       <template slot-scope="scope">
         {{ scope.row.setLeader }}
       </template>
@@ -146,7 +146,6 @@ export default {
     // 表格中行根据项目状态添加 class
     tableRowClassName({ row, rowIndex }) {
       const proRisk = Number(this.list[rowIndex].proRisk)
-      console.log(proRisk)
       if (proRisk === 0) {
         return 'orange-row'
       } else if (proRisk === 1) {

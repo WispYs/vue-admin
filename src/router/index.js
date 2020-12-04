@@ -8,6 +8,7 @@ import Layout from '@/layout'
 import completeRouter from './modules/complete'
 import implplanRouter from './modules/implplan'
 import workshopRouter from './modules/workshop'
+import shipmentCompleteRouter from './modules/shipment-complete'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -66,7 +67,8 @@ export const constantRoutes = [
     children: [
       implplanRouter,
       completeRouter,
-      workshopRouter
+      workshopRouter,
+      shipmentCompleteRouter
       // {
       //   path: 'workshop',
       //   name: 'Workshop',

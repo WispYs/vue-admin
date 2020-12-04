@@ -81,17 +81,17 @@
         {{ scope.$index+1 }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="项目L号" width="100" prop="id" sortable>
+    <el-table-column align="center" label="项目L号" width="100" prop="proNo" sortable>
       <template slot-scope="scope">
         {{ scope.row.proNo }}
       </template>
     </el-table-column>
     <el-table-column label="项目名称">
-      <template slot-scope="scope">
+      <template slot-scope="scope" prop="proName">
         {{ scope.row.proName }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="项目类型" width="120" prop="type" sortable>
+    <el-table-column align="center" label="项目类型" width="120" prop="proType" sortable>
       <template slot-scope="scope">
         {{ scope.row.proType }}
       </template>
@@ -106,17 +106,17 @@
         {{ scope.row.boxNum }}
       </template>
     </el-table-column>
-    <el-table-column align="center" :label="'折算\n标准柜'" width="65">
+    <el-table-column align="center" :label="'折算\n标准柜'" width="65" prop="standardCabinet">
       <template slot-scope="scope">
         {{ scope.row.standardCabinet }}
       </template>
     </el-table-column>
-    <el-table-column align="center" :label="'成套\n计划工时（天）'" width="120">
+    <el-table-column align="center" :label="'成套\n计划工时（天）'" width="120" prop="setPlan">
       <template slot-scope="scope">
         {{ formatTime(scope.row.setPlan) }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="成套班组" width="120">
+    <el-table-column align="center" label="成套班组" width="120" prop="setLeader" sortable>
       <template slot-scope="scope">
         {{ scope.row.setLeader }}
       </template>

@@ -53,11 +53,11 @@
         <label>成套资料提交日期：</label>
         <span class="item-info">{{ projectForm.submissionDate }}</span>
       </el-col>
-      <el-col :xs="18" :sm="8" :md="8" :lg="8">
+      <el-col :xs="18" :sm="8" :md="8" :lg="6">
         <label>材料要求到货日期：</label>
         <span class="item-info">{{ projectForm.arrivalTime }}</span>
       </el-col>
-      <el-col :xs="18" :sm="8" :md="8" :lg="6">
+      <el-col :xs="18" :sm="8" :md="8" :lg="8">
         <label>成套计划启动时间：</label>
         <span class="item-info">{{ projectForm.startTime }}</span>
       </el-col>
@@ -65,7 +65,7 @@
         <label>成套计划完成时间：</label>
         <span class="item-info">{{ projectForm.endTime }}</span>
       </el-col>
-      <el-col :xs="18" :sm="8" :md="8" :lg="8">
+      <el-col :xs="18" :sm="8" :md="8" :lg="6">
         <label>计划发货时间：</label>
         <span class="item-info">{{ projectForm.deliverTime }}</span>
       </el-col>
@@ -102,7 +102,7 @@
 </template>
 
 <script>
-import { formatYYMMDD, workTimeH2D, formatRisk } from '@/utils/format'
+import { formatYYMMDD, formatRisk } from '@/utils/format'
 import { fetchWorkshopProDetail } from '@/api/workshop'
 import ProStatusOption from '@/utils/project-status'
 

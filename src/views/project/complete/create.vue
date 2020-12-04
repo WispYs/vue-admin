@@ -7,7 +7,7 @@
             <el-input v-model="projectForm.proNo" />
           </el-form-item>
         </el-col>
-        <el-col :xs="20" :sm="10" :md="6" :lg="6">
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="项目类型" prop="proType">
             <!-- <el-select v-model="projectForm.proType" placeholder="请选择项目类型">
               <el-option label="控制柜" value="1" />
@@ -17,7 +17,7 @@
             <el-input v-model="projectForm.proType" />
           </el-form-item>
         </el-col>
-        <el-col :xs="24" :sm="18" :md="10" :lg="10">
+        <el-col :xs="24" :sm="18" :md="8" :lg="8">
           <el-form-item label="项目名称" prop="proName">
             <el-input v-model="projectForm.proName" />
           </el-form-item>
@@ -68,17 +68,17 @@
         </el-col>
       </el-row>
       <el-row :gutter="24">
-        <el-col :xs="24" :sm="12" :md="12" :lg="8">
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="成套计划完成时间" label-width="140px" prop="planFinish">
             <el-date-picker v-model="projectForm.planFinish" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="选择日期" style="width: 100%;" />
           </el-form-item>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8">
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="计划发货时间" label-width="140px" prop="deliverTime">
             <el-date-picker v-model="projectForm.deliverTime" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="选择日期" style="width: 100%;" />
           </el-form-item>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="8">
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="实际发货时间" label-width="140px" prop="deliverdDate">
             <el-date-picker v-model="projectForm.deliverdDate" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="选择日期" style="width: 100%;" />
           </el-form-item>

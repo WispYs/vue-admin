@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import baseUrl from './url.js'
 
-// 项目实施计划表
+// 车间成套项目
 // 列表
 export function fetchWorkshopPro(page, size, filter) {
   return request({

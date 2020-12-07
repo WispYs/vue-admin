@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import baseUrl from './url.js'
 
-// 项目实施计划表
+// 本周计划发货项目
 // 列表
 export function fetchWeekplanPro(page, size, filter) {
   return request({

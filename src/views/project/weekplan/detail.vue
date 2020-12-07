@@ -110,7 +110,7 @@ export default {
         this.projectForm = Object.assign(response.data, {
           setDay: workTimeH2D(response.data.setDay),
           setRemaining: workTimeH2D(response.data.setRemaining),
-          proRisk: formatRisk(response.data.formatRisk),
+          proRisk: formatRisk(response.data.proRisk),
           proStatus: formatProjectStatus(response.data.proStatus),
           deliverTime: formatYYMMDD(response.data.deliverTime),
           deliverdDate: formatYYMMDD(response.data.deliverdDate)

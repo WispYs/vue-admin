@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import baseUrl from './url.js'
 
-// 项目实施计划表
+// 发货已完成项目
 // 列表
 export function fetchShipmentComplete(page, size, filter) {
   return request({

@@ -34,3 +34,8 @@ export function formatYYMMDD(str) {
   return timeStr.split(' ')[0]
 }
 
+// 格式化进度 小数转化为百分比
+export function formatProgress(num) {
+  const progress = num || 0
+  return Number((progress * 100).toFixed(2))
+}

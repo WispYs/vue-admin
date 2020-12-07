@@ -23,7 +23,7 @@ import ExcelFields from '@/utils/excel-fields'
 import Pagination from '@/components/Pagination'
 import ListFilter from './ListFilter'
 import ListTable from './ListTable'
-import { deleteImplplanPro } from '@/api/implplan'
+import { deleteImplPlanPro } from '@/api/implplan'
 
 export default {
   components: { Pagination, ListFilter, ListTable },
@@ -84,7 +84,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          deleteImplplanPro(id).then(response => {
+          deleteImplPlanPro(id).then(response => {
             console.log(response)
             this.$message.success(response.message)
             this.__getList()

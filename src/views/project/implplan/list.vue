@@ -4,7 +4,7 @@
 
 <script>
 import ListPage from './components/ListPage'
-import { fetchImplplanPro } from '@/api/implplan'
+import { fetchImplPlanPro } from '@/api/implplan'
 
 export default {
   components: { ListPage },
@@ -18,7 +18,7 @@ export default {
   methods: {
     __fetchlist(page, size, filter) {
       this.listLoading = true
-      fetchImplplanPro(page, size, filter).then(response => {
+      fetchImplPlanPro(page, size, filter).then(response => {
         this.list = response.data.rows
         this.total = response.data.total
         this.listLoading = false

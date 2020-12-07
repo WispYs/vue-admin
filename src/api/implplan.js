@@ -3,7 +3,7 @@ import baseUrl from './url.js'
 
 // 项目实施计划表
 // 列表
-export function fetchImplplanPro(page, size, filter) {
+export function fetchImplPlanPro(page, size, filter) {
   return request({
     url: `${baseUrl}/projectimplplan/search/${page}/${size}`,
     method: 'post',
@@ -11,14 +11,14 @@ export function fetchImplplanPro(page, size, filter) {
   })
 }
 // 详情
-export function fetchImplplanProDetail(id) {
+export function fetchImplPlanProDetail(id) {
   return request({
     url: `${baseUrl}/projectimplplan/${id}`,
     method: 'get'
   })
 }
 // 新增
-export function addImplplanPro(data) {
+export function addImplPlanPro(data) {
   return request({
     url: `${baseUrl}/projectimplplan`,
     method: 'post',
@@ -26,7 +26,7 @@ export function addImplplanPro(data) {
   })
 }
 // 编辑
-export function editImplplanPro(id, data) {
+export function editImplPlanPro(id, data) {
   return request({
     url: `${baseUrl}/projectimplplan/${id}`,
     method: 'put',
@@ -34,7 +34,7 @@ export function editImplplanPro(id, data) {
   })
 }
 // 删除
-export function deleteImplplanPro(id) {
+export function deleteImplPlanPro(id) {
   return request({
     url: `${baseUrl}/projectimplplan/${id}`,
     method: 'delete'

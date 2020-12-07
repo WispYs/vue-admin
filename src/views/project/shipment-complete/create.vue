@@ -71,7 +71,7 @@
           </el-form-item>
         </el-col>
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <el-form-item label="实际发货时间" prop="deliverdDate">
+          <el-form-item label="实际发货时间" prop="deliverdDate" label-width="110px">
             <el-date-picker v-model="projectForm.deliverdDate" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="选择日期" style="width: 100%;" />
           </el-form-item>
         </el-col>
@@ -136,6 +136,9 @@ export default {
         ],
         proName: [
           { required: true, message: '请填写项目名称', trigger: 'blur' }
+        ],
+        deliverdDate: [
+          { required: true, message: '请选择实际发货日期', trigger: 'blur' }
         ],
         cabinetNum: validateNumber('柜体数量'),
         boxNum: validateNumber('箱体数量'),

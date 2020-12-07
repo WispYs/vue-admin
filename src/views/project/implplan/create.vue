@@ -139,7 +139,7 @@
 
 <script>
 import { workTimeD2H } from '@/utils/format'
-import { addImplplanPro } from '@/api/implplan'
+import { addImplPlanPro } from '@/api/implplan'
 
 export default {
   data() {
@@ -226,7 +226,7 @@ export default {
             setRemaining: workTimeD2H(this.projectForm.setRemaining)
           })
           console.log(formData)
-          addImplplanPro(formData).then(response => {
+          addImplPlanPro(formData).then(response => {
             console.log(response)
             this.$message.success(response.message)
             this.loading = false

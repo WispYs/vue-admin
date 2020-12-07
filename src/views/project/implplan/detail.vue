@@ -117,7 +117,7 @@
 
 <script>
 import { formatYYMMDD, workTimeH2D } from '@/utils/format'
-import { fetchImplplanProDetail } from '@/api/implplan'
+import { fetchImplPlanProDetail } from '@/api/implplan'
 import ProStatusOption from '@/utils/project-status'
 
 export default {
@@ -163,7 +163,7 @@ export default {
   methods: {
     __getInfo() {
       const proNo = this.$route.params.id
-      fetchImplplanProDetail(proNo).then(response => {
+      fetchImplPlanProDetail(proNo).then(response => {
         console.log(response)
         this.projectForm = Object.assign(response.data, {
           setPlan: workTimeH2D(response.data.setPlan),

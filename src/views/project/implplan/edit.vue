@@ -136,7 +136,7 @@
 <script>
 import { workTimeD2H, workTimeH2D } from '@/utils/format'
 
-import { fetchImplplanProDetail, editImplplanPro } from '@/api/implplan'
+import { fetchImplPlanProDetail, editImplPlanPro } from '@/api/implplan'
 export default {
   data() {
     const isNumber = (rule, value, callback) => {
@@ -218,7 +218,7 @@ export default {
   methods: {
     __getInfo() {
       const proNo = this.$route.params.id
-      fetchImplplanProDetail(proNo).then(response => {
+      fetchImplPlanProDetail(proNo).then(response => {
         console.log(response)
         this.projectForm = Object.assign(response.data, {
           setPlan: workTimeH2D(response.data.setPlan),
@@ -254,7 +254,7 @@ export default {
             powerTest: this.formatBoolean2Str(this.projectForm.powerTest),
             packDelever: this.formatBoolean2Str(this.projectForm.packDelever)
           })
-          editImplplanPro(proNo, formData).then(response => {
+          editImplPlanPro(proNo, formData).then(response => {
             console.log(response)
             this.$message.success(response.message)
             this.loading = false

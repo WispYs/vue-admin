@@ -9,24 +9,13 @@
       <el-input v-model="proName" class="filter-item" style="width: 240px" placeholder="请输入项目名称" />
     </div>
     <div class="filter-bar__item">
-      <label>计划发货时间：</label>
-      <el-date-picker
-        v-model="deliverTime"
-        class="filter-item"
-        type="daterange"
-        align="right"
-        unlink-panels
-        range-separator="至"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
-        :picker-options="pickerOptions"
-        value-format="yyyy-MM-dd"
-      />
+      <label>项目干系人：</label>
+      <el-input v-model="setLeader" class="filter-item" style="width: 240px" placeholder="请输入项目干系人" />
     </div>
     <div class="filter-bar__item">
-      <label>实际发货时间：</label>
+      <label>计划发货时间：</label>
       <el-date-picker
-        v-model="deliverdDate"
+        v-model="deliverTimeArr"
         class="filter-item"
         type="daterange"
         align="right"
@@ -35,7 +24,7 @@
         start-placeholder="开始日期"
         end-placeholder="结束日期"
         :picker-options="pickerOptions"
-        value-format="yyyy-MM-dd"
+        value-format="yyyy-MM-dd HH:mm:ss"
       />
     </div>
     <div class="filter-bar__item">
@@ -59,12 +48,10 @@ export default {
     return {
       proNo: '',
       proName: '',
-      deliverTime: '',
-      deliverStartTime: '',
-      deliverEndTime: '',
-      deliverdDate: '',
-      deliverdStartDate: '',
-      deliverdEndDate: '',
+      setLeader: '',
+      deliverTimeArr: '', // 原计划发货时间筛选区间
+      deliverTime: '', // 原计划发货开始时间
+      deliverTimeEnd: '', // 原计划发货结束时间
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -101,22 +88,19 @@ export default {
     __initFilter() {
       this.proNo = ''
       this.proName = ''
+      this.setLeader = ''
+      this.deliverTimeArr = ''
       this.deliverTime = ''
-      this.deliverStartTime = ''
-      this.deliverEndTime = ''
-      this.deliverdDate = ''
-      this.deliverdStartDate = ''
-      this.deliverdEndDate = ''
+      this.deliverTimeEnd = ''
     },
 
     __getFilter() {
       return {
         proNo: this.proNo,
         proName: this.proName,
-        deliverStartTime: this.deliverTime[0] ? this.deliverTime[0] : '',
-        deliverEndTime: this.deliverTime[0] ? this.deliverTime[1] : '',
-        deliverdStartDate: this.deliverdDate[0] ? this.deliverdDate[1] : '',
-        deliverdEndDate: this.deliverdDate[0] ? this.deliverdDate[1] : ''
+        setLeader: this.setLeader,
+        deliverTime: this.deliverTimeArr[0] ? this.deliverTimeArr[0] : '',
+        deliverTimeEnd: this.deliverTimeArr[0] ? this.deliverTimeArr[1] : ''
       }
     },
     search() {

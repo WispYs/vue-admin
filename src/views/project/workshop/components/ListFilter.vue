@@ -15,7 +15,7 @@
     <div class="filter-bar__item">
       <label>计划发货时间：</label>
       <el-date-picker
-        v-model="deliverTime"
+        v-model="deliverTimeArr"
         class="filter-item"
         type="daterange"
         align="right"
@@ -24,7 +24,7 @@
         start-placeholder="开始日期"
         end-placeholder="结束日期"
         :picker-options="pickerOptions"
-        value-format="yyyy-MM-dd"
+        value-format="yyyy-MM-dd HH:mm:ss"
       />
     </div>
     <div class="filter-bar__item">
@@ -49,9 +49,9 @@ export default {
       proNo: '',
       proName: '',
       setLeader: '',
+      deliverTimeArr: '',
       deliverTime: '',
-      deliverStartTime: '',
-      deliverEndTime: '',
+      deliverTimeEnd: '',
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -89,9 +89,9 @@ export default {
       this.proNo = ''
       this.proName = ''
       this.setLeader = ''
+      this.deliverTimeArr = ''
       this.deliverTime = ''
-      this.deliverStartTime = ''
-      this.deliverEndTime = ''
+      this.deliverTimeEnd = ''
     },
 
     __getFilter() {
@@ -99,8 +99,8 @@ export default {
         proNo: this.proNo,
         proName: this.proName,
         setLeader: this.setLeader,
-        deliverStartTime: this.deliverTime[0] ? this.deliverTime[0] : '',
-        deliverEndTime: this.deliverTime[0] ? this.deliverTime[1] : ''
+        deliverTime: this.deliverTimeArr[0] ? this.deliverTimeArr[0] : '',
+        deliverTimeEnd: this.deliverTimeArr[0] ? this.deliverTimeArr[1] : ''
       }
     },
     search() {

@@ -12,21 +12,10 @@
       <label>成套班组：</label>
       <el-input v-model="setLeader" class="filter-item" style="width: 200px" placeholder="请输入成套班组" />
     </div>
-    <!-- <div class="filter-bar__item">
-      <label>项目状态：</label>
-      <el-select v-model="proStatus" placeholder="请选择项目状态">
-        <el-option
-          v-for="item in statusOption"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        />
-      </el-select>
-    </div> -->
     <div class="filter-bar__item">
       <label>原计划发货时间：</label>
       <el-date-picker
-        v-model="deliverTime"
+        v-model="deliverTimeArr"
         class="filter-item"
         type="daterange"
         align="right"
@@ -35,7 +24,7 @@
         start-placeholder="开始日期"
         end-placeholder="结束日期"
         :picker-options="pickerOptions"
-        value-format="yyyy-MM-dd"
+        value-format="yyyy-MM-dd HH:mm:ss"
       />
     </div>
     <div class="filter-bar__item">
@@ -60,9 +49,9 @@ export default {
       proNo: '',
       proName: '',
       setLeader: '',
-      deliverTime: '',
-      deliverStartTime: '',
-      deliverEndTime: '',
+      deliverTimeArr: '', // 原计划发货时间筛选区间
+      deliverTime: '', // 原计划发货开始时间
+      deliverTimeEnd: '', // 原计划发货结束时间
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -100,9 +89,9 @@ export default {
       this.proNo = ''
       this.proName = ''
       this.setLeader = ''
+      this.deliverTimeArr = ''
       this.deliverTime = ''
-      this.deliverStartTime = ''
-      this.deliverEndTime = ''
+      this.deliverTimeEnd = ''
     },
 
     __getFilter() {
@@ -110,8 +99,8 @@ export default {
         proNo: this.proNo,
         proName: this.proName,
         setLeader: this.setLeader,
-        deliverStartTime: this.deliverTime[0] ? this.deliverTime[0] : '',
-        deliverEndTime: this.deliverTime[0] ? this.deliverTime[1] : ''
+        deliverTime: this.deliverTimeArr[0] ? this.deliverTimeArr[0] : '',
+        deliverTimeEnd: this.deliverTimeArr[0] ? this.deliverTimeArr[1] : ''
       }
     },
     search() {

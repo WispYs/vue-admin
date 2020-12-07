@@ -2,13 +2,24 @@
   <div class="dashboard-container">
     <el-row :gutter="32">
       <el-col :xs="24" :sm="12" :md="6" :lg="6">
+        <div class="statistic-item statistic-icon--orange">
+          <div class="statistic-icon">
+            <i class="el-icon-user" />
+          </div>
+          <div class="statistic-info">
+            <p>总计划实施项目</p>
+            <b>{{ implPlanCount }}</b>
+          </div>
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="12" :md="6" :lg="6">
         <div class="statistic-item">
           <div class="statistic-icon statistic-icon--blue">
             <i class="el-icon-folder-checked" />
           </div>
           <div class="statistic-info">
-            <p>已完成项目</p>
-            <b>254</b>
+            <p>成套已完成项目</p>
+            <b>{{ completeCount }}</b>
           </div>
         </div>
       </el-col>
@@ -18,8 +29,8 @@
             <i class="el-icon-folder-opened" />
           </div>
           <div class="statistic-info">
-            <p>待完成项目</p>
-            <b>12</b>
+            <p>发货已完成项目</p>
+            <b>{{ shipmentCompleteCount }}</b>
           </div>
         </div>
       </el-col>
@@ -29,19 +40,8 @@
             <i class="el-icon-shopping-bag-1" />
           </div>
           <div class="statistic-info">
-            <p>销售金额</p>
-            <b>2,254,326</b>
-          </div>
-        </div>
-      </el-col>
-      <el-col :xs="24" :sm="12" :md="6" :lg="6">
-        <div class="statistic-item statistic-icon--orange">
-          <div class="statistic-icon">
-            <i class="el-icon-user" />
-          </div>
-          <div class="statistic-info">
-            <p>生产人员</p>
-            <b>534</b>
+            <p>折算标准柜累积量</p>
+            <b>{{ standardCabinetCount }}</b>
           </div>
         </div>
       </el-col>
@@ -132,6 +132,10 @@ import { mapGetters } from 'vuex'
 import BarChart from './components/BarChart'
 import PieChart from './components/PieChart'
 import { fetchNewsList, fetchProjectProgress } from '@/api/dashborad'
+import { fetchImplPlanPro } from '@/api/implplan'
+import { fetchCompletePro } from '@/api/complete'
+import { fetchShipmentComplete } from '@/api/shipment-complete'
+
 import mockDate from '@/mock/mock-data'
 export default {
   name: 'Dashboard',
@@ -141,6 +145,10 @@ export default {
   },
   data() {
     return {
+      implPlanCount: 0, // 总计划实施项目
+      completeCount: 0, // 成套已完成项目
+      shipmentCompleteCount: 0, // 发货已完成项目
+      standardCabinetCount: 0, // 折算标准柜累积量
       barData: {},
       pieData: {},
       newsLists: {},
@@ -174,10 +182,36 @@ export default {
         { value: 12, name: '已完成' }
       ]
     }
-    this.getNewsList()
-    this.getProgress()
+
+    this.__init()
   },
   methods: {
+    __init() {
+      this.getCount()
+      // this.getNewsList()
+      // this.getProgress()
+    },
+
+    // 获取首页项目统计数量
+    getCount() {
+      const page = 1
+      const size = 10
+      const filter = {
+        proNo: ''
+      }
+      // 总计划实施项目总数
+      fetchImplPlanPro(page, size, filter).then(response => {
+        this.implPlanCount = response.data.total
+      })
+      // 成套已完成项目总数
+      fetchCompletePro(page, size, filter).then(response => {
+        this.completeCount = response.data.total
+      })
+      // 发货已完成项目总数
+      fetchShipmentComplete(page, size, filter).then(response => {
+        this.shipmentCompleteCount = response.data.total
+      })
+    },
     getNewsList() {
       this.listLoading = true
       fetchNewsList().then(response => {
@@ -185,14 +219,14 @@ export default {
         this.listLoading = false
       })
     },
-
     getProgress() {
       fetchProjectProgress().then(response => {
         this.projectProgress = response.data
         console.log(this.projectProgress)
       })
     },
-    // Tooltip 文字提示
+
+    // 日历 Tooltip 文字提示
     content(date) {
       let content = ''
       for (const i in this.calendarData) {
@@ -210,9 +244,9 @@ export default {
       } else if (percentage <= 50) {
         return 'warning'
       } else if (percentage <= 75) {
-        return 'success'
+        return ''
       } else {
-        return null
+        return 'success'
       }
     }
   }

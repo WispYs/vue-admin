@@ -1,5 +1,17 @@
 <template>
   <div class="dashboard-container">
+    <!-- <el-row :gutter="32" style="margin-bottom: 12px">
+      <el-col :xs="24" :sm="12" :md="6" :lg="6">
+        <el-select v-model="filterYear" placeholder="请选择">
+          <el-option
+            v-for="item in years"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </el-col>
+    </el-row> -->
     <el-row :gutter="32">
       <el-col :xs="24" :sm="12" :md="6" :lg="6">
         <div class="statistic-item statistic-icon--orange">
@@ -55,11 +67,17 @@
       </el-col>
       <el-col :xs="24" :md="8" :lg="8">
         <div class="chart-wrapper">
-          <p class="chart-title">项目运行状态</p>
+          <p class="chart-title">本周项目运行状态</p>
           <pie-chart :cdata="pieData" />
         </div>
       </el-col>
       <el-col :xs="24" :md="8" :lg="8">
+        <div class="chart-wrapper">
+          <p class="chart-title">项目进度统计</p>
+          <pro-progress :list="projectProgress" />
+        </div>
+      </el-col>
+      <!-- <el-col :xs="24" :md="8" :lg="8">
         <div class="chart-wrapper news-wrapper">
           <p class="chart-title">通知</p>
           <ul>
@@ -69,58 +87,28 @@
             </li>
           </ul>
         </div>
-      </el-col>
+      </el-col> -->
     </el-row>
     <el-row :gutter="32">
-      <el-col :xs="24" :md="24" :lg="12">
+      <el-col :xs="24" :md="12" :lg="12">
+        <div class="chart-wrapper">
+          <p class="chart-title">本周计划发货项目</p>
+          <week-plan :list="weekplanData" />
+        </div>
+      </el-col>
+      <el-col :xs="24" :md="12" :lg="12">
+        <div class="chart-wrapper">
+          <p class="chart-title">上周工时</p>
+          <last-week-chart :cdata="lastWeekData" />
+        </div>
+      </el-col>
+    </el-row>
+
+    <el-row :gutter="32">
+      <el-col :xs="24" :md="24" :lg="24">
         <div class="chart-wrapper" style="height: 706px">
           <p class="chart-title">日历</p>
-          <el-calendar id="calendar" v-model="value">
-            <!-- 这里使用的是 2.5 slot 语法，对于新项目请使用 2.6 slot 语法-->
-            <template
-              slot="dateCell"
-              slot-scope="{date, data}"
-            >
-              <!--自定义内容-->
-              <div :class="brightDate.indexOf(data.day)!=-1 ? 'highlight' : ''">
-                <div class="calendar-day">{{ data.day.split('-').slice(2).join('-') }}</div>
-                <div v-for="(item, index) in calendarData" :key="index">
-                  <div v-if="(item.date.split('-')[0]).indexOf(data.day.split('-')[0])!=-1">
-                    <div v-if="(item.date.split('-')[1]).indexOf(data.day.split('-')[1])!=-1">
-                      <div v-if="(item.date.split('-')[2]).indexOf(data.day.split('-')[2])!=-1">
-                        <el-tooltip class="item" effect="dark" :content="item.title" placement="right">
-                          <div class="is-selected">{{ item.title }}</div>
-                        </el-tooltip>
-                      </div>
-                      <div v-else />
-                    </div>
-                    <div v-else />
-                  </div>
-                  <div v-else />
-                </div>
-              </div>
-            </template>
-          </el-calendar>
-        </div>
-      </el-col>
-      <el-col :xs="24" :md="24" :lg="12">
-        <div class="chart-wrapper" style="height: 336px">
-          <p class="chart-title">项目进度统计</p>
-          <div v-for="(item, index) in projectProgress" :key="index" class="progress-box">
-            <span :title="item.title">{{ item.title }}</span>
-            <el-progress
-              class="progress-line"
-              :text-inside="true"
-              :stroke-width="30"
-              :percentage="item.progress"
-              :status="statusMethod(item.progress)"
-            />
-          </div>
-        </div>
-      </el-col>
-      <el-col :xs="24" :md="24" :lg="12">
-        <div class="chart-wrapper" style="height: 336px">
-          <p class="chart-title">上周工时</p>
+          <pro-calendar />
         </div>
       </el-col>
     </el-row>
@@ -128,46 +116,52 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import BarChart from './components/BarChart'
 import PieChart from './components/PieChart'
-import { fetchNewsList, fetchProjectProgress } from '@/api/dashborad'
+import LastWeekChart from './components/LastWeekChart'
+import ProCalendar from './components/ProCalendar'
+import WeekPlan from './components/WeekPlan'
+import ProProgress from './components/ProProgress'
 import { fetchImplPlanPro } from '@/api/implplan'
 import { fetchCompletePro } from '@/api/complete'
 import { fetchShipmentComplete } from '@/api/shipment-complete'
+import { fetchWorkingDays } from '@/api/working-days'
+import { fetchWeekplanPro } from '@/api/weekplan'
+import { fetchProjectProgress } from '@/api/dashborad'
+
+import { workTimeH2D } from '@/utils/format'
 
 import mockDate from '@/mock/mock-data'
+
 export default {
-  name: 'Dashboard',
   components: {
     BarChart,
-    PieChart
+    PieChart,
+    LastWeekChart,
+    ProCalendar,
+    WeekPlan,
+    ProProgress
   },
   data() {
     return {
+      years: [
+        { value: '2020', label: '2020年' },
+        { value: '2019', label: '2019年' },
+        { value: '2018', label: '2020年' },
+        { value: '2017', label: '2016年' },
+        { value: '2016', label: '2016年' }
+      ],
+      filterYear: '2020',
       implPlanCount: 0, // 总计划实施项目
       completeCount: 0, // 成套已完成项目
       shipmentCompleteCount: 0, // 发货已完成项目
       standardCabinetCount: 0, // 折算标准柜累积量
-      barData: {},
-      pieData: {},
-      newsLists: {},
-      calendarData: mockDate.calendarData,
-      projectProgress: [],
-      value: new Date()
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'name'
-    ]),
-    // 时间高亮的数组
-    brightDate() {
-      const ary = []
-      for (const i in this.calendarData) {
-        ary.push(this.calendarData[i].date)
-      }
-      return ary
+      barData: null,
+      pieData: null,
+      projectProgress: null,
+      lastWeekData: null,
+      weekplanData: null,
+      newsLists: mockDate.newsLists.item
     }
   },
   mounted() {
@@ -182,14 +176,17 @@ export default {
         { value: 12, name: '已完成' }
       ]
     }
-
+    this.lastWeekData = {
+      proName: [],
+      costDay: [],
+      targetDay: [],
+      actualDay: []
+    }
     this.__init()
   },
   methods: {
     __init() {
       this.getCount()
-      // this.getNewsList()
-      // this.getProgress()
     },
 
     // 获取首页项目统计数量
@@ -211,46 +208,38 @@ export default {
       fetchShipmentComplete(page, size, filter).then(response => {
         this.shipmentCompleteCount = response.data.total
       })
-    },
-    getNewsList() {
-      this.listLoading = true
-      fetchNewsList().then(response => {
-        this.newsLists = response.item
-        this.listLoading = false
-      })
-    },
-    getProgress() {
+
+      // 项目进度统计
       fetchProjectProgress().then(response => {
         this.projectProgress = response.data
         console.log(this.projectProgress)
       })
-    },
-
-    // 日历 Tooltip 文字提示
-    content(date) {
-      let content = ''
-      for (const i in this.calendarData) {
-        if (date === this.calendarData[i].startDate) {
-          content = this.calendarData[i].judgeName + ` ` + this.calendarData[i].tribunalName
-        }
-      }
-      return content
-    },
-
-    // 项目进度颜色变化
-    statusMethod(percentage) {
-      if (percentage <= 25) {
-        return 'exception'
-      } else if (percentage <= 50) {
-        return 'warning'
-      } else if (percentage <= 75) {
-        return ''
-      } else {
-        return 'success'
-      }
+      // 本周计划发货
+      fetchWeekplanPro(page, size, filter).then(response => {
+        this.weekplanData = response.data.rows
+      })
+      // 上周工时
+      fetchWorkingDays(page, size, filter).then(response => {
+        const lastWeekPro = response.data.rows.slice(0, 5)
+        lastWeekPro.forEach(item => {
+          for (const key in item) {
+            if (key === 'proName') {
+              this.lastWeekData.proName.push(item[key])
+            }
+            if (key === 'costDay') {
+              this.lastWeekData.costDay.push(workTimeH2D(item[key]))
+            }
+            if (key === 'targetDay') {
+              this.lastWeekData.targetDay.push(workTimeH2D(item[key]))
+            }
+            if (key === 'actualDay') {
+              this.lastWeekData.actualDay.push(workTimeH2D(item[key]))
+            }
+          }
+        })
+      })
     }
   }
-
 }
 </script>
 
@@ -305,7 +294,6 @@ export default {
         }
       }
     }
-
     .chart-wrapper {
       background: #fff;
       padding: 16px 16px 0;
@@ -352,43 +340,6 @@ export default {
       .chart-title {
         line-height: 20px;
         margin-bottom: 10px;
-      }
-      .highlight {
-        // background: lightgoldenrodyellow;
-        .calendar-day {
-          color: #409EFF;
-          font-weight: bold;
-          font-size: 16px;
-        }
-      }
-      .calendar-day{
-        text-align: center;
-        color: #202535;
-        line-height: 26px;
-        font-size: 12px;
-      }
-      .is-selected{
-        color: #666;
-        font-size: 10px;
-        line-height: 16px;
-        margin-top: 1px;
-      }
-      .progress-box {
-        padding: 13px 0;
-        span {
-          display: inline-block;
-          text-align: right;
-          width: 30%;
-          text-overflow: ellipsis;
-          overflow: hidden;
-          white-space: nowrap;
-          font-size: 13px;
-          padding-right: 20px;
-        }
-        .progress-line {
-          display: inline-block;
-          width: 70%;
-        }
       }
     }
   }

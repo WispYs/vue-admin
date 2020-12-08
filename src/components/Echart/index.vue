@@ -38,10 +38,11 @@ export default {
   watch: {
     options: {
       handler(options) {
-        // if (options) {
-        //   // 设置true清空echart缓存
-        //   this.chart.setOption(options, true)
-        // }
+        if (options) {
+          // 设置true清空echart缓存
+          this.chart = this.$echarts.init(this.$el, 'macarons')
+          this.setOptions(options)
+        }
       },
       deep: true
     }
@@ -62,7 +63,10 @@ export default {
     initChart() {
       // 初始化echart
       this.chart = this.$echarts.init(this.$el, 'macarons')
-      this.chart.setOption(this.options, true)
+      this.setOptions(this.options)
+    },
+    setOptions(options) {
+      this.chart.setOption(options, true)
     }
   }
 }

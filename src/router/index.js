@@ -11,6 +11,7 @@ import workshopRouter from './modules/workshop'
 import shipmentCompleteRouter from './modules/shipment-complete'
 import weekplanRouter from './modules/weekplan'
 import progressPlanRouter from './modules/progress-plan'
+import workingDaysRouter from './modules/working-days'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -72,7 +73,8 @@ export const constantRoutes = [
       workshopRouter,
       shipmentCompleteRouter,
       weekplanRouter,
-      progressPlanRouter
+      progressPlanRouter,
+      workingDaysRouter
     ]
   },
   // {

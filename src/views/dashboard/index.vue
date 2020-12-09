@@ -215,9 +215,18 @@ export default {
       fetchQuarterCount({ 'deliverdDate': nowYear }).then(response => {
         const quarterCount = []
         const res = response.data
-        res.forEach(item => {
-          quarterCount.push(item['countNum'])
-        })
+        // quarterNum ：季度数字，1 代表 1季度  2 代表2季度  3 代表 3季度  4 代表4季度。
+        // 当不存在对应季度的项目时，不返回数值
+        // 例：[{"quarterNum": "1","countNum": "2"},{"quarterNum": "4","countNum": "4"}]
+        // 后台返回的数据不全，前端对应补充
+        for (let i = 1; i < 5; i++) {
+          const itemCount = res.filter(it => it['quarterNum'] == i)
+          if (itemCount[0]) {
+            quarterCount.push(Number(itemCount[0]['countNum']))
+          } else {
+            quarterCount.push(0)
+          }
+        }
         this.quarterData = {
           data: quarterCount,
           name: ['第一季度', '第二季度', '第三季度', '第四季度']

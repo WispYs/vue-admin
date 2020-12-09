@@ -25,6 +25,13 @@ export function addProgressPlan(data) {
     data
   })
 }
+// 获取项目名称筛选项
+export function fetchPlanProName() {
+  return request({
+    url: `${baseUrl}/resourceload/querypronamelist`,
+    method: 'get'
+  })
+}
 // 编辑
 export function editProgressPlan(id, data) {
   return request({

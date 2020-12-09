@@ -53,16 +53,15 @@
 
 <script>
 import { formatProgress } from '@/utils/format'
-import { fetchProgressPlanDetail, editProgressPlan } from '@/api/progress-plan'
+import { fetchProgressPlanDetail, editProgressPlan, fetchPlanProName } from '@/api/progress-plan'
 export default {
   data() {
     return {
       loading: false,
       proNameOption: [
-        '华南虎XXX项目',
-        '*****18期环保公厕项目',
-        '****-山东齐智',
-        '2020*****30期（F04A159）'
+        '项目A',
+        '项目B',
+        '项目C'
       ],
       projectForm: {
         proName: '',
@@ -96,6 +95,7 @@ export default {
   },
   mounted() {
     this.__getInfo()
+    this.__getPlanProName()
   },
   methods: {
     __getInfo() {
@@ -106,6 +106,11 @@ export default {
           plan: formatProgress(response.data.plan),
           completion: formatProgress(response.data.completion)
         })
+      })
+    },
+    __getPlanProName() {
+      fetchPlanProName().then(response => {
+        this.proNameOption = response.data
       })
     },
     submitForm(formName) {

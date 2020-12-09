@@ -52,17 +52,16 @@
 </template>
 
 <script>
-import { addProgressPlan } from '@/api/progress-plan'
+import { addProgressPlan, fetchPlanProName } from '@/api/progress-plan'
 
 export default {
   data() {
     return {
       loading: false,
       proNameOption: [
-        '华南虎XXX项目',
-        '*****18期环保公厕项目',
-        '****-山东齐智',
-        '2020*****30期（F04A159）'
+        '项目A',
+        '项目B',
+        '项目C'
       ],
       projectForm: {
         proName: '',
@@ -94,7 +93,15 @@ export default {
       }
     }
   },
+  mounted() {
+    this.__getPlanProName()
+  },
   methods: {
+    __getPlanProName() {
+      fetchPlanProName().then(response => {
+        this.proNameOption = response.data
+      })
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {

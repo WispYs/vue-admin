@@ -48,6 +48,7 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
+import { setToken } from '@/utils/auth'
 
 export default {
   name: 'Login',
@@ -103,12 +104,15 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
-          }).catch(() => {
-            this.loading = false
-          })
+          setToken('xs6d7sfs1a212')
+          this.$router.push({ path: this.redirect || '/' })
+          this.loading = false
+          // this.$store.dispatch('user/login', this.loginForm).then(() => {
+          //   this.$router.push({ path: this.redirect || '/' })
+          //   this.loading = false
+          // }).catch(() => {
+          //   this.loading = false
+          // })
         } else {
           console.log('error submit!!')
           return false

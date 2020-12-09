@@ -14,9 +14,9 @@
     </el-row> -->
     <el-row :gutter="32">
       <el-col :xs="24" :sm="12" :md="6" :lg="6">
-        <div class="statistic-item statistic-icon--orange">
-          <div class="statistic-icon">
-            <i class="el-icon-user" />
+        <div class="statistic-item">
+          <div class="statistic-icon statistic-icon--blue">
+            <i class="el-icon-edit" />
           </div>
           <div class="statistic-info">
             <p>总计划实施项目</p>
@@ -26,7 +26,7 @@
       </el-col>
       <el-col :xs="24" :sm="12" :md="6" :lg="6">
         <div class="statistic-item">
-          <div class="statistic-icon statistic-icon--blue">
+          <div class="statistic-icon statistic-icon--skyblue">
             <i class="el-icon-folder-checked" />
           </div>
           <div class="statistic-info">
@@ -49,7 +49,7 @@
       <el-col :xs="24" :sm="12" :md="6" :lg="6">
         <div class="statistic-item">
           <div class="statistic-icon statistic-icon--green">
-            <i class="el-icon-shopping-bag-1" />
+            <i class="el-icon-user" />
           </div>
           <div class="statistic-info">
             <p>折算标准柜累积量</p>
@@ -308,8 +308,8 @@ export default {
         &--green {
           background: #00a65a;
         }
-        &--orange {
-          background: #f39c12;
+        &--skyblue {
+          background: #59B2D6;
         }
         i {
           font-size: 45px;

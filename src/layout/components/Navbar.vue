@@ -5,12 +5,17 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
-      <el-dropdown class="avatar-container" trigger="click">
+      <div class="avatar-container">
         <div class="avatar-wrapper">
           <h4>超级管理员</h4>
-          <!-- <i class="el-icon-caret-bottom" /> -->
         </div>
-        <!-- <el-dropdown-menu slot="dropdown" class="user-dropdown">
+      </div>
+      <!-- <el-dropdown class="avatar-container" trigger="click">
+        <div class="avatar-wrapper">
+          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <i class="el-icon-caret-bottom" />
+        </div>
+        <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <router-link to="/">
             <el-dropdown-item>
               Home
@@ -25,8 +30,8 @@
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">Log Out</span>
           </el-dropdown-item>
-        </el-dropdown-menu> -->
-      </el-dropdown>
+        </el-dropdown-menu>
+      </el-dropdown> -->
     </div>
   </div>
 </template>
@@ -117,7 +122,10 @@ export default {
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
-
+        h4 {
+          font-size: 14px;
+          color: #787878;
+        }
         .user-avatar {
           cursor: pointer;
           width: 40px;

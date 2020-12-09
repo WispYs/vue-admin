@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Echart id="barChart" :options="options" />
+    <Echart id="quarterCount" :options="options" />
   </div>
 </template>
 
@@ -42,15 +42,16 @@ export default {
           },
           xAxis: [{
             type: 'category',
-            data: ['第一季度', '第二季度', '第三季度', '第四季度'],
+            data: newData.name,
             axisTick: {
               alignWithLabel: true
             }
           }],
           yAxis: [{
             type: 'value',
+            minInterval: 1,
             axisTick: {
-              show: false
+              show: true
             }
           }],
           series: [{
@@ -58,6 +59,10 @@ export default {
             type: 'bar',
             stack: 'vistors',
             barWidth: '60%',
+            label: {
+              show: true,
+              position: 'inside'
+            },
             data: newData.data
           }]
         }

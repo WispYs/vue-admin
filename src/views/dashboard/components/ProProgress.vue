@@ -1,19 +1,20 @@
 <template>
   <div class="progress-wrapper">
     <div v-for="(item, index) in list" :key="index" class="progress-item">
-      <span :title="item.title">{{ item.title }}</span>
+      <span :title="item.proName">{{ item.proName }}</span>
       <el-progress
         class="progress-line"
         :text-inside="true"
         :stroke-width="30"
-        :percentage="item.progress"
-        :status="statusMethod(item.progress)"
+        :percentage="formatProgress(item.completion)"
+        :status="statusMethod(formatProgress(item.completion))"
       />
     </div>
   </div>
 </template>
 
 <script>
+import { formatProgress } from '@/utils/format'
 
 export default {
   props: {
@@ -28,6 +29,10 @@ export default {
     }
   },
   methods: {
+    // 进度小数转化为百分比
+    formatProgress(num) {
+      return formatProgress(num)
+    },
     // 项目进度颜色变化
     statusMethod(percentage) {
       if (percentage <= 25) {

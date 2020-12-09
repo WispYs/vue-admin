@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Echart id="pieChart" :options="options" />
+    <Echart id="workingStatus" :options="options" />
   </div>
 </template>
 
@@ -33,7 +33,7 @@ export default {
           legend: {
             orient: 'vertical',
             left: 10,
-            data: ['进行中', '已延期', '已中断', '已完成']
+            data: newData.name
           },
           color: ['#e6a23c', '#409EFF', '#f56c6c', '#67c23a'],
           series: [

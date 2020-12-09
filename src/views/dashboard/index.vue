@@ -62,13 +62,13 @@
       <el-col :xs="24" :md="8" :lg="8">
         <div class="chart-wrapper">
           <p class="chart-title">季度任务数</p>
-          <bar-chart :cdata="barData" />
+          <quarter-count :cdata="quarterData" />
         </div>
       </el-col>
       <el-col :xs="24" :md="8" :lg="8">
         <div class="chart-wrapper">
           <p class="chart-title">本周项目运行状态</p>
-          <pie-chart :cdata="pieData" />
+          <working-status :cdata="workingStatus" />
         </div>
       </el-col>
       <el-col :xs="24" :md="8" :lg="8">
@@ -116,8 +116,8 @@
 </template>
 
 <script>
-import BarChart from './components/BarChart'
-import PieChart from './components/PieChart'
+import QuarterCount from './components/QuarterCount'
+import WorkingStatus from './components/WorkingStatus'
 import LastWeekChart from './components/LastWeekChart'
 import ProCalendar from './components/ProCalendar'
 import WeekPlan from './components/WeekPlan'
@@ -127,16 +127,16 @@ import { fetchCompletePro } from '@/api/complete'
 import { fetchShipmentComplete } from '@/api/shipment-complete'
 import { fetchWorkingDays } from '@/api/working-days'
 import { fetchWeekplanPro } from '@/api/weekplan'
-import { fetchProjectProgress } from '@/api/dashborad'
+import { fetchProjectProgress, fetchWorkingStatus, fetchStandardCabinet, fetchQuarterCount } from '@/api/dashborad'
 
-import { workTimeH2D } from '@/utils/format'
+import { workTimeH2D, formatProjectStatus } from '@/utils/format'
 
 import mockDate from '@/mock/mock-data'
 
 export default {
   components: {
-    BarChart,
-    PieChart,
+    QuarterCount,
+    WorkingStatus,
     LastWeekChart,
     ProCalendar,
     WeekPlan,
@@ -156,8 +156,8 @@ export default {
       completeCount: 0, // 成套已完成项目
       shipmentCompleteCount: 0, // 发货已完成项目
       standardCabinetCount: 0, // 折算标准柜累积量
-      barData: null,
-      pieData: null,
+      quarterData: null,
+      workingStatus: null,
       projectProgress: null,
       lastWeekData: null,
       weekplanData: null,
@@ -165,16 +165,13 @@ export default {
     }
   },
   mounted() {
-    this.barData = {
-      data: [12, 23, 34, 26]
+    this.quarterData = {
+      data: [],
+      name: []
     }
-    this.pieData = {
-      data: [
-        { value: 5, name: '进行中' },
-        { value: 2, name: '已延期' },
-        { value: 1, name: '已中断' },
-        { value: 12, name: '已完成' }
-      ]
+    this.workingStatus = {
+      data: [],
+      name: []
     }
     this.lastWeekData = {
       proName: [],
@@ -208,11 +205,46 @@ export default {
       fetchShipmentComplete(page, size, filter).then(response => {
         this.shipmentCompleteCount = response.data.total
       })
+      // 折算标准柜累积量
+      const nowYear = new Date().getFullYear() + '-01-01 00:00:00'
+      fetchStandardCabinet({ 'deliverdDate': nowYear }).then(response => {
+        this.standardCabinetCount = Number(response.data[0].standardCabinet).toFixed(2)
+      })
 
+      // 季度任务数量
+      fetchQuarterCount({ 'deliverdDate': nowYear }).then(response => {
+        const quarterCount = []
+        const res = response.data
+        res.forEach(item => {
+          quarterCount.push(item['countNum'])
+        })
+        this.quarterData = {
+          data: quarterCount,
+          name: ['第一季度', '第二季度', '第三季度', '第四季度']
+        }
+      })
+
+      // 本周项目运行状态
+      fetchWorkingStatus().then(response => {
+        const res = response.data
+        const workingStatusData = []
+        const workingStatusName = []
+        res.forEach(item => {
+          const statusItem = {
+            value: item.countNum,
+            name: formatProjectStatus(item.proStatus)
+          }
+          workingStatusData.push(statusItem)
+          workingStatusName.push(formatProjectStatus(item.proStatus))
+        })
+        this.workingStatus = {
+          data: workingStatusData,
+          name: workingStatusName
+        }
+      })
       // 项目进度统计
-      fetchProjectProgress().then(response => {
-        this.projectProgress = response.data
-        console.log(this.projectProgress)
+      fetchProjectProgress(page, size).then(response => {
+        this.projectProgress = response.data.rows
       })
       // 本周计划发货
       fetchWeekplanPro(page, size, filter).then(response => {

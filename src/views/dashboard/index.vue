@@ -104,14 +104,14 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="32">
+    <!-- <el-row :gutter="32">
       <el-col :xs="24" :md="24" :lg="24">
         <div class="chart-wrapper" style="height: 706px">
           <p class="chart-title">日历</p>
           <pro-calendar />
         </div>
       </el-col>
-    </el-row>
+    </el-row> -->
   </div>
 </template>
 

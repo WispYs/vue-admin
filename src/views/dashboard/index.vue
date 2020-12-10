@@ -112,6 +112,7 @@
         </div>
       </el-col>
     </el-row> -->
+    <footerbar />
   </div>
 </template>
 
@@ -122,6 +123,7 @@ import LastWeekChart from './components/LastWeekChart'
 import ProCalendar from './components/ProCalendar'
 import WeekPlan from './components/WeekPlan'
 import ProProgress from './components/ProProgress'
+import Footerbar from './components/Footerbar'
 import { fetchImplPlanPro } from '@/api/implplan'
 import { fetchCompletePro } from '@/api/complete'
 import { fetchShipmentComplete } from '@/api/shipment-complete'
@@ -138,9 +140,10 @@ export default {
     QuarterCount,
     WorkingStatus,
     LastWeekChart,
-    ProCalendar,
+    // ProCalendar,
     WeekPlan,
-    ProProgress
+    ProProgress,
+    Footerbar
   },
   data() {
     return {

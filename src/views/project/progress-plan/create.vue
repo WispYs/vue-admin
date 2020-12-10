@@ -1,5 +1,6 @@
 <template>
   <div class="create-container">
+    <page-back />
     <el-form ref="projectForm" :model="projectForm" :rules="rules" label-width="100px" class="demo-projectForm">
       <el-row :gutter="24">
         <el-col :xs="24" :sm="18" :md="8" :lg="8">
@@ -44,7 +45,7 @@
         <el-input v-model="projectForm.content" type="textarea" :autosize="{ minRows: 3, maxRows: 6}" />
       </el-form-item>
       <el-form-item>
-        <el-button v-loading="loading" type="primary" @click="submitForm('projectForm')">新增计划</el-button>
+        <el-button v-loading="loading" type="primary" @click="submitForm('projectForm')">新建计划</el-button>
         <el-button @click="resetForm('projectForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -53,8 +54,12 @@
 
 <script>
 import { addProgressPlan, fetchPlanProName } from '@/api/progress-plan'
+import PageBack from '@/components/PageBack'
 
 export default {
+  components: {
+    PageBack
+  },
   data() {
     return {
       loading: false,
@@ -131,7 +136,8 @@ export default {
 
 <style lang="scss" scoped>
   .create-container {
-    padding: 20px;
+    padding: 40px;
+    position: relative;
     .progress-slider {
       display: inline-block;
       width: calc(100% - 60px);

@@ -17,7 +17,7 @@ export function fetchWeekplanProDetail(id) {
     method: 'get'
   })
 }
-// 新增
+// 新建
 export function addWeekplanPro(data) {
   return request({
     url: `${baseUrl}/weekplanshipment`,

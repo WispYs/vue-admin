@@ -104,7 +104,7 @@
         <el-input v-model="projectForm.remark" type="textarea" :autosize="{ minRows: 3, maxRows: 6}" />
       </el-form-item>
       <el-form-item>
-        <el-button v-loading="loading" type="primary" @click="submitForm('projectForm')">新增项目</el-button>
+        <el-button v-loading="loading" type="primary" @click="submitForm('projectForm')">新建项目</el-button>
         <el-button @click="resetForm('projectForm')">重置</el-button>
       </el-form-item>
     </el-form>

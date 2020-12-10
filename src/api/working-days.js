@@ -17,7 +17,7 @@ export function fetchWorkingDaysDetail(id) {
     method: 'get'
   })
 }
-// 新增
+// 新建
 export function addWorkingDays(data) {
   return request({
     url: `${baseUrl}/workingdays`,

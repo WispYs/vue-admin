@@ -1,5 +1,6 @@
 <template>
   <div class="edit-container">
+    <page-back />
     <el-form ref="projectForm" :model="projectForm" :rules="rules" label-width="100px" class="demo-projectForm">
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
@@ -106,9 +107,14 @@
 </template>
 
 <script>
+import PageBack from '@/components/PageBack'
 import { workTimeH2D, workTimeD2H } from '@/utils/format'
 import { fetchWeekplanProDetail, editWeekplanPro } from '@/api/weekplan'
+
 export default {
+  components: {
+    PageBack
+  },
   data() {
     const isNumber = (rule, value, callback) => {
       if (!/^\d+(\.\d+)?$/.test(value)) {
@@ -219,7 +225,8 @@ export default {
 
 <style lang="scss" scoped>
   .edit-container {
-    padding: 20px;
+    padding: 40px;
+    position: relative;
   }
   .el-textarea {
     width: 60%;

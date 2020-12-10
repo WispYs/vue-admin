@@ -48,7 +48,7 @@
     <div class="filter-bar__item">
       <el-button type="primary" size="medium" @click="search()">搜索</el-button>
       <el-button type="primary" size="medium" @click="reset()">重置</el-button>
-      <el-button type="primary" size="medium" @click="$router.push({name: 'Dashboard'})">新增项目</el-button>
+      <el-button type="primary" size="medium" @click="$router.push({name: 'Dashboard'})">新建项目</el-button>
     </div>
 
   </div>

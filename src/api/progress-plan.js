@@ -17,7 +17,7 @@ export function fetchProgressPlanDetail(id) {
     method: 'get'
   })
 }
-// 新增
+// 新建
 export function addProgressPlan(data) {
   return request({
     url: `${baseUrl}/resourceload`,

@@ -1,5 +1,6 @@
 <template>
   <div class="detail-container">
+    <page-back />
     <el-row :gutter="24" class="detail-item">
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
         <label>项目L号：</label>
@@ -94,11 +95,15 @@
 </template>
 
 <script>
+import PageBack from '@/components/PageBack'
 import { formatYYMMDD, formatRisk } from '@/utils/format'
 import { fetchWorkshopProDetail } from '@/api/workshop'
 import ProStatusOption from '@/utils/project-status'
 
 export default {
+  components: {
+    PageBack
+  },
   data() {
     return {
       ProStatusOption,
@@ -159,6 +164,7 @@ export default {
 <style lang="scss" scoped>
   .detail-container {
     padding: 40px;
+    position: relative;
     .detail-item {
       margin-bottom: 22px;
       label {

@@ -1,5 +1,6 @@
 <template>
   <div class="create-container">
+    <page-back />
     <el-form ref="projectForm" :model="projectForm" :rules="rules" label-width="100px" class="demo-projectForm">
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
@@ -57,7 +58,7 @@
         </el-col>
       </el-row>
       <el-form-item>
-        <el-button v-loading="loading" type="primary" @click="submitForm('projectForm')">新增项目</el-button>
+        <el-button v-loading="loading" type="primary" @click="submitForm('projectForm')">新建项目</el-button>
         <el-button @click="resetForm('projectForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -65,10 +66,14 @@
 </template>
 
 <script>
+import PageBack from '@/components/PageBack'
 import { addWorkingDays } from '@/api/working-days'
 import { workTimeD2H } from '@/utils/format'
 
 export default {
+  components: {
+    PageBack
+  },
   data() {
     const isNumber = (rule, value, callback) => {
       if (!/^\d+(\.\d+)?$/.test(value)) {
@@ -151,7 +156,8 @@ export default {
 
 <style lang="scss" scoped>
   .create-container {
-    padding: 20px;
+    padding: 40px;
+    position: relative;
     .progress-slider {
       display: inline-block;
       width: calc(100% - 60px);

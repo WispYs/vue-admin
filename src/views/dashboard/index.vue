@@ -2,7 +2,7 @@
   <div class="dashboard-container">
     <!-- <el-row :gutter="32" style="margin-bottom: 12px">
       <el-col :xs="24" :sm="12" :md="6" :lg="6">
-        <el-select v-model="filterYear" placeholder="请选择">
+        <el-select v-model="filterYear" placeholder="请选择" @change="selectYear">
           <el-option
             v-for="item in years"
             :key="item.value"
@@ -147,8 +147,8 @@ export default {
       years: [
         { value: '2020', label: '2020年' },
         { value: '2019', label: '2019年' },
-        { value: '2018', label: '2020年' },
-        { value: '2017', label: '2016年' },
+        { value: '2018', label: '2018年' },
+        { value: '2017', label: '2017年' },
         { value: '2016', label: '2016年' }
       ],
       filterYear: '2020',
@@ -279,6 +279,11 @@ export default {
           }
         })
       })
+    },
+
+    // 改变筛选年份
+    selectYear(val) {
+      console.log(val)
     }
   }
 }

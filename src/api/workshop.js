@@ -17,7 +17,7 @@ export function fetchWorkshopProDetail(id) {
     method: 'get'
   })
 }
-// 新增
+// 新建
 export function addWorkshopPro(data) {
   return request({
     url: `${baseUrl}/workshopproject`,

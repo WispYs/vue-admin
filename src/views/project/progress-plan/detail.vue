@@ -1,5 +1,6 @@
 <template>
   <div class="detail-container">
+    <page-back />
     <el-form ref="projectForm" :model="projectForm" label-width="100px" class="demo-projectForm">
       <el-row :gutter="24" class="detail-item">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
@@ -42,11 +43,14 @@
 </template>
 
 <script>
+import PageBack from '@/components/PageBack'
 import { formatYYMMDD, formatProjectStatus, formatProgress } from '@/utils/format'
-
 import { fetchProgressPlanDetail } from '@/api/progress-plan'
 
 export default {
+  components: {
+    PageBack
+  },
   data() {
     return {
       projectForm: {
@@ -82,6 +86,7 @@ export default {
 <style lang="scss" scoped>
   .detail-container {
     padding: 40px;
+    position: relative;
     .detail-item {
       margin-bottom: 22px;
       label {

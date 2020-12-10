@@ -1,5 +1,6 @@
 <template>
   <div class="edit-container">
+    <page-back />
     <el-form ref="projectForm" :model="projectForm" :rules="rules" label-width="100px" class="demo-projectForm">
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
@@ -135,9 +136,12 @@
 
 <script>
 import { workTimeD2H, workTimeH2D } from '@/utils/format'
-
+import PageBack from '@/components/PageBack'
 import { fetchImplPlanProDetail, editImplPlanPro } from '@/api/implplan'
 export default {
+  components: {
+    PageBack
+  },
   data() {
     const isNumber = (rule, value, callback) => {
       if (!/^\d+(\.\d+)?$/.test(value)) {
@@ -281,7 +285,8 @@ export default {
 
 <style lang="scss" scoped>
   .edit-container {
-    padding: 20px;
+    padding: 40px;
+    position: relative;
   }
   .el-textarea {
     width: 60%;

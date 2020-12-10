@@ -17,7 +17,7 @@ export function fetchImplPlanProDetail(id) {
     method: 'get'
   })
 }
-// 新增
+// 新建
 export function addImplPlanPro(data) {
   return request({
     url: `${baseUrl}/projectimplplan`,

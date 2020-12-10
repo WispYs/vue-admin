@@ -1,5 +1,6 @@
 <template>
   <div class="edit-container">
+    <page-back />
     <el-form ref="projectForm" :model="projectForm" :rules="rules" label-width="100px" class="demo-projectForm">
       <el-row :gutter="24">
         <el-col :xs="24" :sm="18" :md="8" :lg="8">
@@ -52,9 +53,14 @@
 </template>
 
 <script>
+import PageBack from '@/components/PageBack'
 import { formatProgress } from '@/utils/format'
 import { fetchProgressPlanDetail, editProgressPlan, fetchPlanProName } from '@/api/progress-plan'
+
 export default {
+  components: {
+    PageBack
+  },
   data() {
     return {
       loading: false,
@@ -143,7 +149,8 @@ export default {
 
 <style lang="scss" scoped>
   .edit-container {
-    padding: 20px;
+    padding: 40px;
+    position: relative;
     .progress-slider {
       display: inline-block;
       width: calc(100% - 60px);

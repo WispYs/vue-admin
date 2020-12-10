@@ -17,7 +17,7 @@ export function fetchCompleteProDetail(id) {
     method: 'get'
   })
 }
-// 新增
+// 新建
 export function addCompletePro(data) {
   return request({
     url: `${baseUrl}/completeproject`,

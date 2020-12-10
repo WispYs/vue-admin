@@ -17,7 +17,7 @@ export function fetchShipmentCompleteDetail(id) {
     method: 'get'
   })
 }
-// 新增
+// 新建
 export function addShipmentComplete(data) {
   return request({
     url: `${baseUrl}/shipmentcomplete`,

@@ -5,7 +5,7 @@
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="项目L号" prop="proNo">
-            <el-input v-model="projectForm.proNo" />
+            <el-input v-model.trim="projectForm.proNo" />
           </el-form-item>
         </el-col>
         <el-col :xs="18" :sm="8" :md="8" :lg="6">

@@ -1,3 +1,8 @@
+export function formatTimestamp(date) {
+  const dateTime = date || ''
+  return new Date(dateTime).getTime()
+}
+
 export function formatProjectStatus(type) {
   switch (Number(type)) {
     case 0: return '未开始'

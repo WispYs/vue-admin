@@ -127,6 +127,17 @@ export default {
         callback()
       }
     }
+    // 比较计划工时和剩余工时
+    const compareNumber = (rule, value, callback) => {
+      const setDay = this.projectForm.setDay
+      const setRemaining = this.projectForm.setRemaining
+      if (setRemaining > setDay) {
+        this.projectForm.setRemaining = this.projectForm.setDay
+        // callback(new Error('剩余工时不能大于计划工时'))
+      } else {
+        callback()
+      }
+    }
     const validateNumber = (name) => {
       return [
         { required: true, message: `${name}不能为空，若没有请填0` },
@@ -173,11 +184,13 @@ export default {
         ],
         setDay: [
           { required: true, message: '请输入计划工时', trigger: 'blur' },
-          { validator: isNumber, trigger: 'blur' }
+          { validator: isNumber, trigger: 'blur' },
+          { validator: compareNumber, trigger: 'blur' }
         ],
         setRemaining: [
           { required: true, message: '请输入剩余工时', trigger: 'blur' },
-          { validator: isNumber, trigger: 'blur' }
+          { validator: isNumber, trigger: 'blur' },
+          { validator: compareNumber, trigger: 'blur' }
         ],
         proRisk: [
           { required: true, message: '请选择风险等级', trigger: 'blur' }

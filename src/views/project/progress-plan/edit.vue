@@ -62,6 +62,19 @@ export default {
     PageBack
   },
   data() {
+    // 比较计划进度和完成进度
+    const compareNumber = (rule, value, callback) => {
+      const plan = this.projectForm.plan
+      const completion = this.projectForm.completion
+      // if (!plan) {
+      //   callback(new Error('请先选择计划进度'))
+      // }
+      if (completion > plan) {
+        this.projectForm.completion = this.projectForm.plan
+      } else {
+        callback()
+      }
+    }
     return {
       loading: false,
       proNameOption: [
@@ -88,10 +101,12 @@ export default {
           { required: true, message: '请选择项目状态', trigger: 'blur' }
         ],
         plan: [
-          { required: true, message: '请选择计划进度', trigger: 'blur' }
+          { required: true, message: '请选择计划进度', trigger: 'blur' },
+          { validator: compareNumber, trigger: 'change' }
         ],
         completion: [
-          { required: true, message: '请选择完成进度', trigger: 'blur' }
+          { required: true, message: '请选择完成进度', trigger: 'blur' },
+          { validator: compareNumber, trigger: 'change' }
         ],
         content: [
           { required: true, message: '请填写工作内容', trigger: 'blur' }

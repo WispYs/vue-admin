@@ -199,6 +199,9 @@ export default {
         proName: [
           { required: true, message: '请填写项目名称', trigger: 'blur' }
         ],
+        deliverTime: [
+          { required: true, message: '请选择原计划发货时间', trigger: 'blur' }
+        ],
         cabinetNum: validateNumber('柜体数量'),
         boxNum: validateNumber('箱体数量'),
         standardCabinet: [
@@ -263,6 +266,9 @@ export default {
             this.$message.success(response.message)
             this.loading = false
             this.$router.push({ name: 'Implplan' })
+          }).catch(error => {
+            console.log(error)
+            this.loading = false
           })
         } else {
           this.$message.error('请填写完整信息')

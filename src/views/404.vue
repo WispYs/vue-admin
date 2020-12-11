@@ -10,7 +10,7 @@
       <div class="bullshit">
         <div class="bullshit__oops">页面找不到啦</div>
         <div class="bullshit__info">请访问正确的网页地址，或者点击下方按钮跳转首页</div>
-        <a href="" class="bullshit__return-home">返回首页</a>
+        <a href="javascript:void(0)" class="bullshit__return-home" @click="$router.push({name: 'Dashboard'})">返回首页</a>
       </div>
     </div>
   </div>

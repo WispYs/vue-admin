@@ -85,7 +85,7 @@
           </el-form-item>
         </el-col>
         <el-col :xs="18" :sm="12" :md="8" :lg="6">
-          <el-form-item label="计划发货时间" prop="deliverTime">
+          <el-form-item label="计划发货时间" prop="deliverTime" label-width="110px">
             <el-date-picker v-model="projectForm.deliverTime" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="选择日期" style="width: 100%;" />
           </el-form-item>
         </el-col>
@@ -158,6 +158,9 @@ export default {
         proName: [
           { required: true, message: '请填写项目名称', trigger: 'blur' }
         ],
+        deliverTime: [
+          { required: true, message: '请选择原计划发货时间', trigger: 'blur' }
+        ],
         cabinetNum: validateNumber('柜体数量'),
         boxNum: validateNumber('箱体数量'),
         standardCabinet: [
@@ -209,6 +212,9 @@ export default {
             this.$message.success(response.message)
             this.loading = false
             this.$router.push({ name: 'Weekplan' })
+          }).catch(error => {
+            console.log(error)
+            this.loading = false
           })
         } else {
           this.$message.error('请填写完整信息')

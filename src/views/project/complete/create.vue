@@ -195,6 +195,9 @@ export default {
             this.$message.success(response.message)
             this.loading = false
             this.$router.push({ name: 'Complete' })
+          }).catch(error => {
+            console.log(error)
+            this.loading = false
           })
         } else {
           this.$message.error('请填写完整信息')

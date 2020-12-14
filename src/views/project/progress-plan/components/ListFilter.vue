@@ -1,8 +1,14 @@
 <template>
   <div class="filter-bar">
     <div class="filter-bar__item">
-      <label>项目名称：</label>
-      <el-input v-model="proName" class="filter-item" style="width: 240px" placeholder="请输入项目名称" />
+      <label>项目L号：</label>
+      <el-input v-model="proNo" class="filter-item" style="width: 240px" placeholder="请输入项目L号" />
+    </div>
+    <div class="filter-bar__item">
+      <label>项目状态：</label>
+      <el-select v-model="proStatus" placeholder="请选择项目状态">
+        <el-option v-for="(item, index) in ProStatusOption.ProjectStatus" :key="index" :label="item.name" :value="item.value" />
+      </el-select>
     </div>
     <div class="filter-bar__item">
       <el-button type="primary" size="medium" @click="search()">搜索</el-button>
@@ -14,6 +20,8 @@
 </template>
 
 <script>
+import ProStatusOption from '@/utils/project-status'
+
 export default {
   props: {
     downloadLoading: {
@@ -23,7 +31,9 @@ export default {
   },
   data() {
     return {
-      proName: '',
+      ProStatusOption,
+      proNo: '',
+      proStatus: '',
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -58,11 +68,13 @@ export default {
   },
   methods: {
     __initFilter() {
-      this.proName = ''
+      this.proNo = ''
+      this.proStatus = ''
     },
     __getFilter() {
       return {
-        proName: this.proName
+        proNo: this.proNo,
+        proStatus: this.proStatus
       }
     },
     search() {

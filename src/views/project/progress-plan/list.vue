@@ -5,13 +5,14 @@
 <script>
 import ListPage from './components/ListPage'
 import { fetchProgressPlan } from '@/api/progress-plan'
+import mockData from '@/mock/mock-data'
 
 export default {
   components: { ListPage },
   data() {
     return {
       listLoading: true,
-      list: [],
+      list: mockData.progressList,
       total: 0
     }
   },
@@ -19,8 +20,9 @@ export default {
     __fetchlist(page, size, filter) {
       this.listLoading = true
       fetchProgressPlan(page, size, filter).then(response => {
-        this.list = response.data.rows
-        this.total = response.data.total
+        // this.list = response.data.rows
+        this.list = mockData.progressList
+        this.total = 3
         this.listLoading = false
       })
     }

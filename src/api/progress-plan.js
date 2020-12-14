@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import baseUrl from './url.js'
 
-// 资源&负荷进度计划
+// 项目进度预算
 // 列表
 export function fetchProgressPlan(page, size, filter) {
   return request({

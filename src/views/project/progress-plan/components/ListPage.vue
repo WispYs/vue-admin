@@ -6,6 +6,11 @@
       @reset-click="queryData"
       @export-click="exportExcel"
     />
+    <div class="list-tip">
+      <el-tag class="list-tip__item" size="small" type="warning">超预算</el-tag>
+      <el-tag class="list-tip__item" size="small" type="danger">超成本</el-tag>
+      <el-tag class="list-tip__item" size="small" type="success">正常</el-tag>
+    </div>
     <list-table :list="list" :list-loading="listLoading" @delete-click="delClick" />
     <pagination
       v-show="total>0"
@@ -137,6 +142,12 @@ export default {
 <style lang="scss">
   .list-container {
     padding: 20px;
+    .list-tip {
+      margin-bottom: 10px;
+      &__item {
+        margin-right: 8px;
+      }
+    }
   }
   .status-tab {
     margin: 4px;

@@ -6,13 +6,18 @@
     element-loading-text="Loading"
     border
     fit
-    highlight-current-row
     :cell-style="cellStyle"
     header-cell-class-name="pre-line"
+    :row-class-name="tableRowClassName"
   >
     <el-table-column align="center" label="序号" width="50">
       <template slot-scope="scope">
         {{ scope.$index+1 }}
+      </template>
+    </el-table-column>
+    <el-table-column label="项目L号" width="100" prop="proNo">
+      <template slot-scope="scope">
+        {{ scope.row.proNo }}
       </template>
     </el-table-column>
     <el-table-column label="项目名称" prop="proName">
@@ -20,36 +25,31 @@
         {{ scope.row.proName }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="计划创建日期" width="130" prop="currentTime" sortable>
+    <el-table-column align="center" label="成本工时（人/天）" width="150" prop="worktime1">
       <template slot-scope="scope">
-        {{ formatDate(scope.row.currentTime) }}
+        {{ scope.row.worktime1 }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="计划进度" width="120" prop="plan">
+    <el-table-column align="center" label="预算工时（人/天）" width="150" prop="worktime2">
       <template slot-scope="scope">
-        {{ formatProgress(scope.row.plan) }}%
+        {{ scope.row.worktime2 }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="完成进度" width="120" prop="completion">
+    <el-table-column align="center" label="实际工时（人/天）" width="150" prop="worktime3">
       <template slot-scope="scope">
-        {{ formatProgress(scope.row.completion) }}%
+        {{ scope.row.worktime3 }}
+        <span v-if="scope.row.worktime3 > scope.row.worktime2 && scope.row.worktime3 < scope.row.worktime1" class="time-warning--orange">（↑{{ scope.row.worktime3 - scope.row.worktime2 }}）</span>
+        <span v-else-if="scope.row.worktime3 > scope.row.worktime1" class="time-warning--red">（↑{{ scope.row.worktime3 - scope.row.worktime1 }}）</span>
       </template>
     </el-table-column>
-    <el-table-column align="center" label="工作内容" prop="content">
+    <el-table-column align="center" label="完成率" width="120" prop="progress">
       <template slot-scope="scope">
-        {{ scope.row.content }}
+        {{ formatProgress(scope.row.progress) }}%
       </template>
     </el-table-column>
     <el-table-column align="center" label="项目状态" width="120" prop="status" sortable>
       <template slot-scope="scope">
         {{ formatStatus(scope.row.status) }}
-      </template>
-    </el-table-column>
-    <el-table-column label="操作" width="80" align="center">
-      <template slot-scope="scope">
-        <el-button type="text" size="small" @click="$router.push({name: 'ProgressPlanDetail', params: {id: scope.row.id}})">查看</el-button>
-        <!-- <el-button type="text" size="small" @click="$router.push({name: 'ProgressPlanEdit', params: {id: scope.row.id}})">编辑</el-button>
-        <el-button class="delete" type="text" size="small" @click="delClick(scope.row.id)">删除</el-button> -->
       </template>
     </el-table-column>
   </el-table>
@@ -73,6 +73,19 @@ export default {
     }
   },
   methods: {
+    tableRowClassName({ row, rowIndex }) {
+      const worktime1 = Number(this.list[rowIndex].worktime1)
+      const worktime2 = Number(this.list[rowIndex].worktime2)
+      const worktime3 = Number(this.list[rowIndex].worktime3)
+      if (worktime3 < worktime2) {
+        return 'green-row'
+      } else if (worktime3 >= worktime2 && worktime3 < worktime1) {
+        return 'orange-row'
+      } else if (worktime3 > worktime1) {
+        return 'red-row'
+      }
+      return ''
+    },
     delClick(id) {
       this.$emit('delete-click', id)
     },
@@ -96,8 +109,29 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-  .el-table .pre-line {
-    background: #f5f7fa;
+<style lang="scss">
+  .el-table {
+    .pre-line {
+      background: #f5f7fa;
+    }
+    .time-warning--red {
+      font-size: 12px;
+      color: #f56c6c;
+    }
+    .time-warning--orange {
+      font-size: 12px;
+      color: #e6a23c;
+    }
+    .orange-row {
+      background: oldlace;
+    }
+
+    .red-row {
+      background: #fef0f0;
+    }
+
+    .green-row {
+      background: #f0f9eb;
+    }
   }
 </style>

@@ -24,17 +24,17 @@
         {{ scope.row.proName }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="柜体数量" width="120" prop="cabinetNum" sortable>
+    <el-table-column label="项目类型" prop="proType" width="150">
       <template slot-scope="scope">
-        {{ scope.row.cabinetNum }}
+        {{ scope.row.proType }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="生产负责人" width="120" prop="productionMan" sortable>
+    <el-table-column align="center" label="成套班组" width="150" prop="productionMan" sortable>
       <template slot-scope="scope">
         {{ scope.row.productionMan }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="成本工时（天）" width="120" prop="costDay">
+    <!-- <el-table-column align="center" label="成本工时（天）" width="120" prop="costDay">
       <template slot-scope="scope">
         {{ formatTime(scope.row.costDay) }}
       </template>
@@ -43,17 +43,17 @@
       <template slot-scope="scope">
         {{ formatTime(scope.row.targetDay) }}
       </template>
-    </el-table-column>
-    <el-table-column align="center" label="实际汇总工时（天）" width="150" prop="actualDay">
+    </el-table-column> -->
+    <el-table-column align="center" label="上周总工时（人/天）" width="200" prop="actualDay">
       <template slot-scope="scope">
         {{ formatTime(scope.row.actualDay) }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="工时完成率" width="130" prop="completionRate">
+    <!-- <el-table-column align="center" label="工时完成率" width="130" prop="completionRate">
       <template slot-scope="scope">
         {{ formatProgress(scope.row.completionRate) }}%
       </template>
-    </el-table-column>
+    </el-table-column> -->
     <el-table-column label="操作" width="80" align="center">
       <template slot-scope="scope">
         <el-button type="text" size="small" @click="$router.push({name: 'WorkingDaysDetail', params: {id: scope.row.id}})">查看</el-button>

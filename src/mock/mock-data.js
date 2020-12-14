@@ -182,5 +182,33 @@ export default {
     { 'title': '苏州XXXXX电动公司项目', 'progress': 75 },
     { 'title': '杭州XXXX院公司项目', 'progress': 50 },
     { 'title': '南京XXXX有限公司项目', 'progress': 25 }
+  ],
+
+  progressList: [
+    {
+      proNo: 'L20356',
+      proName: '2020*****30期（F04A159）',
+      worktime1: 96,
+      worktime2: 72,
+      worktime3: 75,
+      progress: 1,
+      status: 1
+    }, {
+      proNo: 'L20436',
+      proName: '****-山东齐智',
+      worktime1: 42,
+      worktime2: 40,
+      worktime3: 50,
+      progress: 0.80,
+      status: 2
+    }, {
+      proNo: 'L20498',
+      proName: '八耳3000种猪场配怀舍电控箱',
+      worktime1: 120,
+      worktime2: 100,
+      worktime3: 75,
+      progress: 0.75,
+      status: 1
+    }
   ]
 }

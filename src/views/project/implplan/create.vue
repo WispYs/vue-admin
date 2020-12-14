@@ -62,7 +62,7 @@
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="成本工时" label-width="110px" prop="setPlan">
             <el-input v-model="projectForm.setPlan">
-              <template slot="append">天</template>
+              <template slot="append">人/天</template>
             </el-input>
           </el-form-item>
         </el-col>
@@ -85,10 +85,15 @@
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="项目状态" prop="proStatus">
-            <el-select v-model="projectForm.proStatus" placeholder="请选择项目类型">
-              <el-option label="控制柜" value="1" />
-              <el-option label="控制箱" value="2" />
-              <el-option label="工程" value="3" />
+            <el-select v-model="projectForm.proStatus" placeholder="请选择项目状态">
+              <el-option v-for="(item, index) in ProStatusOption.ProjectStatus" :key="index" :label="item.name" :value="item.value" />
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
+          <el-form-item label="项目风险等级" prop="proRisk">
+            <el-select v-model="projectForm.proRisk" placeholder="请选择风险等级">
+              <el-option v-for="(item, index) in ProStatusOption.ProjectRisk" :key="index" :label="item.name" :value="item.value" />
             </el-select>
           </el-form-item>
         </el-col>
@@ -124,9 +129,16 @@
             <el-date-picker v-model="projectForm.endTime" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="选择日期" style="width: 100%;" />
           </el-form-item>
         </el-col>
+      </el-row>
+      <el-row :gutter="24">
         <el-col :xs="24" :sm="12" :md="12" :lg="8">
           <el-form-item label="原计划发货时间" label-width="140px" prop="deliverTime">
             <el-date-picker v-model="projectForm.deliverTime" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="选择日期" style="width: 100%;" />
+          </el-form-item>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="8">
+          <el-form-item label="实际发货时间" label-width="140px" prop="deliverdDate">
+            <el-date-picker v-model="projectForm.deliverdDate" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="选择日期" style="width: 100%;" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -161,6 +173,9 @@
       </el-form-item>
       <el-form-item label="缺料反馈" prop="materialFeedback">
         <el-input v-model="projectForm.materialFeedback" type="textarea" :autosize="{ minRows: 3, maxRows: 6}" />
+      </el-form-item>
+      <el-form-item label="备注" prop="remark">
+        <el-input v-model="projectForm.remark" type="textarea" :autosize="{ minRows: 3, maxRows: 6}" />
       </el-form-item>
       <el-form-item>
         <el-button v-loading="loading" type="primary" @click="submitForm('projectForm')">新建项目</el-button>
@@ -221,10 +236,12 @@ export default {
         standardCabinet: '',
         setPlan: '',
         setRemaining: '',
+        proStatus: '',
+        proRisk: '',
+        feedbackPickup: 0,
         submissionDate: '',
         pickupTime: '',
         arrivalTime: '',
-        feedbackPickup: 0,
         startTime: '',
         endTime: '',
         deliverTime: '',

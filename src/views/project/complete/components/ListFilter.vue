@@ -8,9 +8,16 @@
       <label>项目名称：</label>
       <el-input v-model="proName" class="filter-item" style="width: 240px" placeholder="请输入项目名称" />
     </div>
-    <div class="filter-bar__item">
+    <!-- <div class="filter-bar__item">
       <label>项目干系人：</label>
       <el-input v-model="setLeader" class="filter-item" style="width: 240px" placeholder="请输入项目干系人" />
+    </div> -->
+    <div class="filter-bar__item">
+      <label>发货状态：</label>
+      <el-select v-model="proStatus" placeholder="请选择发货状态">
+        <el-option label="未发货" value="0" />
+        <el-option label="已发货" value="1" />
+      </el-select>
     </div>
     <!-- <div class="filter-bar__item">
       <label>计划发货时间：</label>

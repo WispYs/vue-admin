@@ -14,6 +14,18 @@ export default {
       value: 3
     }
   ],
+  ProjectRisk: [
+    {
+      name: '有风险',
+      value: 0
+    }, {
+      name: '已延误',
+      value: 1
+    }, {
+      name: '正常',
+      value: 2
+    }
+  ],
   DesignStatus: [
     {
       name: '图纸设计',

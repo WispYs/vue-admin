@@ -16,7 +16,7 @@
       <el-button type="primary" size="medium" @click="search()">搜索</el-button>
       <el-button type="primary" size="medium" @click="reset()">重置</el-button>
       <!--<el-button type="primary" size="medium" :loading="downloadLoading" @click="handleExport()">导出数据</el-button> -->
-      <el-button type="primary" size="medium" @click="$router.push({name: 'WorkingDaysCreate'})">新建项目</el-button>
+      <!-- <el-button type="primary" size="medium" @click="$router.push({name: 'WorkingDaysCreate'})">新建项目</el-button> -->
     </div>
   </div>
 </template>
@@ -32,8 +32,7 @@ export default {
   data() {
     return {
       proNo: '',
-      proName: '',
-      productionMan: ''
+      proName: ''
     }
   },
   mounted() {
@@ -43,14 +42,12 @@ export default {
     __initFilter() {
       this.proNo = ''
       this.proName = ''
-      this.productionMan = ''
     },
 
     __getFilter() {
       return {
         proNo: this.proNo,
-        proName: this.proName,
-        productionMan: this.productionMan
+        proName: this.proName
       }
     },
     search() {

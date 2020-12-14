@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import baseUrl from './url.js'
 
-// 项目实施计划表
+// 成套生产计划表
 // 列表
 export function fetchImplPlanPro(page, size, filter) {
   return request({

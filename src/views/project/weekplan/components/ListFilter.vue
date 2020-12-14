@@ -12,7 +12,7 @@
       <label>成套班组：</label>
       <el-input v-model="setLeader" class="filter-item" style="width: 200px" placeholder="请输入成套班组" />
     </div>
-    <div class="filter-bar__item">
+    <!-- <div class="filter-bar__item">
       <label>计划发货时间：</label>
       <el-date-picker
         v-model="deliverTimeArr"
@@ -26,12 +26,12 @@
         :picker-options="pickerOptions"
         value-format="yyyy-MM-dd HH:mm:ss"
       />
-    </div>
+    </div> -->
     <div class="filter-bar__item">
       <el-button type="primary" size="medium" @click="search()">搜索</el-button>
       <el-button type="primary" size="medium" @click="reset()">重置</el-button>
       <!--<el-button type="primary" size="medium" :loading="downloadLoading" @click="handleExport()">导出数据</el-button> -->
-      <el-button type="primary" size="medium" @click="$router.push({name: 'WeekplanCreate'})">新建项目</el-button>
+      <!-- <el-button type="primary" size="medium" @click="$router.push({name: 'WeekplanCreate'})">新建项目</el-button> -->
     </div>
   </div>
 </template>
@@ -49,9 +49,9 @@ export default {
       proNo: '',
       proName: '',
       setLeader: '',
-      deliverTimeArr: '',
-      deliverTime: '',
-      deliverTimeEnd: '',
+      // deliverTimeArr: '',
+      // deliverTime: '',
+      // deliverTimeEnd: '',
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -89,18 +89,18 @@ export default {
       this.proNo = ''
       this.proName = ''
       this.setLeader = ''
-      this.deliverTimeArr = ''
-      this.deliverTime = ''
-      this.deliverTimeEnd = ''
+      // this.deliverTimeArr = ''
+      // this.deliverTime = ''
+      // this.deliverTimeEnd = ''
     },
 
     __getFilter() {
       return {
         proNo: this.proNo,
         proName: this.proName,
-        setLeader: this.setLeader,
-        deliverTime: this.deliverTimeArr[0] ? this.deliverTimeArr[0] : '',
-        deliverTimeEnd: this.deliverTimeArr[0] ? this.deliverTimeArr[1] : ''
+        setLeader: this.setLeader
+        // deliverTime: this.deliverTimeArr[0] ? this.deliverTimeArr[0] : '',
+        // deliverTimeEnd: this.deliverTimeArr[0] ? this.deliverTimeArr[1] : ''
       }
     },
     search() {

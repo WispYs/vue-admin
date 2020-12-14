@@ -1,4 +1,19 @@
 export default {
+  ProjectStatus: [
+    {
+      name: '未开始',
+      value: 0
+    }, {
+      name: '进行中',
+      value: 1
+    }, {
+      name: '已完成',
+      value: 2
+    }, {
+      name: '已搁置',
+      value: 3
+    }
+  ],
   DesignStatus: [
     {
       name: '图纸设计',

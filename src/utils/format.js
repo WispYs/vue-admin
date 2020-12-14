@@ -8,6 +8,7 @@ export function formatProjectStatus(type) {
     case 0: return '未开始'
     case 1: return '进行中'
     case 2: return '已完成'
+    case 3: return '已搁置'
     default: return ''
   }
 }

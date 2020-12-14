@@ -90,7 +90,7 @@
       <el-tag
         v-for="(item, index) in ProStatusOption.DesignStatus"
         :key="index"
-        :type="projectForm[item.fields] ? 'success' : 'info'"
+        :type="projectForm[item.fields] | statusFilter"
         class="status-tab"
         size="small"
       >{{ item.name }}</el-tag>
@@ -100,7 +100,7 @@
       <el-tag
         v-for="(item, index) in ProStatusOption.ProduceStatus"
         :key="index"
-        :type="projectForm[item.fields] ? 'success' : 'info'"
+        :type="projectForm[item.fields] | statusFilter"
         class="status-tab"
         size="small"
       >{{ item.name }}</el-tag>
@@ -125,6 +125,15 @@ import ProStatusOption from '@/utils/project-status'
 export default {
   components: {
     PageBack
+  },
+  filters: {
+    statusFilter(status) {
+      if (status === '1') {
+        return 'success'
+      } else if (status === '0') {
+        return 'info'
+      }
+    }
   },
   data() {
     return {
@@ -169,7 +178,6 @@ export default {
     __getInfo() {
       const proNo = this.$route.params.id
       fetchImplPlanProDetail(proNo).then(response => {
-        console.log(response)
         this.projectForm = Object.assign(response.data, {
           setPlan: workTimeH2D(response.data.setPlan),
           setRemaining: workTimeH2D(response.data.setRemaining),
@@ -178,21 +186,9 @@ export default {
           arrivalTime: formatYYMMDD(response.data.arrivalTime),
           startTime: formatYYMMDD(response.data.startTime),
           endTime: formatYYMMDD(response.data.endTime),
-          deliverTime: formatYYMMDD(response.data.deliverTime),
-          drawingDesign: this.formatStr2Boolean(response.data.drawingDesign),
-          cabinetOrder: this.formatStr2Boolean(response.data.cabinetOrder),
-          materialMain: this.formatStr2Boolean(response.data.materialMain),
-          informationSubmit: this.formatStr2Boolean(response.data.informationSubmit),
-          materialAuxiliary: this.formatStr2Boolean(response.data.materialAuxiliary),
-          pickingLayout: this.formatStr2Boolean(response.data.pickingLayout),
-          wiringSet: this.formatStr2Boolean(response.data.wiringSet),
-          powerTest: this.formatStr2Boolean(response.data.powerTest),
-          packDelever: this.formatStr2Boolean(response.data.packDelever)
+          deliverTime: formatYYMMDD(response.data.deliverTime)
         })
       })
-    },
-    formatStr2Boolean(str) {
-      return str === '1'
     }
   }
 }

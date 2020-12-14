@@ -60,17 +60,36 @@
       </el-row>
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <el-form-item label="成套计划工时" label-width="110px" prop="setPlan">
+          <el-form-item label="成本工时" label-width="110px" prop="setPlan">
             <el-input v-model="projectForm.setPlan">
               <template slot="append">天</template>
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
+          <el-form-item label="成套计划工时" label-width="110px" prop="setPlan">
+            <el-input v-model="projectForm.setPlan">
+              <template slot="append">人/天</template>
+            </el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="成套剩余工时" label-width="110px" prop="setRemaining">
             <el-input v-model="projectForm.setRemaining">
-              <template slot="append">天</template>
+              <template slot="append">人/天</template>
             </el-input>
+          </el-form-item>
+        </el-col>
+
+      </el-row>
+      <el-row :gutter="24">
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
+          <el-form-item label="项目状态" prop="proStatus">
+            <el-select v-model="projectForm.proStatus" placeholder="请选择项目类型">
+              <el-option label="控制柜" value="1" />
+              <el-option label="控制箱" value="2" />
+              <el-option label="工程" value="3" />
+            </el-select>
           </el-form-item>
         </el-col>
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
@@ -112,17 +131,30 @@
         </el-col>
       </el-row>
       <el-form-item label="设计阶段：">
-        <el-checkbox v-model="projectForm.drawingDesign" label="图纸设计" name="drawingDesign" :true-label="1" :false-label="0" />
-        <el-checkbox v-model="projectForm.cabinetOrder" label="柜体订货" name="cabinetOrder" :true-label="1" :false-label="0" />
-        <el-checkbox v-model="projectForm.materialMain" label="主材订货" name="materialMain" :true-label="1" :false-label="0" />
-        <el-checkbox v-model="projectForm.informationSubmit" label="辅材订货" name="informationSubmit" :true-label="1" :false-label="0" />
-        <el-checkbox v-model="projectForm.materialAuxiliary" label="资料提交" name="materialAuxiliary" :true-label="1" :false-label="0" />
+        <el-checkbox
+          v-for="(item, index) in ProStatusOption.DesignStatus"
+          :key="index"
+          v-model="projectForm[item.fields]"
+          :label="item.name"
+          :name="item.fields"
+          :true-label="1"
+          :false-label="0"
+        />
+        <!-- <el-checkbox v-model="projectForm.drawingDesign" label="图纸设计" name="drawingDesign" :true-label="1" :false-label="0" /> -->
+        <!-- ... -->
       </el-form-item>
       <el-form-item label="生产阶段：">
-        <el-checkbox v-model="projectForm.pickingLayout" label="领料排版" name="pickingLayout" :true-label="1" :false-label="0" />
-        <el-checkbox v-model="projectForm.wiringSet" label="接线成套" name="wiringSet" :true-label="1" :false-label="0" />
-        <el-checkbox v-model="projectForm.powerTest" label="上电测试" name="powerTest" :true-label="1" :false-label="0" />
-        <el-checkbox v-model="projectForm.packDelever" label="打包待发" name="packDelever" :true-label="1" :false-label="0" />
+        <el-checkbox
+          v-for="(item, index) in ProStatusOption.ProduceStatus"
+          :key="index"
+          v-model="projectForm[item.fields]"
+          :label="item.name"
+          :name="item.fields"
+          :true-label="1"
+          :false-label="0"
+        />
+        <!-- <el-checkbox v-model="projectForm.pickingLayout" label="领料排版" name="pickingLayout" :true-label="1" :false-label="0" /> -->
+        <!-- ... -->
       </el-form-item>
       <el-form-item label="项目问题汇总" prop="problem">
         <el-input v-model="projectForm.problem" type="textarea" :autosize="{ minRows: 3, maxRows: 6}" />
@@ -142,6 +174,7 @@
 import { workTimeD2H } from '@/utils/format'
 import { addImplPlanPro } from '@/api/implplan'
 import PageBack from '@/components/PageBack'
+import ProStatusOption from '@/utils/project-status'
 
 export default {
   components: {
@@ -159,6 +192,7 @@ export default {
     const compareNumber = (rule, value, callback) => {
       const setPlan = this.projectForm.setPlan
       const setRemaining = this.projectForm.setRemaining
+      console.log(setRemaining, setPlan)
       if (setRemaining > setPlan) {
         this.projectForm.setRemaining = this.projectForm.setPlan
         // callback(new Error('剩余工时不能大于计划工时'))
@@ -174,6 +208,7 @@ export default {
     }
     return {
       loading: false,
+      ProStatusOption,
       projectForm: {
         proNo: '',
         proName: '',

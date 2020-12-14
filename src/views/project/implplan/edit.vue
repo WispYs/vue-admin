@@ -108,17 +108,26 @@
         </el-col>
       </el-row>
       <el-form-item label="设计阶段：">
-        <el-checkbox v-model="projectForm.drawingDesign" label="图纸设计" name="drawingDesign" />
-        <el-checkbox v-model="projectForm.cabinetOrder" label="柜体订货" name="cabinetOrder" />
-        <el-checkbox v-model="projectForm.materialMain" label="主材订货" name="materialMain" />
-        <el-checkbox v-model="projectForm.informationSubmit" label="辅材订货" name="informationSubmit" />
-        <el-checkbox v-model="projectForm.materialAuxiliary" label="资料提交" name="materialAuxiliary" />
+        <el-checkbox
+          v-for="(item, index) in ProStatusOption.DesignStatus"
+          :key="index"
+          v-model="projectForm[item.fields]"
+          :label="item.name"
+          :name="item.fields"
+          :true-label="1"
+          :false-label="0"
+        />
       </el-form-item>
       <el-form-item label="生产阶段：">
-        <el-checkbox v-model="projectForm.pickingLayout" label="领料排版" name="pickingLayout" />
-        <el-checkbox v-model="projectForm.wiringSet" label="接线成套" name="wiringSet" />
-        <el-checkbox v-model="projectForm.powerTest" label="上电测试" name="powerTest" />
-        <el-checkbox v-model="projectForm.packDelever" label="打包待发" name="packDelever" />
+        <el-checkbox
+          v-for="(item, index) in ProStatusOption.ProduceStatus"
+          :key="index"
+          v-model="projectForm[item.fields]"
+          :label="item.name"
+          :name="item.fields"
+          :true-label="1"
+          :false-label="0"
+        />
       </el-form-item>
       <el-form-item label="项目问题汇总" prop="problem">
         <el-input v-model="projectForm.problem" type="textarea" :autosize="{ minRows: 3, maxRows: 6}" />
@@ -138,6 +147,8 @@
 import { workTimeD2H, workTimeH2D } from '@/utils/format'
 import PageBack from '@/components/PageBack'
 import { fetchImplPlanProDetail, editImplPlanPro } from '@/api/implplan'
+import ProStatusOption from '@/utils/project-status'
+
 export default {
   components: {
     PageBack
@@ -169,6 +180,7 @@ export default {
     }
     return {
       loading: false,
+      ProStatusOption,
       projectForm: {
         proNo: '',
         proName: '',
@@ -244,15 +256,17 @@ export default {
           setPlan: workTimeH2D(response.data.setPlan),
           setRemaining: workTimeH2D(response.data.setRemaining),
           feedbackPickup: Number(response.data.feedbackPickup),
-          drawingDesign: this.formatStr2Boolean(response.data.drawingDesign),
-          cabinetOrder: this.formatStr2Boolean(response.data.cabinetOrder),
-          materialMain: this.formatStr2Boolean(response.data.materialMain),
-          informationSubmit: this.formatStr2Boolean(response.data.informationSubmit),
-          materialAuxiliary: this.formatStr2Boolean(response.data.materialAuxiliary),
-          pickingLayout: this.formatStr2Boolean(response.data.pickingLayout),
-          wiringSet: this.formatStr2Boolean(response.data.wiringSet),
-          powerTest: this.formatStr2Boolean(response.data.powerTest),
-          packDelever: this.formatStr2Boolean(response.data.packDelever)
+          drawingDesign: Number(response.data.drawingDesign),
+          cabinetOrder: Number(response.data.cabinetOrder),
+          materialMain: Number(response.data.materialMain),
+          informationSubmit: Number(response.data.informationSubmit),
+          materialAuxiliary: Number(response.data.materialAuxiliary),
+          pickingLayout: Number(response.data.pickingLayout),
+          wiringSet: Number(response.data.wiringSet),
+          powerTest: Number(response.data.powerTest),
+          packDelever: Number(response.data.packDelever)
+          // drawingDesign: this.formatStr2Boolean(response.data.drawingDesign),
+          // ...
         })
       })
     },
@@ -263,16 +277,9 @@ export default {
           const proNo = this.$route.params.id
           const formData = Object.assign(this.projectForm, {
             setPlan: workTimeD2H(this.projectForm.setPlan),
-            setRemaining: workTimeD2H(this.projectForm.setRemaining),
-            drawingDesign: this.formatBoolean2Str(this.projectForm.drawingDesign),
-            cabinetOrder: this.formatBoolean2Str(this.projectForm.cabinetOrder),
-            materialMain: this.formatBoolean2Str(this.projectForm.materialMain),
-            informationSubmit: this.formatBoolean2Str(this.projectForm.informationSubmit),
-            materialAuxiliary: this.formatBoolean2Str(this.projectForm.materialAuxiliary),
-            pickingLayout: this.formatBoolean2Str(this.projectForm.pickingLayout),
-            wiringSet: this.formatBoolean2Str(this.projectForm.wiringSet),
-            powerTest: this.formatBoolean2Str(this.projectForm.powerTest),
-            packDelever: this.formatBoolean2Str(this.projectForm.packDelever)
+            setRemaining: workTimeD2H(this.projectForm.setRemaining)
+            // drawingDesign: this.formatBoolean2Str(this.projectForm.drawingDesign),
+            // ...
           })
           editImplPlanPro(proNo, formData).then(response => {
             console.log(response)
@@ -291,13 +298,13 @@ export default {
     },
     resetForm(formName) {
       this.__getInfo()
-    },
-    formatStr2Boolean(str) {
-      return str === '1'
-    },
-    formatBoolean2Str(str) {
-      return str === true ? '1' : '0'
     }
+    // formatStr2Boolean(str) {
+    //   return str === '1'
+    // },
+    // formatBoolean2Str(str) {
+    //   return str === true ? '1' : '0'
+    // }
   }
 }
 </script>

@@ -3,7 +3,7 @@ const progressPlanRouter = {
   name: 'ProgressPlan',
   redirect: '/project/progress-plan/list',
   component: () => import('@/views/project/progress-plan/index'),
-  meta: { title: '项目进度预算' },
+  meta: { title: '项目人工核算' },
   children: [
     {
       path: 'list',

@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import baseUrl from './url.js'
 
-// 项目进度预算
+// 项目人工核算
 // 列表
 export function fetchProgressPlan(page, size, filter) {
   return request({

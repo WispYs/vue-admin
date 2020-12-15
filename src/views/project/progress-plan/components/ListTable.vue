@@ -25,6 +25,11 @@
         {{ scope.row.proName }}
       </template>
     </el-table-column>
+    <el-table-column align="center" label="折算标准柜" width="150" prop="standardCabinet">
+      <template slot-scope="scope">
+        {{ scope.row.standardCabinet }}
+      </template>
+    </el-table-column>
     <el-table-column align="center" label="成本工时（人/天）" width="150" prop="worktime1">
       <template slot-scope="scope">
         {{ scope.row.worktime1 }}
@@ -40,11 +45,12 @@
         {{ scope.row.worktime3 }}
         <span v-if="scope.row.worktime3 > scope.row.worktime2 && scope.row.worktime3 < scope.row.worktime1" class="time-warning--orange">（↑{{ scope.row.worktime3 - scope.row.worktime2 }}）</span>
         <span v-else-if="scope.row.worktime3 > scope.row.worktime1" class="time-warning--red">（↑{{ scope.row.worktime3 - scope.row.worktime1 }}）</span>
+        <span v-else class="time-warning--green">（↑0）</span>
       </template>
     </el-table-column>
-    <el-table-column align="center" label="完成率" width="120" prop="progress">
+    <el-table-column align="center" label="成套班组" width="120" prop="setLeader">
       <template slot-scope="scope">
-        {{ formatProgress(scope.row.progress) }}%
+        {{ scope.row.setLeader }}
       </template>
     </el-table-column>
     <el-table-column align="center" label="项目状态" width="120" prop="status" sortable>
@@ -121,6 +127,10 @@ export default {
     .time-warning--orange {
       font-size: 12px;
       color: #e6a23c;
+    }
+    .time-warning--green {
+      font-size: 12px;
+      color: #67c23a;
     }
     .orange-row {
       background: oldlace;

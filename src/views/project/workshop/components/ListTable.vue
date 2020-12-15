@@ -102,6 +102,11 @@
         {{ scope.row.setLeader }}
       </template>
     </el-table-column>
+    <el-table-column align="center" label="项目状态" width="120" prop="proStatus" sortable>
+      <template slot-scope="scope">
+        {{ formatProjectStatus(scope.row.proStatus) }}
+      </template>
+    </el-table-column>
     <el-table-column label="操作" width="80" align="center">
       <template slot-scope="scope">
         <el-button type="text" size="small" @click="$router.push({name: 'WorkshopDetail', params: {id: scope.row.id}})">查看</el-button>
@@ -114,7 +119,7 @@
 
 <script>
 import ProStatusOption from '@/utils/project-status'
-import { formatYYMMDD } from '@/utils/format'
+import { formatYYMMDD, formatProjectStatus } from '@/utils/format'
 export default {
   props: {
     list: {
@@ -142,6 +147,10 @@ export default {
     // 表格单元格样式
     cellStyle() {
       return 'font-size: 13px'
+    },
+    // 项目实际状态
+    formatProjectStatus(status) {
+      return formatProjectStatus(status)
     },
     // 表格中行根据项目状态添加 class
     // 0:有风险,1:已延误，2：正常

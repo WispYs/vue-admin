@@ -6,6 +6,8 @@
     element-loading-text="Loading"
     border
     fit
+    show-summary
+    :summary-method="getSummaries"
     :cell-style="cellStyle"
     header-cell-class-name="pre-line"
   >
@@ -97,7 +99,34 @@ export default {
     // 表格单元格样式
     cellStyle() {
       return 'font-size: 13px'
+    },
+    // 计算合计总工时
+    getSummaries(param) {
+      const { columns, data } = param
+      const sums = []
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = '合计'
+          return
+        }
+        const values = data.map(item => Number(item[column.property]))
+        if (!values.every(value => isNaN(value))) {
+          sums[index] = values.reduce((prev, curr) => {
+            const value = Number(curr)
+            if (!isNaN(value)) {
+              return prev + curr / 8
+            } else {
+              return prev
+            }
+          }, 0)
+        } else {
+          sums[index] = ''
+        }
+      })
+
+      return sums
     }
+
   }
 }
 </script>

@@ -34,7 +34,7 @@
           <el-form-item label="计划发货日期">
             <span>{{ formatDate(scope.row.deliverTime) }}</span>
           </el-form-item>
-          <el-form-item label="计划发货日期">
+          <el-form-item label="实际发货日期">
             <span>{{ formatDate(scope.row.deliverdDate) }}</span>
           </el-form-item>
           <el-form-item label="项目问题汇总" class="lg-item">

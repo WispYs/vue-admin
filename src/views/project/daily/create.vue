@@ -10,6 +10,16 @@
             </el-select>
           </el-form-item>
         </el-col>
+        <el-col :xs="18" :sm="8" :md="8" :lg="8">
+          <el-form-item label="项目名称" prop="proName">
+            <el-input v-model="projectForm.proName" disabled />
+          </el-form-item>
+        </el-col>
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
+          <el-form-item label="项目类型" prop="proType">
+            <el-input v-model="projectForm.proType" disabled />
+          </el-form-item>
+        </el-col>
       </el-row>
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
@@ -27,6 +37,9 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <el-form-item label="工作内容" prop="content">
+        <el-input v-model="projectForm.content" type="textarea" :autosize="{ minRows: 3, maxRows: 6}" />
+      </el-form-item>
       <el-form-item>
         <el-button v-loading="loading" type="primary" @click="submitForm('projectForm')">添加工时</el-button>
         <el-button @click="resetForm('projectForm')">重置</el-button>

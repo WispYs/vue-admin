@@ -33,7 +33,7 @@
           <el-form-item label="项目问题汇总" class="lg-item">
             <span>{{ scope.row.problem }}</span>
           </el-form-item>
-          <el-form-item label="缺料反馈" class="lg-item">
+          <el-form-item label="发货遗留问题" class="lg-item">
             <span>{{ scope.row.materialFeedback }}</span>
           </el-form-item>
         </el-form>

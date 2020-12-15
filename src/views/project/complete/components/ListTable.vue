@@ -22,7 +22,10 @@
           <el-form-item label="项目负责人">
             <span>{{ scope.row.proMan }}</span>
           </el-form-item>
-          <el-form-item label="成套计划完成时间">
+          <el-form-item label="成套启动时间">
+            <span>{{ formatDate(scope.row.planFinish) }}</span>
+          </el-form-item>
+          <el-form-item label="成套完成时间">
             <span>{{ formatDate(scope.row.planFinish) }}</span>
           </el-form-item>
           <el-form-item label="计划发货日期">
@@ -30,6 +33,9 @@
           </el-form-item>
           <el-form-item label="实际发货日期">
             <span>{{ formatDate(scope.row.deliverdDate) }}</span>
+          </el-form-item>
+          <el-form-item label="">
+            <span />
           </el-form-item>
           <el-form-item label="设计阶段-项目计划">
             <el-tag
@@ -98,11 +104,11 @@
         {{ formatTime(scope.row.setWork) }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="项目干系人" width="120" prop="setLeader" sortable>
+    <!-- <el-table-column align="center" label="项目干系人" width="120" prop="setLeader" sortable>
       <template slot-scope="scope">
         {{ scope.row.setLeader }}
       </template>
-    </el-table-column>
+    </el-table-column> -->
     <el-table-column label="操作" width="80" align="center">
       <template slot-scope="scope">
         <el-button type="text" size="small" @click="$router.push({name: 'CompleteDetail', params: {id: scope.row.id}})">查看</el-button>

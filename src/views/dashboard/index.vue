@@ -41,7 +41,7 @@
             <i class="el-icon-folder-opened" />
           </div>
           <div class="statistic-info">
-            <p>发货已完成项目</p>
+            <p>已发货项目</p>
             <b>{{ shipmentCompleteCount }}</b>
           </div>
         </div>

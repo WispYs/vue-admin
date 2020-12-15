@@ -36,12 +36,12 @@
         {{ scope.row.productionMan }}
       </template>
     </el-table-column>
-    <!-- <el-table-column align="center" label="成本工时（天）" width="120" prop="costDay">
+    <!-- <el-table-column align="center" label="成本工时（人/天）" width="120" prop="costDay">
       <template slot-scope="scope">
         {{ formatTime(scope.row.costDay) }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="预算目标工时（天）" width="150" prop="targetDay">
+    <el-table-column align="center" label="预算目标工时（人/天）" width="150" prop="targetDay">
       <template slot-scope="scope">
         {{ formatTime(scope.row.targetDay) }}
       </template>

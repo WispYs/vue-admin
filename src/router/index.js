@@ -13,6 +13,8 @@ import weekplanRouter from './modules/weekplan'
 import progressPlanRouter from './modules/progress-plan'
 import workingDaysRouter from './modules/working-days'
 import dailyRouter from './modules/daily'
+import workAllotRouter from './modules/work-allot'
+import personInfoRouter from './modules/person-info'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -79,18 +81,17 @@ export const constantRoutes = [
       dailyRouter
     ]
   },
-  // {
-  //   path: '/person',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: 'Person',
-  //       component: () => import('@/views/person/index'),
-  //       meta: { title: '人员管理', icon: 'user' }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/personnel',
+    component: Layout,
+    redirect: '/personnel/work-allot/list',
+    name: 'Personnel',
+    meta: { title: '员工管理', icon: 'user' },
+    children: [
+      workAllotRouter,
+      personInfoRouter
+    ]
+  },
   // {
   //   path: '/publish',
   //   component: Layout,

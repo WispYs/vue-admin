@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { addProgressPlan, fetchPlanProName } from '@/api/progress-plan'
+import { addProgressPlan } from '@/api/progress-plan'
 import PageBack from '@/components/PageBack'
 
 export default {

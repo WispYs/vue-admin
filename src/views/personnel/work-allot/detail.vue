@@ -1,48 +1,40 @@
 <template>
   <div class="detail-container">
     <page-back />
-    <el-form ref="projectForm" :model="projectForm" label-width="100px" class="demo-projectForm">
+    <el-form ref="userForm" :model="userForm" label-width="100px" class="demo-userForm">
       <el-row :gutter="24" class="detail-item">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <label>项目L号：</label>
-          <span class="item-info">{{ projectForm.proNo }}</span>
+          <label>员工编号：</label>
+          <span class="item-info">{{ userForm.userNo }}</span>
         </el-col>
 
-        <el-col :xs="18" :sm="8" :md="8" :lg="12">
-          <label>项目名称：</label>
-          <span class="item-info">{{ projectForm.proName }}</span>
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
+          <label>员工名字：</label>
+          <span class="item-info">{{ userForm.userName }}</span>
         </el-col>
       </el-row>
       <el-row :gutter="24" class="detail-item">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <label>柜体数量：</label>
-          <span class="item-info">{{ projectForm.cabinetNum }}</span>
-        </el-col>
-        <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <label>项目生产负责人：</label>
-          <span class="item-info">{{ projectForm.productionMan }}</span>
+          <label>日报日期：</label>
+          <span class="item-info">{{ userForm.currentTime }}</span>
         </el-col>
       </el-row>
       <el-row :gutter="24" class="detail-item">
-        <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <label>成本工时：</label>
-          <span class="item-info">{{ projectForm.costDay }}人/天</span>
-        </el-col>
-        <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <label>预算目标工时：</label>
-          <span class="item-info">{{ projectForm.targetDay }}人/天</span>
-        </el-col>
-        <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <label>实际汇总工时：</label>
-          <span class="item-info">{{ projectForm.actualDay }}人/天</span>
-        </el-col>
+        <label>工作内容：</label>
+        <span class="item-info">{{ userForm.content }}</span>
       </el-row>
       <el-row :gutter="24">
         <el-col :xs="20" :sm="18" :md="18" :lg="12">
-          <el-form-item label="工时完成率：" prop="completionRate">
-            <el-slider v-model="projectForm.completionRate" class="progress-slider" disabled />
-            <span class="progress-item">{{ projectForm.completionRate }}%</span>
+          <el-form-item label="完成率：" prop="completion">
+            <el-slider v-model="userForm.completion" class="progress-slider" disabled />
+            <span class="progress-item">{{ userForm.completion }}%</span>
           </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="24" class="detail-item">
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
+          <label>评价：</label>
+          <span class="item-info">{{ userForm.evaluation }}</span>
         </el-col>
       </el-row>
     </el-form>
@@ -51,7 +43,7 @@
 
 <script>
 import PageBack from '@/components/PageBack'
-import { formatProgress, workTimeH2D } from '@/utils/format'
+import { formatProgress, formatYYMMDD, formatEvaluation } from '@/utils/format'
 import { fetchWorkingDaysDetail } from '@/api/working-days'
 
 export default {
@@ -60,15 +52,13 @@ export default {
   },
   data() {
     return {
-      projectForm: {
-        proNo: '',
-        proName: '',
-        cabinetNum: '',
-        productionMan: '',
-        costDay: '',
-        targetDay: '',
-        actualDay: '',
-        completionRate: 0
+      userForm: {
+        userNo: '',
+        userName: '',
+        currentTime: '',
+        content: '',
+        completion: '',
+        evaluation: ''
       }
     }
   },
@@ -80,11 +70,10 @@ export default {
       const proNo = this.$route.params.id
       fetchWorkingDaysDetail(proNo).then(response => {
         console.log(response)
-        this.projectForm = Object.assign(response.data, {
-          costDay: workTimeH2D(response.data.costDay),
-          targetDay: workTimeH2D(response.data.targetDay),
-          actualDay: workTimeH2D(response.data.actualDay),
-          completionRate: formatProgress(response.data.completionRate)
+        this.userForm = Object.assign(response.data, {
+          currentTime: formatYYMMDD(response.data.currentTime),
+          completion: formatProgress(response.data.completion),
+          evaluation: formatEvaluation(response.data.evaluation)
         })
       })
     }

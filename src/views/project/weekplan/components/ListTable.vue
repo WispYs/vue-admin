@@ -23,10 +23,10 @@
             <span>{{ scope.row.proMan }}</span>
           </el-form-item>
           <el-form-item label="成套计划工时">
-            <span>{{ formatTime(scope.row.setDay) }}天</span>
+            <span>{{ formatTime(scope.row.setDay) }}人/天</span>
           </el-form-item>
           <el-form-item label="成套剩余工时">
-            <span>{{ formatTime(scope.row.setRemaining) }}天</span>
+            <span>{{ formatTime(scope.row.setRemaining) }}人/天</span>
           </el-form-item>
           <el-form-item label="项目风险预警">
             <span>{{ formatRisk(scope.row.proRisk) }}</span>
@@ -78,7 +78,7 @@
         {{ scope.row.standardCabinet }}
       </template>
     </el-table-column>
-    <el-table-column align="center" :label="'成套工时（天）'" width="120" prop="setDay">
+    <el-table-column align="center" :label="'成套工时（人/天）'" width="140" prop="setDay">
       <template slot-scope="scope">
         {{ formatTime(scope.row.setDay) }}
       </template>

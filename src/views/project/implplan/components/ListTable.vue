@@ -26,10 +26,10 @@
             <span>{{ scope.row.feedbackPickup == '1' ? '是' : '否' }}</span>
           </el-form-item>
           <el-form-item label="成套计划工时">
-            <span>{{ formatTime(scope.row.setPlan) }}天</span>
+            <span>{{ formatTime(scope.row.setPlan) }}人/天</span>
           </el-form-item>
           <el-form-item label="成套剩余工时">
-            <span>{{ formatTime(scope.row.setRemaining) }}天</span>
+            <span>{{ formatTime(scope.row.setRemaining) }}人/天</span>
           </el-form-item>
           <el-form-item label="成套资料提交日期">
             <span>{{ formatDate(scope.row.submissionDate) }}</span>
@@ -111,7 +111,7 @@
         {{ scope.row.standardCabinet }}
       </template>
     </el-table-column>
-    <el-table-column align="center" :label="'成套\n计划工时（天）'" width="120" prop="setPlan">
+    <el-table-column align="center" :label="'成套\n计划工时（人/天）'" width="140" prop="setPlan">
       <template slot-scope="scope">
         {{ formatTime(scope.row.setPlan) }}
       </template>

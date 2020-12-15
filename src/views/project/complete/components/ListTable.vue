@@ -99,7 +99,7 @@
         {{ scope.row.standardCabinet }}
       </template>
     </el-table-column>
-    <el-table-column align="center" :label="'成套\n工时汇总（天）'" width="120" prop="setWork">
+    <el-table-column align="center" :label="'成套\n工时汇总（人/天）'" width="150" prop="setWork">
       <template slot-scope="scope">
         {{ formatTime(scope.row.setWork) }}
       </template>

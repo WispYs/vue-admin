@@ -22,7 +22,7 @@ export function formatRisk(status) {
   }
 }
 
-// 格式化工时单位 （1天 = 8小时）
+// 格式化工时单位 （1人/天 = 8小时）
 // 小时转天
 export function workTimeH2D(num) {
   const workTime = num || 0
@@ -44,4 +44,15 @@ export function formatYYMMDD(str) {
 export function formatProgress(num) {
   const progress = num || 0
   return Number((progress * 100).toFixed(2))
+}
+
+// 工作评价
+export function formatEvaluation(status) {
+  switch (Number(status)) {
+    case 1: return '优'
+    case 2: return '良'
+    case 3: return '中'
+    case 4: return '差'
+    default: return ''
+  }
 }

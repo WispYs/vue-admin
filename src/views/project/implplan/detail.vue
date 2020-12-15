@@ -46,11 +46,11 @@
     <el-row :gutter="24" class="detail-item">
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
         <label>成套计划工时：</label>
-        <span class="item-info">{{ projectForm.setPlan }}天</span>
+        <span class="item-info">{{ projectForm.setPlan }}人/天</span>
       </el-col>
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
         <label>成套剩余工时：</label>
-        <span class="item-info">{{ projectForm.setRemaining }}天</span>
+        <span class="item-info">{{ projectForm.setRemaining }}人/天</span>
       </el-col>
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
         <label>反馈提货：</label>

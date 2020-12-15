@@ -57,14 +57,14 @@
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="成套工时" prop="setDay">
             <el-input v-model="projectForm.setDay">
-              <template slot="append">天</template>
+              <template slot="append">人/天</template>
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="成套剩余工时" label-width="110px" prop="setRemaining">
             <el-input v-model="projectForm.setRemaining">
-              <template slot="append">天</template>
+              <template slot="append">人/天</template>
             </el-input>
           </el-form-item>
         </el-col>

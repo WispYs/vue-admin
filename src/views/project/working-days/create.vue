@@ -30,21 +30,21 @@
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="成本工时" prop="costDay">
             <el-input v-model="projectForm.costDay">
-              <template slot="append">天</template>
+              <template slot="append">人/天</template>
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="预算目标工时" label-width="110px" prop="targetDay">
             <el-input v-model="projectForm.targetDay">
-              <template slot="append">天</template>
+              <template slot="append">人/天</template>
             </el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="实际汇总工时" label-width="110px" prop="actualDay">
             <el-input v-model="projectForm.actualDay">
-              <template slot="append">天</template>
+              <template slot="append">人/天</template>
             </el-input>
           </el-form-item>
         </el-col>

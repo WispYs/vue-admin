@@ -69,12 +69,12 @@
           </el-form-item>
         </el-col>
         <el-col :xs="18" :sm="12" :md="8" :lg="6">
-          <el-form-item label="计划发货时间" label-width="140px" prop="deliverTime">
+          <el-form-item label="计划发货日期" label-width="140px" prop="deliverTime">
             <el-date-picker v-model="projectForm.deliverTime" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="选择日期" style="width: 100%;" />
           </el-form-item>
         </el-col>
         <el-col :xs="18" :sm="12" :md="8" :lg="6">
-          <el-form-item label="实际发货时间" label-width="140px" prop="deliverdDate">
+          <el-form-item label="实际发货日期" label-width="140px" prop="deliverdDate">
             <el-date-picker v-model="projectForm.deliverdDate" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="选择日期" style="width: 100%;" />
           </el-form-item>
         </el-col>

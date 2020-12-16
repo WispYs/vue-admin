@@ -38,15 +38,27 @@
         <label>箱体数量：</label>
         <span class="item-info">{{ projectForm.boxNum }}</span>
       </el-col>
+      <el-col :xs="18" :sm="8" :md="8" :lg="6">
+        <label>成套计划工时：</label>
+        <span class="item-info">{{ projectForm.setPlan }}</span>
+      </el-col>
+      <el-col :xs="18" :sm="8" :md="8" :lg="6">
+        <label>成套实际工时：</label>
+        <span class="item-info">{{ projectForm.setWork }}</span>
+      </el-col>
     </el-row>
     <el-row :gutter="24" class="detail-item">
+      <el-col :xs="18" :sm="8" :md="8" :lg="6">
+        <label>项目状态：</label>
+        <span class="item-info">{{ projectForm.proStatus }}</span>
+      </el-col>
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
         <label>项目风险预警：</label>
         <span class="item-info">{{ projectForm.proRisk }}</span>
       </el-col>
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
         <label>反馈提货：</label>
-        <span class="item-info">{{ projectForm.feedbackPickup == '1' ? '是' : '否' }}</span>
+        <span class="item-info">{{ projectForm.feedbackPickup | formatFeedback }}</span>
       </el-col>
     </el-row>
     <el-row :gutter="24" class="detail-item">
@@ -69,7 +81,7 @@
         <span class="item-info">{{ projectForm.endTime }}</span>
       </el-col>
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
-        <label>计划发货时间：</label>
+        <label>计划发货日期：</label>
         <span class="item-info">{{ projectForm.deliverTime }}</span>
       </el-col>
     </el-row>
@@ -78,7 +90,7 @@
       <el-tag
         v-for="(item, index) in ProStatusOption.ProduceStatus"
         :key="index"
-        :type="projectForm[item.fields] ? 'success' : 'info'"
+        :type="projectForm[item.fields] | formatStageStatus"
         class="status-tab"
         size="small"
       >{{ item.name }}</el-tag>
@@ -96,13 +108,17 @@
 
 <script>
 import PageBack from '@/components/PageBack'
-import { formatYYMMDD, formatRisk } from '@/utils/format'
+import { formatYYMMDD, formatRisk, workTimeH2D, formatFeedback, formatStageStatus, formatProjectStatus } from '@/utils/format'
 import { fetchWorkshopProDetail } from '@/api/workshop'
 import ProStatusOption from '@/utils/project-status'
 
 export default {
   components: {
     PageBack
+  },
+  filter: {
+    formatFeedback,
+    formatStageStatus
   },
   data() {
     return {
@@ -116,6 +132,9 @@ export default {
         setLeader: '',
         cabinetNum: '',
         boxNum: '',
+        setPlan: '',
+        setWork: '',
+        proStatus: '',
         proRisk: '', // 0:有风险,1:已延误，2：正常
         feedbackPickup: 0,
         submissionDate: '',
@@ -141,6 +160,9 @@ export default {
       fetchWorkshopProDetail(proNo).then(response => {
         console.log(response)
         this.projectForm = Object.assign(response.data, {
+          setPlan: workTimeH2D(response.data.setPlan),
+          setWork: workTimeH2D(response.data.setWork),
+          proStatus: formatProjectStatus(response.data.proStatus),
           proRisk: formatRisk(response.data.proRisk),
           submissionDate: formatYYMMDD(response.data.submissionDate),
           arrivalTime: formatYYMMDD(response.data.arrivalTime),

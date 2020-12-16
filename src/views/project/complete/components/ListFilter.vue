@@ -16,7 +16,7 @@
       </el-select>
     </div>
     <!-- <div class="filter-bar__item">
-      <label>计划发货时间：</label>
+      <label>计划发货日期：</label>
       <el-date-picker
         v-model="deliverTimeArr"
         class="filter-item"
@@ -52,7 +52,7 @@ export default {
       proNo: '',
       proName: '',
       deliverStatus: '',
-      // deliverTimeArr: '', // 原计划发货时间筛选区间
+      // deliverTimeArr: '', // 原计划发货日期筛选区间
       // deliverTime: '', // 原计划发货开始时间
       // deliverTimeEnd: '', // 原计划发货结束时间
       pickerOptions: {

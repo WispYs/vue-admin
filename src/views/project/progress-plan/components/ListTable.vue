@@ -30,39 +30,39 @@
         {{ scope.row.standardCabinet }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="成本工时（人/天）" width="150" prop="worktime1">
+    <el-table-column align="center" label="成本工时（人/天）" width="150" prop="costDay">
       <template slot-scope="scope">
-        {{ scope.row.worktime1 }}
+        {{ scope.row.costDay | workTimeH2D }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="预算工时（人/天）" width="150" prop="worktime2">
+    <el-table-column align="center" label="预算工时（人/天）" width="150" prop="setPlan">
       <template slot-scope="scope">
-        {{ scope.row.worktime2 }}
+        {{ scope.row.setPlan | workTimeH2D }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="实际工时（人/天）" width="150" prop="worktime3">
+    <el-table-column align="center" label="实际工时（人/天）" width="150" prop="setWork">
       <template slot-scope="scope">
-        {{ scope.row.worktime3 }}
-        <span v-if="scope.row.worktime3 > scope.row.worktime2 && scope.row.worktime3 < scope.row.worktime1" class="time-warning--orange">（↑{{ scope.row.worktime3 - scope.row.worktime2 }}）</span>
-        <span v-else-if="scope.row.worktime3 > scope.row.worktime1" class="time-warning--red">（↑{{ scope.row.worktime3 - scope.row.worktime1 }}）</span>
-        <span v-else class="time-warning--green">（↑0）</span>
+        {{ scope.row.setWork | workTimeH2D }}
+        <span v-if="compareTime(scope.row.costDay, scope.row.setPlan, scope.row.setWork) === 0" class="time-warning--green">（↑0）</span>
+        <span v-else-if="compareTime(scope.row.costDay, scope.row.setPlan, scope.row.setWork) === 1" class="time-warning--orange">（↑{{ scope.row.setWork - scope.row.setPlan }}）</span>
+        <span v-else-if="compareTime(scope.row.costDay, scope.row.setPlan, scope.row.setWork) === 2" class="time-warning--red">（↑{{ scope.row.setWork - scope.row.costDay }}）</span>
       </template>
     </el-table-column>
-    <el-table-column align="center" label="成套班组" width="120" prop="setLeader">
+    <el-table-column align="center" label="成套班组" width="120" prop="setLeader" sortable>
       <template slot-scope="scope">
         {{ scope.row.setLeader }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="项目状态" width="120" prop="status" sortable>
+    <el-table-column align="center" label="项目状态" width="120" prop="proStatus" sortable>
       <template slot-scope="scope">
-        {{ formatStatus(scope.row.status) }}
+        {{ scope.row.proStatus | formatProjectStatus }}
       </template>
     </el-table-column>
   </el-table>
 </template>
 
 <script>
-import { formatYYMMDD, formatProjectStatus, formatProgress } from '@/utils/format'
+import { workTimeH2D, formatProjectStatus } from '@/utils/format'
 export default {
   props: {
     list: {
@@ -74,38 +74,51 @@ export default {
       default: true
     }
   },
+  filter: {
+    workTimeH2D,
+    formatProjectStatus
+  },
   data() {
     return {
     }
   },
+  computed: {
+
+  },
   methods: {
+    // 成本工时：costDay , 计划工时：setPlan, 实际工时：setWork
+    // 工时核算状态：正常  0 ；超预算  1； 超成本  2；
+    // 这个状态后台没有存，只在前端计算后展示...我是真的服
+    // 计划工时 < 成本工时（始终）
+    // 实际工时 < 计划工时 --- 正常  0
+    // 计划工时 < 实际工时 < 成本工时 --- 超预算  1
+    // 实际工时 < 成本工时 --- 超成本  2
+    compareTime(costDay, setPlan, setWork) {
+      if (setWork < setPlan) {
+        return 0
+      }
+      if (setWork > setPlan && setWork < costDay) {
+        return 1
+      }
+      if (setWork > costDay) {
+        return 2
+      }
+    },
     tableRowClassName({ row, rowIndex }) {
-      const worktime1 = Number(this.list[rowIndex].worktime1)
-      const worktime2 = Number(this.list[rowIndex].worktime2)
-      const worktime3 = Number(this.list[rowIndex].worktime3)
-      if (worktime3 < worktime2) {
+      const costDay = Number(this.list[rowIndex].costDay)
+      const setPlan = Number(this.list[rowIndex].setPlan)
+      const setWork = Number(this.list[rowIndex].setWork)
+      if (setWork < setPlan) {
         return 'green-row'
-      } else if (worktime3 >= worktime2 && worktime3 < worktime1) {
+      } else if (setWork > setPlan && setWork < costDay) {
         return 'orange-row'
-      } else if (worktime3 > worktime1) {
+      } else if (setWork > costDay) {
         return 'red-row'
       }
       return ''
     },
     delClick(id) {
       this.$emit('delete-click', id)
-    },
-    // 去除时分秒
-    formatDate(date) {
-      return formatYYMMDD(date)
-    },
-    // 进度小数转化为百分比
-    formatProgress(num) {
-      return formatProgress(num)
-    },
-    // 格式化项目状态
-    formatStatus(status) {
-      return formatProjectStatus(status)
     },
     // 表格单元格样式
     cellStyle() {

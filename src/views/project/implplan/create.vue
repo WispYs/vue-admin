@@ -116,7 +116,7 @@
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="12" :lg="8">
-          <el-form-item label="材料提货时间" label-width="140px" prop="pickupTime">
+          <el-form-item label="材料提货日期" label-width="140px" prop="pickupTime">
             <el-date-picker v-model="projectForm.pickupTime" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="选择日期" style="width: 100%;" />
           </el-form-item>
         </el-col>
@@ -138,12 +138,12 @@
       </el-row>
       <el-row :gutter="24">
         <el-col :xs="24" :sm="12" :md="12" :lg="8">
-          <el-form-item label="原计划发货时间" label-width="140px" prop="deliverTime">
+          <el-form-item label="原计划发货日期" label-width="140px" prop="deliverTime">
             <el-date-picker v-model="projectForm.deliverTime" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="选择日期" style="width: 100%;" />
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="12" :lg="8">
-          <el-form-item label="实际发货时间" label-width="140px" prop="deliverdDate">
+          <el-form-item label="实际发货日期" label-width="140px" prop="deliverdDate">
             <el-date-picker v-model="projectForm.deliverdDate" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="选择日期" style="width: 100%;" />
           </el-form-item>
         </el-col>
@@ -279,7 +279,7 @@ export default {
           { required: true, message: '请填写项目名称', trigger: 'blur' }
         ],
         deliverTime: [
-          { required: true, message: '请选择原计划发货时间', trigger: 'blur' }
+          { required: true, message: '请选择原计划发货日期', trigger: 'blur' }
         ],
         cabinetNum: validateNumber('柜体数量'),
         boxNum: validateNumber('箱体数量'),

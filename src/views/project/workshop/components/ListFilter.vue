@@ -13,7 +13,7 @@
       <el-input v-model="setLeader" class="filter-item" style="width: 200px" placeholder="请输入成套班组" />
     </div>
     <!-- <div class="filter-bar__item">
-      <label>计划发货时间：</label>
+      <label>计划发货日期：</label>
       <el-date-picker
         v-model="deliverTimeArr"
         class="filter-item"

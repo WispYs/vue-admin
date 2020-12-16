@@ -46,7 +46,7 @@ export default {
             'status': 0
           }
         ],
-        'issue': '项目实际发货时间拖得太长了',
+        'issue': '项目实际发货日期拖得太长了',
         'stakeholder': '张三',
         'remark': '以后由张三及时跟进项目进度'
 

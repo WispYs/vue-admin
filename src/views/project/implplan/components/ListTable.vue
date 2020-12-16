@@ -25,19 +25,31 @@
           <el-form-item label="反馈提货">
             <span>{{ scope.row.feedbackPickup | formatFeedback }}</span>
           </el-form-item>
+          <el-form-item label="成本工时">
+            <span>{{ scope.row.costDay | workTimeH2D }}人/天</span>
+          </el-form-item>
           <el-form-item label="成套计划工时">
             <span>{{ scope.row.setPlan | workTimeH2D }}人/天</span>
           </el-form-item>
           <el-form-item label="成套剩余工时">
             <span>{{ scope.row.setRemaining | workTimeH2D }}人/天</span>
           </el-form-item>
+          <el-form-item label="项目状态">
+            <span>{{ scope.row.proStatus | formatProjectStatus }}人/天</span>
+          </el-form-item>
+          <el-form-item label="发货状态">
+            <span>{{ scope.row.deliverStatus | formatDeliverStatus }}人/天</span>
+          </el-form-item>
+          <el-form-item label="项目风险等级">
+            <span>{{ scope.row.proRisk | formatRisk }}人/天</span>
+          </el-form-item>
           <el-form-item label="成套资料提交日期">
             <span>{{ scope.row.submissionDate | formatYYMMDD }}</span>
           </el-form-item>
-          <el-form-item label="材料提货时间">
+          <el-form-item label="材料提货日期">
             <span>{{ scope.row.pickupTime | formatYYMMDD }}</span>
           </el-form-item>
-          <el-form-item label="材料要求到货时间">
+          <el-form-item label="材料要求到货日期">
             <span>{{ scope.row.arrivalTime | formatYYMMDD }}</span>
           </el-form-item>
           <el-form-item label="成套计划启动时间">
@@ -48,6 +60,9 @@
           </el-form-item>
           <el-form-item label="原计划发货日期">
             <span>{{ scope.row.deliverTime | formatYYMMDD }}</span>
+          </el-form-item>
+          <el-form-item label="实际发货日期">
+            <span>{{ scope.row.deliverdDate | formatYYMMDD }}</span>
           </el-form-item>
           <el-form-item label="设计阶段-项目计划">
             <el-tag
@@ -72,6 +87,9 @@
           </el-form-item>
           <el-form-item label="缺料反馈" class="lg-item">
             <span>{{ scope.row.materialFeedback }}</span>
+          </el-form-item>
+          <el-form-item label="备注" class="lg-item">
+            <span>{{ scope.row.remark }}</span>
           </el-form-item>
         </el-form>
       </template>
@@ -133,7 +151,7 @@
 
 <script>
 import ProStatusOption from '@/utils/project-status'
-import { formatYYMMDD, workTimeH2D, formatStageStatus, formatFeedback } from '@/utils/format'
+import { formatYYMMDD, workTimeH2D, formatStageStatus, formatFeedback, formatProjectStatus, formatDeliverStatus, formatRisk } from '@/utils/format'
 
 export default {
   props: {
@@ -150,7 +168,10 @@ export default {
     formatYYMMDD,
     workTimeH2D,
     formatStageStatus,
-    formatFeedback
+    formatFeedback,
+    formatProjectStatus,
+    formatDeliverStatus,
+    formatRisk
   },
   data() {
     return {

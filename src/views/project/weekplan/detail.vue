@@ -42,7 +42,7 @@
     <el-row :gutter="24" class="detail-item">
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
         <label>成套工时：</label>
-        <span class="item-info">{{ projectForm.setDay }}人/天</span>
+        <span class="item-info">{{ projectForm.setWork }}人/天</span>
       </el-col>
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
         <label>成套剩余工时：</label>
@@ -59,11 +59,11 @@
         <span class="item-info">{{ projectForm.proStatus }}</span>
       </el-col>
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
-        <label>计划发货时间：</label>
+        <label>计划发货日期：</label>
         <span class="item-info">{{ projectForm.deliverTime }}</span>
       </el-col>
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
-        <label>实际发货时间：</label>
+        <label>实际发货日期：</label>
         <span class="item-info">{{ projectForm.deliverdDate }}</span>
       </el-col>
     </el-row>
@@ -94,7 +94,7 @@ export default {
         cabinetNum: '',
         boxNum: '',
         standardCabinet: '',
-        setDay: '',
+        setWork: '',
         setRemaining: '',
         proRisk: '', // 0:有风险,1:已延误，2：正常
         deliverTime: '',
@@ -113,7 +113,7 @@ export default {
       fetchWeekplanProDetail(proNo).then(response => {
         console.log(response)
         this.projectForm = Object.assign(response.data, {
-          setDay: workTimeH2D(response.data.setDay),
+          setWork: workTimeH2D(response.data.setWork),
           setRemaining: workTimeH2D(response.data.setRemaining),
           proRisk: formatRisk(response.data.proRisk),
           proStatus: formatProjectStatus(response.data.proStatus),

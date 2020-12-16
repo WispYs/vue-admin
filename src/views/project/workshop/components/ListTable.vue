@@ -25,6 +25,9 @@
           <el-form-item label="反馈提货">
             <span>{{ scope.row.feedbackPickup | formatFeedback }}</span>
           </el-form-item>
+          <el-form-item label="项目风险预警">
+            <span>{{ scope.row.proRisk | formatRisk }}</span>
+          </el-form-item>
           <el-form-item label="成套计划工时">
             <span>{{ scope.row.setPlan | workTimeH2D }}人/天</span>
           </el-form-item>
@@ -34,7 +37,7 @@
           <el-form-item label="成套资料提交日期">
             <span>{{ scope.row.submissionDate | formatYYMMDD }}</span>
           </el-form-item>
-          <el-form-item label="材料要求到货时间">
+          <el-form-item label="材料要求到货日期">
             <span>{{ scope.row.arrivalTime | formatYYMMDD }}</span>
           </el-form-item>
           <el-form-item label="成套计划启动时间">
@@ -46,15 +49,6 @@
           <el-form-item label="计划发货日期">
             <span>{{ scope.row.deliverTime | formatYYMMDD }}</span>
           </el-form-item>
-          <!-- <el-form-item label="设计阶段-项目计划">
-            <el-tag
-              v-for="(item, index) in ProStatusOption.DesignStatus"
-              :key="index"
-              :type="scope.row[item.fields] == '1' ? 'success' : 'info'"
-              class="status-tab"
-              size="small"
-            >{{ item.name }}</el-tag>
-          </el-form-item> -->
           <el-form-item label="生产阶段-项目计划">
             <el-tag
               v-for="(item, index) in ProStatusOption.ProduceStatus"
@@ -125,7 +119,7 @@
 
 <script>
 import ProStatusOption from '@/utils/project-status'
-import { formatYYMMDD, formatFeedback, workTimeH2D, formatStageStatus, formatProjectStatus } from '@/utils/format'
+import { formatYYMMDD, formatFeedback, workTimeH2D, formatRisk, formatStageStatus, formatProjectStatus } from '@/utils/format'
 
 export default {
   props: {
@@ -142,6 +136,7 @@ export default {
     formatYYMMDD,
     formatFeedback,
     workTimeH2D,
+    formatRisk,
     formatStageStatus,
     formatProjectStatus
   },

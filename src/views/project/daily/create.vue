@@ -93,20 +93,34 @@ export default {
       //   this.proNoOption = response.data
       // })
     },
+    createDaily(formData) {
+      this.loading = true
+      addProgressPlan(formData).then(response => {
+        console.log(response)
+        this.$message.success(response.message)
+        this.loading = false
+        this.$router.push({ name: 'Daily' })
+      }).catch(error => {
+        console.log(error)
+        this.loading = false
+      })
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.loading = true
-          const formData = this.projectForm
-          addProgressPlan(formData).then(response => {
-            console.log(response)
-            this.$message.success(response.message)
-            this.loading = false
-            this.$router.push({ name: 'Daily' })
-          }).catch(error => {
-            console.log(error)
-            this.loading = false
-          })
+          if (!this.loading) {
+            this.$confirm('确定添加该条日工时?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              const formData = this.projectForm
+              console.log(formData)
+              this.createDaily(formData)
+            }).catch(() => {
+
+            })
+          }
         } else {
           this.$message.error('请填写完整信息')
           return false

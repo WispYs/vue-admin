@@ -31,43 +31,26 @@
         {{ scope.row.proType }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="成套班组" width="150" prop="productionMan" sortable>
+    <el-table-column align="center" label="成套班组" width="150" prop="setLeader" sortable>
       <template slot-scope="scope">
-        {{ scope.row.productionMan }}
+        {{ scope.row.setLeader }}
       </template>
     </el-table-column>
-    <!-- <el-table-column align="center" label="成本工时（人/天）" width="120" prop="costDay">
+    <el-table-column align="center" label="上周总工时（人/天）" width="200" prop="setWork">
       <template slot-scope="scope">
-        {{ formatTime(scope.row.costDay) }}
+        {{ scope.row.setWork | workTimeH2D }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="预算目标工时（人/天）" width="150" prop="targetDay">
+    <el-table-column align="center" label="项目状态" width="120" prop="proStatus" sortable>
       <template slot-scope="scope">
-        {{ formatTime(scope.row.targetDay) }}
-      </template>
-    </el-table-column> -->
-    <el-table-column align="center" label="上周总工时（人/天）" width="200" prop="actualDay">
-      <template slot-scope="scope">
-        {{ formatTime(scope.row.actualDay) }}
-      </template>
-    </el-table-column>
-    <!-- <el-table-column align="center" label="工时完成率" width="130" prop="completionRate">
-      <template slot-scope="scope">
-        {{ formatProgress(scope.row.completionRate) }}%
-      </template>
-    </el-table-column> -->
-    <el-table-column label="操作" width="80" align="center">
-      <template slot-scope="scope">
-        <el-button type="text" size="small" @click="$router.push({name: 'WorkingDaysDetail', params: {id: scope.row.id}})">查看</el-button>
-        <!-- <el-button type="text" size="small" @click="$router.push({name: 'WorkingDaysEdit', params: {id: scope.row.id}})">编辑</el-button>
-        <el-button class="delete" type="text" size="small" @click="delClick(scope.row.id)">删除</el-button> -->
+        {{ scope.row.proStatus | formatProjectStatus }}
       </template>
     </el-table-column>
   </el-table>
 </template>
 
 <script>
-import { workTimeH2D, formatProgress } from '@/utils/format'
+import { workTimeH2D, formatProjectStatus } from '@/utils/format'
 export default {
   props: {
     list: {
@@ -79,6 +62,10 @@ export default {
       default: true
     }
   },
+  filter: {
+    workTimeH2D,
+    formatProjectStatus
+  },
   data() {
     return {
 
@@ -87,14 +74,6 @@ export default {
   methods: {
     delClick(id) {
       this.$emit('delete-click', id)
-    },
-    // 工时-小时转天
-    formatTime(h) {
-      return workTimeH2D(h)
-    },
-    // 进度小数转化为百分比
-    formatProgress(num) {
-      return formatProgress(num)
     },
     // 表格单元格样式
     cellStyle() {
@@ -114,7 +93,7 @@ export default {
           sums[index] = values.reduce((prev, curr) => {
             const value = Number(curr)
             if (!isNaN(value)) {
-              return prev + curr / 8
+              return prev + (curr / 8).toFixed(2)
             } else {
               return prev
             }

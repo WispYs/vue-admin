@@ -25,10 +25,10 @@
             <span />
           </el-form-item>
           <el-form-item label="计划发货日期">
-            <span>{{ formatDate(scope.row.deliverTime) }}</span>
+            <span>{{ scope.row.deliverTime | formatYYMMDD }}</span>
           </el-form-item>
           <el-form-item label="实际发货日期">
-            <span>{{ formatDate(scope.row.deliverdDate) }}</span>
+            <span>{{ scope.row.deliverdDate | formatYYMMDD }}</span>
           </el-form-item>
           <el-form-item label="项目问题汇总" class="lg-item">
             <span>{{ scope.row.problem }}</span>
@@ -76,7 +76,7 @@
     </el-table-column>
     <el-table-column align="center" label="成套工时（人/天）" width="140" prop="setWork">
       <template slot-scope="scope">
-        {{ formatTime(scope.row.setWork) }}
+        {{ scope.row.setWork | workTimeH2D }}
       </template>
     </el-table-column>
     <el-table-column align="center" label="成套班组" width="120" prop="setLeader" sortable>
@@ -108,6 +108,10 @@ export default {
       default: true
     }
   },
+  filter: {
+    formatYYMMDD,
+    workTimeH2D
+  },
   data() {
     return {
       ProStatusOption // 项目状态字段配置表
@@ -117,19 +121,10 @@ export default {
     delClick(id) {
       this.$emit('delete-click', id)
     },
-    // 去除时分秒
-    formatDate(date) {
-      return formatYYMMDD(date)
-    },
-    // 工时-小时转天
-    formatTime(h) {
-      return workTimeH2D(h)
-    },
     // 表格单元格样式
     cellStyle() {
       return 'font-size: 13px'
     }
-
   }
 }
 </script>

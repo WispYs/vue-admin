@@ -23,10 +23,10 @@
         <label>项目负责人：</label>
         <span class="item-info">{{ projectForm.proMan }}</span>
       </el-col>
-      <el-col :xs="18" :sm="8" :md="8" :lg="6">
+      <!-- <el-col :xs="18" :sm="8" :md="8" :lg="6">
         <label>项目干系人：</label>
         <span class="item-info">{{ projectForm.setLeader }}</span>
-      </el-col>
+      </el-col> -->
     </el-row>
     <el-row :gutter="24" class="detail-item">
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
@@ -50,15 +50,19 @@
     </el-row>
     <el-row :gutter="24" class="detail-item">
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
-        <label>成套计划完成时间：</label>
-        <span class="item-info">{{ projectForm.planFinish }}</span>
+        <label>成套启动时间：</label>
+        <span class="item-info">{{ projectForm.startTime }}</span>
       </el-col>
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
-        <label>计划发货时间：</label>
+        <label>成套完成时间：</label>
+        <span class="item-info">{{ projectForm.endTime }}</span>
+      </el-col>
+      <el-col :xs="18" :sm="8" :md="8" :lg="6">
+        <label>计划发货日期：</label>
         <span class="item-info">{{ projectForm.deliverTime }}</span>
       </el-col>
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
-        <label>实际发货时间：</label>
+        <label>实际发货日期：</label>
         <span class="item-info">{{ projectForm.deliverdDate }}</span>
       </el-col>
     </el-row>
@@ -108,12 +112,13 @@ export default {
         proType: '',
         saleMan: '',
         proMan: '',
-        setLeader: '',
+        // setLeader: '',
         cabinetNum: '',
         boxNum: '',
         standardCabinet: '',
         setWork: '',
-        planFinish: '',
+        startTime: '',
+        endTime: '',
         deliverTime: '',
         deliverdDate: '',
         drawingDesign: 0,
@@ -140,7 +145,8 @@ export default {
         console.log(response)
         this.projectForm = Object.assign(response.data, {
           setWork: workTimeH2D(response.data.setWork),
-          planFinish: formatYYMMDD(response.data.planFinish),
+          startTime: formatYYMMDD(response.data.startTime),
+          endTime: formatYYMMDD(response.data.endTime),
           deliverTime: formatYYMMDD(response.data.deliverTime),
           deliverdDate: formatYYMMDD(response.data.deliverdDate),
           drawingDesign: this.formatStr2Boolean(response.data.drawingDesign),

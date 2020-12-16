@@ -85,7 +85,7 @@
         <span class="item-info">{{ projectForm.submissionDate }}</span>
       </el-col>
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
-        <label>材料提货时间：</label>
+        <label>材料提货日期：</label>
         <span class="item-info">{{ projectForm.pickupTime }}</span>
       </el-col>
       <el-col :xs="18" :sm="8" :md="8" :lg="8">
@@ -103,7 +103,7 @@
         <span class="item-info">{{ projectForm.endTime }}</span>
       </el-col>
       <el-col :xs="18" :sm="8" :md="8" :lg="8">
-        <label>原计划发货时间：</label>
+        <label>原计划发货日期：</label>
         <span class="item-info">{{ projectForm.deliverTime }}</span>
       </el-col>
     </el-row>

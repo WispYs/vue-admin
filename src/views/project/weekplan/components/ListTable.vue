@@ -23,19 +23,19 @@
             <span>{{ scope.row.proMan }}</span>
           </el-form-item>
           <el-form-item label="成套计划工时">
-            <span>{{ formatTime(scope.row.setDay) }}人/天</span>
+            <span>{{ scope.row.setWork | workTimeH2D }}人/天</span>
           </el-form-item>
           <el-form-item label="成套剩余工时">
-            <span>{{ formatTime(scope.row.setRemaining) }}人/天</span>
+            <span>{{ scope.row.setRemaining | workTimeH2D }}人/天</span>
           </el-form-item>
           <el-form-item label="项目风险预警">
-            <span>{{ formatRisk(scope.row.proRisk) }}</span>
+            <span>{{ scope.row.proRisk | formatRisk }}</span>
           </el-form-item>
           <el-form-item label="计划发货日期">
-            <span>{{ formatDate(scope.row.deliverTime) }}</span>
+            <span>{{ scope.row.deliverTime | formatYYMMDD }}</span>
           </el-form-item>
           <el-form-item label="实际发货日期">
-            <span>{{ formatDate(scope.row.deliverdDate) }}</span>
+            <span>{{ scope.row.deliverdDate | formatYYMMDD }}</span>
           </el-form-item>
           <el-form-item label="项目问题汇总" class="lg-item">
             <span>{{ scope.row.problem }}</span>
@@ -78,14 +78,14 @@
         {{ scope.row.standardCabinet }}
       </template>
     </el-table-column>
-    <el-table-column align="center" :label="'成套工时（人/天）'" width="140" prop="setDay">
+    <el-table-column align="center" :label="'成套工时（人/天）'" width="140" prop="setWork">
       <template slot-scope="scope">
-        {{ formatTime(scope.row.setDay) }}
+        {{ scope.row.setWork | workTimeH2D }}
       </template>
     </el-table-column>
     <el-table-column align="center" label="项目实际状态" width="130" prop="proStatus" sortable>
       <template slot-scope="scope">
-        {{ formatProjectStatus(scope.row.proStatus) }}
+        {{ scope.row.proStatus | formatProjectStatus }}
       </template>
     </el-table-column>
     <el-table-column label="操作" width="80" align="center">
@@ -112,6 +112,12 @@ export default {
       default: true
     }
   },
+  filter: {
+    formatYYMMDD,
+    workTimeH2D,
+    formatRisk,
+    formatProjectStatus
+  },
   data() {
     return {
       ProStatusOption // 项目状态字段配置表
@@ -120,22 +126,6 @@ export default {
   methods: {
     delClick(id) {
       this.$emit('delete-click', id)
-    },
-    // 去除时分秒
-    formatDate(date) {
-      return formatYYMMDD(date)
-    },
-    // 工时-小时转天
-    formatTime(h) {
-      return workTimeH2D(h)
-    },
-    // 项目风险等级
-    formatRisk(status) {
-      return formatRisk(status)
-    },
-    // 项目实际状态
-    formatProjectStatus(status) {
-      return formatProjectStatus(status)
     },
     // 表格单元格样式
     cellStyle() {

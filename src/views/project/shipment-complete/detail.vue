@@ -49,11 +49,11 @@
         <span class="item-info">{{ projectForm.setWork }}人/天</span>
       </el-col>
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
-        <label>计划发货时间：</label>
+        <label>计划发货日期：</label>
         <span class="item-info">{{ projectForm.deliverTime }}</span>
       </el-col>
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
-        <label>实际发货时间：</label>
+        <label>实际发货日期：</label>
         <span class="item-info">{{ projectForm.deliverdDate }}</span>
       </el-col>
     </el-row>
@@ -62,7 +62,7 @@
       <span class="item-info">{{ projectForm.problem }}</span>
     </el-row>
     <el-row :gutter="24" class="detail-item">
-      <label>缺料反馈：</label>
+      <label>发货遗留问题：</label>
       <span class="item-info">{{ projectForm.materialFeedback }}</span>
     </el-row>
   </div>

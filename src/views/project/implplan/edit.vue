@@ -18,7 +18,6 @@
             <el-input v-model="projectForm.proName" />
           </el-form-item>
         </el-col>
-
       </el-row>
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
@@ -34,6 +33,11 @@
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="成套班组" prop="setLeader">
             <el-input v-model="projectForm.setLeader" />
+          </el-form-item>
+        </el-col>
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
+          <el-form-item label="项目生产负责人" prop="productionMan" label-width="110px">
+            <el-input v-model="projectForm.productionMan" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -56,6 +60,13 @@
       </el-row>
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
+          <el-form-item label="成本工时" prop="costDay">
+            <el-input v-model="projectForm.costDay">
+              <template slot="append">人/天</template>
+            </el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="成套计划工时" label-width="110px" prop="setPlan">
             <el-input v-model="projectForm.setPlan">
               <template slot="append">人/天</template>
@@ -67,6 +78,29 @@
             <el-input v-model="projectForm.setRemaining">
               <template slot="append">人/天</template>
             </el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="24">
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
+          <el-form-item label="项目状态" prop="proStatus">
+            <el-select v-model="projectForm.proStatus" placeholder="请选择项目状态">
+              <el-option v-for="(item, index) in ProStatusOption.ProjectStatus" :key="index" :label="item.name" :value="item.value" />
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
+          <el-form-item label="发货状态" prop="deliverStatus">
+            <el-select v-model="projectForm.deliverStatus" placeholder="请选择发货状态">
+              <el-option v-for="(item, index) in ProStatusOption.DeliverStatus" :key="index" :label="item.name" :value="item.value" />
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
+          <el-form-item label="项目风险等级" prop="proRisk">
+            <el-select v-model="projectForm.proRisk" placeholder="请选择风险等级">
+              <el-option v-for="(item, index) in ProStatusOption.ProjectRisk" :key="index" :label="item.name" :value="item.value" />
+            </el-select>
           </el-form-item>
         </el-col>
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
@@ -101,9 +135,16 @@
             <el-date-picker v-model="projectForm.endTime" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="选择日期" style="width: 100%;" />
           </el-form-item>
         </el-col>
+      </el-row>
+      <el-row :gutter="24">
         <el-col :xs="24" :sm="12" :md="12" :lg="8">
           <el-form-item label="原计划发货时间" label-width="140px" prop="deliverTime">
             <el-date-picker v-model="projectForm.deliverTime" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="选择日期" style="width: 100%;" />
+          </el-form-item>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="8">
+          <el-form-item label="实际发货时间" label-width="140px" prop="deliverdDate">
+            <el-date-picker v-model="projectForm.deliverdDate" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="选择日期" style="width: 100%;" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -134,6 +175,9 @@
       </el-form-item>
       <el-form-item label="缺料反馈" prop="materialFeedback">
         <el-input v-model="projectForm.materialFeedback" type="textarea" :autosize="{ minRows: 3, maxRows: 6}" />
+      </el-form-item>
+      <el-form-item label="备注" prop="remark">
+        <el-input v-model="projectForm.remark" type="textarea" :autosize="{ minRows: 3, maxRows: 6}" />
       </el-form-item>
       <el-form-item>
         <el-button v-loading="loading" type="primary" @click="submitForm('projectForm')">编辑</el-button>
@@ -188,18 +232,24 @@ export default {
         saleMan: '',
         proEngineer: '',
         setLeader: '',
+        productionMan: '',
         cabinetNum: '',
         boxNum: '',
         standardCabinet: '',
+        costDay: '',
         setPlan: '',
         setRemaining: '',
+        proStatus: '',
+        deliverStatus: '',
+        proRisk: '',
+        feedbackPickup: 0,
         submissionDate: '',
         pickupTime: '',
         arrivalTime: '',
-        feedbackPickup: '',
         startTime: '',
         endTime: '',
         deliverTime: '',
+        deliverdDate: '',
         drawingDesign: 0,
         cabinetOrder: 0,
         materialMain: 0,
@@ -210,7 +260,8 @@ export default {
         powerTest: 0,
         packDelever: 0,
         problem: '',
-        materialFeedback: ''
+        materialFeedback: '',
+        remark: ''
       },
       rules: {
         proNo: [
@@ -229,6 +280,10 @@ export default {
         boxNum: validateNumber('箱体数量'),
         standardCabinet: [
           { required: true, message: '请输入折算标准柜值', trigger: 'blur' },
+          { validator: isNumber, trigger: 'blur' }
+        ],
+        costDay: [
+          { required: true, message: '请输入成本工时', trigger: 'blur' },
           { validator: isNumber, trigger: 'blur' }
         ],
         setPlan: [
@@ -253,6 +308,7 @@ export default {
       fetchImplPlanProDetail(proNo).then(response => {
         console.log(response)
         this.projectForm = Object.assign(response.data, {
+          costDay: workTimeH2D(response.data.costDay),
           setPlan: workTimeH2D(response.data.setPlan),
           setRemaining: workTimeH2D(response.data.setRemaining),
           feedbackPickup: Number(response.data.feedbackPickup),
@@ -270,26 +326,41 @@ export default {
         })
       })
     },
+    editProject(proNo, formData) {
+      this.loading = true
+      editImplPlanPro(proNo, formData).then(response => {
+        console.log(response)
+        this.$message.success(response.message)
+        this.loading = false
+        this.$router.push({ name: 'Implplan' })
+      }).catch(error => {
+        console.log(error)
+        this.loading = false
+      })
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.loading = true
-          const proNo = this.$route.params.id
-          const formData = Object.assign(this.projectForm, {
-            setPlan: workTimeD2H(this.projectForm.setPlan),
-            setRemaining: workTimeD2H(this.projectForm.setRemaining)
-            // drawingDesign: this.formatBoolean2Str(this.projectForm.drawingDesign),
-            // ...
-          })
-          editImplPlanPro(proNo, formData).then(response => {
-            console.log(response)
-            this.$message.success(response.message)
-            this.loading = false
-            this.$router.push({ name: 'Implplan' })
-          }).catch(error => {
-            console.log(error)
-            this.loading = false
-          })
+          if (!this.loading) {
+            this.$confirm('确定编辑该项目?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              const proNo = this.$route.params.id
+              const formData = Object.assign(this.projectForm, {
+                costDay: workTimeD2H(this.projectForm.costDay),
+                setPlan: workTimeD2H(this.projectForm.setPlan),
+                setRemaining: workTimeD2H(this.projectForm.setRemaining)
+                // drawingDesign: this.formatBoolean2Str(this.projectForm.drawingDesign),
+                // ...
+              })
+              console.log(formData)
+              this.editProject(proNo, formData)
+            }).catch(() => {
+
+            })
+          }
         } else {
           this.$message.error('请填写完整信息')
           return false

@@ -3,7 +3,7 @@ const shipmentCompleteRouter = {
   name: 'ShipmentComplete',
   redirect: '/project/shipment-complete/list',
   component: () => import('@/views/project/shipment-complete/index'),
-  meta: { title: '发货已完成项目' },
+  meta: { title: '已发货项目' },
   children: [
     {
       path: 'list',

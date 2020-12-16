@@ -8,17 +8,13 @@
       <label>项目名称：</label>
       <el-input v-model="proName" class="filter-item" style="width: 240px" placeholder="请输入项目名称" />
     </div>
-    <!-- <div class="filter-bar__item">
-      <label>项目干系人：</label>
-      <el-input v-model="setLeader" class="filter-item" style="width: 240px" placeholder="请输入项目干系人" />
-    </div> -->
-    <!-- <div class="filter-bar__item">
+    <div class="filter-bar__item">
       <label>发货状态：</label>
-      <el-select v-model="proStatus" placeholder="请选择发货状态">
+      <el-select v-model="deliverStatus" placeholder="请选择发货状态">
         <el-option label="未发货" value="0" />
         <el-option label="已发货" value="1" />
       </el-select>
-    </div> -->
+    </div>
     <!-- <div class="filter-bar__item">
       <label>计划发货时间：</label>
       <el-date-picker
@@ -55,6 +51,7 @@ export default {
     return {
       proNo: '',
       proName: '',
+      deliverStatus: '',
       // deliverTimeArr: '', // 原计划发货时间筛选区间
       // deliverTime: '', // 原计划发货开始时间
       // deliverTimeEnd: '', // 原计划发货结束时间
@@ -94,6 +91,7 @@ export default {
     __initFilter() {
       this.proNo = ''
       this.proName = ''
+      this.deliverStatus = ''
       // this.deliverTimeArr = ''
       // this.deliverTime = ''
       // this.deliverTimeEnd = ''
@@ -102,7 +100,8 @@ export default {
     __getFilter() {
       return {
         proNo: this.proNo,
-        proName: this.proName
+        proName: this.proName,
+        deliverStatus: this.deliverStatus
         // deliverTime: this.deliverTimeArr[0] ? this.deliverTimeArr[0] : '',
         // deliverTimeEnd: this.deliverTimeArr[0] ? this.deliverTimeArr[1] : ''
       }

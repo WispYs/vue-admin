@@ -23,16 +23,16 @@
             <span>{{ scope.row.proMan }}</span>
           </el-form-item>
           <el-form-item label="成套启动时间">
-            <span>{{ formatDate(scope.row.planFinish) }}</span>
+            <span>{{ scope.row.startTime | formatYYMMDD }}</span>
           </el-form-item>
           <el-form-item label="成套完成时间">
-            <span>{{ formatDate(scope.row.planFinish) }}</span>
+            <span>{{ scope.row.endTime | formatYYMMDD }}</span>
           </el-form-item>
           <el-form-item label="计划发货日期">
-            <span>{{ formatDate(scope.row.deliverTime) }}</span>
+            <span>{{ scope.row.deliverTime | formatYYMMDD }}</span>
           </el-form-item>
           <el-form-item label="实际发货日期">
-            <span>{{ formatDate(scope.row.deliverdDate) }}</span>
+            <span>{{ scope.row.deliverdDate | formatYYMMDD }}</span>
           </el-form-item>
           <el-form-item label="">
             <span />
@@ -41,7 +41,7 @@
             <el-tag
               v-for="(item, index) in ProStatusOption.DesignStatus"
               :key="index"
-              :type="scope.row[item.fields] == '1' ? 'success' : 'info'"
+              :type="scope.row[item.fields] | formatStageStatus"
               class="status-tab"
               size="small"
             >{{ item.name }}</el-tag>
@@ -50,7 +50,7 @@
             <el-tag
               v-for="(item, index) in ProStatusOption.ProduceStatus"
               :key="index"
-              :type="scope.row[item.fields] == '1' ? 'success' : 'info'"
+              :type="scope.row[item.fields] | formatStageStatus"
               class="status-tab"
               size="small"
             >{{ item.name }}</el-tag>
@@ -101,7 +101,7 @@
     </el-table-column>
     <el-table-column align="center" :label="'成套\n工时汇总（人/天）'" width="150" prop="setWork">
       <template slot-scope="scope">
-        {{ formatTime(scope.row.setWork) }}
+        {{ scope.row.setWork | workTimeH2D }}
       </template>
     </el-table-column>
     <!-- <el-table-column align="center" label="项目干系人" width="120" prop="setLeader" sortable>
@@ -121,7 +121,8 @@
 
 <script>
 import ProStatusOption from '@/utils/project-status'
-import { formatYYMMDD, workTimeH2D } from '@/utils/format'
+import { formatYYMMDD, workTimeH2D, formatStageStatus } from '@/utils/format'
+
 export default {
   props: {
     list: {
@@ -133,6 +134,11 @@ export default {
       default: true
     }
   },
+  filter: {
+    formatYYMMDD,
+    workTimeH2D,
+    formatStageStatus
+  },
   data() {
     return {
       ProStatusOption // 项目状态字段配置表
@@ -141,14 +147,6 @@ export default {
   methods: {
     delClick(id) {
       this.$emit('delete-click', id)
-    },
-    // 去除时分秒
-    formatDate(date) {
-      return formatYYMMDD(date)
-    },
-    // 工时-小时转天
-    formatTime(h) {
-      return workTimeH2D(h)
     },
     // 表格单元格样式
     cellStyle() {

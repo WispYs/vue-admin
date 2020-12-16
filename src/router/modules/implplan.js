@@ -3,7 +3,7 @@ const implplanRouter = {
   name: 'Implplan',
   redirect: '/project/implplan/list',
   component: () => import('@/views/project/implplan/index'),
-  meta: { title: '成套生产计划表' },
+  meta: { title: '生产计划表' },
   children: [
     {
       path: 'list',

@@ -10,11 +10,6 @@
         </el-col>
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="项目类型" prop="proType">
-            <!-- <el-select v-model="projectForm.proType" placeholder="请选择项目类型">
-              <el-option label="控制柜" value="1" />
-              <el-option label="控制箱" value="2" />
-              <el-option label="工程" value="3" />
-            </el-select> -->
             <el-input v-model="projectForm.proType" />
           </el-form-item>
         </el-col>
@@ -40,6 +35,11 @@
             <el-input v-model="projectForm.setLeader" />
           </el-form-item>
         </el-col>
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
+          <el-form-item label="项目生产负责人" prop="productionMan" label-width="110px">
+            <el-input v-model="projectForm.productionMan" />
+          </el-form-item>
+        </el-col>
       </el-row>
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
@@ -60,8 +60,8 @@
       </el-row>
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <el-form-item label="成本工时" label-width="110px" prop="setPlan">
-            <el-input v-model="projectForm.setPlan">
+          <el-form-item label="成本工时" prop="costDay">
+            <el-input v-model="projectForm.costDay">
               <template slot="append">人/天</template>
             </el-input>
           </el-form-item>
@@ -80,13 +80,19 @@
             </el-input>
           </el-form-item>
         </el-col>
-
       </el-row>
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="项目状态" prop="proStatus">
             <el-select v-model="projectForm.proStatus" placeholder="请选择项目状态">
               <el-option v-for="(item, index) in ProStatusOption.ProjectStatus" :key="index" :label="item.name" :value="item.value" />
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
+          <el-form-item label="发货状态" prop="deliverStatus">
+            <el-select v-model="projectForm.deliverStatus" placeholder="请选择发货状态">
+              <el-option v-for="(item, index) in ProStatusOption.DeliverStatus" :key="index" :label="item.name" :value="item.value" />
             </el-select>
           </el-form-item>
         </el-col>
@@ -231,12 +237,15 @@ export default {
         saleMan: '',
         proEngineer: '',
         setLeader: '',
+        productionMan: '',
         cabinetNum: '',
         boxNum: '',
         standardCabinet: '',
+        costDay: '',
         setPlan: '',
         setRemaining: '',
         proStatus: '',
+        deliverStatus: '',
         proRisk: '',
         feedbackPickup: 0,
         submissionDate: '',
@@ -245,6 +254,7 @@ export default {
         startTime: '',
         endTime: '',
         deliverTime: '',
+        deliverdDate: '',
         drawingDesign: 0,
         cabinetOrder: 0,
         materialMain: 0,
@@ -255,7 +265,8 @@ export default {
         powerTest: 0,
         packDelever: 0,
         problem: '',
-        materialFeedback: ''
+        materialFeedback: '',
+        remark: ''
       },
       rules: {
         proNo: [
@@ -276,6 +287,10 @@ export default {
           { required: true, message: '请输入折算标准柜值', trigger: 'blur' },
           { validator: isNumber, trigger: 'blur' }
         ],
+        costDay: [
+          { required: true, message: '请输入成本工时', trigger: 'blur' },
+          { validator: isNumber, trigger: 'blur' }
+        ],
         setPlan: [
           { required: true, message: '请输入计划工时', trigger: 'blur' },
           { validator: isNumber, trigger: 'blur' },
@@ -290,24 +305,38 @@ export default {
     }
   },
   methods: {
+    createProject(formData) {
+      this.loading = true
+      addImplPlanPro(formData).then(response => {
+        console.log(response)
+        this.$message.success(response.message)
+        this.loading = false
+        this.$router.push({ name: 'Implplan' })
+      }).catch(error => {
+        console.log(error)
+        this.loading = false
+      })
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.loading = true
-          const formData = Object.assign(this.projectForm, {
-            setPlan: workTimeD2H(this.projectForm.setPlan),
-            setRemaining: workTimeD2H(this.projectForm.setRemaining)
-          })
-          console.log(formData)
-          addImplPlanPro(formData).then(response => {
-            console.log(response)
-            this.$message.success(response.message)
-            this.loading = false
-            this.$router.push({ name: 'Implplan' })
-          }).catch(error => {
-            console.log(error)
-            this.loading = false
-          })
+          if (!this.loading) {
+            this.$confirm('确定添加该项目?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              const formData = Object.assign(this.projectForm, {
+                costDay: workTimeD2H(this.projectForm.costDay),
+                setPlan: workTimeD2H(this.projectForm.setPlan),
+                setRemaining: workTimeD2H(this.projectForm.setRemaining)
+              })
+              console.log(formData)
+              this.createProject(formData)
+            }).catch(() => {
+
+            })
+          }
         } else {
           this.$message.error('请填写完整信息')
           return false

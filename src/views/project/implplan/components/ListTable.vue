@@ -23,37 +23,37 @@
             <span>{{ scope.row.proEngineer }}</span>
           </el-form-item>
           <el-form-item label="反馈提货">
-            <span>{{ scope.row.feedbackPickup == '1' ? '是' : '否' }}</span>
+            <span>{{ scope.row.feedbackPickup | formatFeedback }}</span>
           </el-form-item>
           <el-form-item label="成套计划工时">
-            <span>{{ formatTime(scope.row.setPlan) }}人/天</span>
+            <span>{{ scope.row.setPlan | workTimeH2D }}人/天</span>
           </el-form-item>
           <el-form-item label="成套剩余工时">
-            <span>{{ formatTime(scope.row.setRemaining) }}人/天</span>
+            <span>{{ scope.row.setRemaining | workTimeH2D }}人/天</span>
           </el-form-item>
           <el-form-item label="成套资料提交日期">
-            <span>{{ formatDate(scope.row.submissionDate) }}</span>
+            <span>{{ scope.row.submissionDate | formatYYMMDD }}</span>
           </el-form-item>
           <el-form-item label="材料提货时间">
-            <span>{{ formatDate(scope.row.pickupTime) }}</span>
+            <span>{{ scope.row.pickupTime | formatYYMMDD }}</span>
           </el-form-item>
           <el-form-item label="材料要求到货时间">
-            <span>{{ formatDate(scope.row.arrivalTime) }}</span>
+            <span>{{ scope.row.arrivalTime | formatYYMMDD }}</span>
           </el-form-item>
           <el-form-item label="成套计划启动时间">
-            <span>{{ formatDate(scope.row.startTime) }}</span>
+            <span>{{ scope.row.startTime | formatYYMMDD }}</span>
           </el-form-item>
           <el-form-item label="成套计划完成时间">
-            <span>{{ formatDate(scope.row.endTime) }}</span>
+            <span>{{ scope.row.endTime | formatYYMMDD }}</span>
           </el-form-item>
           <el-form-item label="原计划发货日期">
-            <span>{{ formatDate(scope.row.deliverTime) }}</span>
+            <span>{{ scope.row.deliverTime | formatYYMMDD }}</span>
           </el-form-item>
           <el-form-item label="设计阶段-项目计划">
             <el-tag
               v-for="(item, index) in ProStatusOption.DesignStatus"
               :key="index"
-              :type="scope.row[item.fields] == '1' ? 'success' : 'info'"
+              :type="scope.row[item.fields] | formatStageStatus"
               class="status-tab"
               size="small"
             >{{ item.name }}</el-tag>
@@ -62,7 +62,7 @@
             <el-tag
               v-for="(item, index) in ProStatusOption.ProduceStatus"
               :key="index"
-              :type="scope.row[item.fields] == '1' ? 'success' : 'info'"
+              :type="scope.row[item.fields] | formatStageStatus"
               class="status-tab"
               size="small"
             >{{ item.name }}</el-tag>
@@ -113,7 +113,7 @@
     </el-table-column>
     <el-table-column align="center" :label="'成套\n计划工时（人/天）'" width="140" prop="setPlan">
       <template slot-scope="scope">
-        {{ formatTime(scope.row.setPlan) }}
+        {{ scope.row.setPlan | workTimeH2D }}
       </template>
     </el-table-column>
     <el-table-column align="center" label="成套班组" width="120" prop="setLeader" sortable>
@@ -133,7 +133,8 @@
 
 <script>
 import ProStatusOption from '@/utils/project-status'
-import { formatYYMMDD, workTimeH2D } from '@/utils/format'
+import { formatYYMMDD, workTimeH2D, formatStageStatus, formatFeedback } from '@/utils/format'
+
 export default {
   props: {
     list: {
@@ -145,6 +146,12 @@ export default {
       default: true
     }
   },
+  filter: {
+    formatYYMMDD,
+    workTimeH2D,
+    formatStageStatus,
+    formatFeedback
+  },
   data() {
     return {
       ProStatusOption // 项目状态字段配置表
@@ -153,14 +160,6 @@ export default {
   methods: {
     delClick(id) {
       this.$emit('delete-click', id)
-    },
-    // 去除时分秒
-    formatDate(date) {
-      return formatYYMMDD(date)
-    },
-    // 工时-小时转天
-    formatTime(h) {
-      return workTimeH2D(h)
     },
     // 表格单元格样式
     cellStyle() {

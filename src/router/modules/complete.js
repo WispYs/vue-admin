@@ -3,7 +3,7 @@ const completeRouter = {
   name: 'Complete',
   redirect: '/project/complete/list',
   component: () => import('@/views/project/complete/index'),
-  meta: { title: '成套已完成项目' },
+  meta: { title: '已完成项目' },
   children: [
     {
       path: 'list',

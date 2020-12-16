@@ -13,6 +13,14 @@ export function formatProjectStatus(type) {
   }
 }
 
+export function formatDeliverStatus(type) {
+  switch (Number(type)) {
+    case 0: return '未发货'
+    case 1: return '已发货'
+    default: return ''
+  }
+}
+
 export function formatRisk(status) {
   switch (Number(status)) {
     case 0: return '有风险'
@@ -22,7 +30,26 @@ export function formatRisk(status) {
   }
 }
 
+// 项目阶段（设计/生产）状态
+export function formatStageStatus(status) {
+  if (status === '1') {
+    return 'success'
+  } else if (status === '0') {
+    return 'info'
+  }
+}
+
+// 反馈提货
+export function formatFeedback(status) {
+  if (status === '1') {
+    return '是'
+  } else if (status === '0') {
+    return '否'
+  }
+}
+
 // 格式化工时单位 （1人/天 = 8小时）
+// 项目需求为天后台一意孤行要存小时，所以存取数据的时候需要转换，smddx
 // 小时转天
 export function workTimeH2D(num) {
   const workTime = num || 0
@@ -35,6 +62,7 @@ export function workTimeD2H(num) {
 }
 
 // 格式化时间（去除后台返回的时分秒 例如：2020-12-01 00:00:00）
+// 原因同上，存取数据的时候需要转换
 export function formatYYMMDD(str) {
   const timeStr = str || ''
   return timeStr.split(' ')[0]

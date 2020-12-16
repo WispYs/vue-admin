@@ -69,7 +69,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/project/implplan',
     name: 'Project',
-    meta: { title: '项目管理', icon: 'el-icon-s-help' },
+    meta: { title: '项目成套管理', icon: 'el-icon-s-help' },
     children: [
       implplanRouter,
       completeRouter,

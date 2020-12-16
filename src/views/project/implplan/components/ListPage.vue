@@ -77,8 +77,8 @@ export default {
 
     // 删除操作
     delClick(id) {
-      const limit = 1
-      if (limit === 1) {
+      const role = 1
+      if (role) {
         this.$confirm('是否删除该项目?', '提示', {
           confirmButtonText: '删除',
           cancelButtonText: '取消',
@@ -90,13 +90,13 @@ export default {
             this.__getList()
           })
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })
+          // this.$message({
+          //   type: 'info',
+          //   message: '已取消删除'
+          // })
         })
       } else {
-        this.$alert('请联系管理员（何经理、王经理）进行删除操作', '', {
+        this.$alert('请联系管理员（何经理）进行删除操作', '', {
           confirmButtonText: '确定'
         })
       }

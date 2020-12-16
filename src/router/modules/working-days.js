@@ -3,7 +3,7 @@ const workingDaysRouter = {
   name: 'WorkingDays',
   redirect: '/project/working-days/list',
   component: () => import('@/views/project/working-days/index'),
-  meta: { title: '上周工时' },
+  meta: { title: '上周生产工时' },
   children: [
     {
       path: 'list',

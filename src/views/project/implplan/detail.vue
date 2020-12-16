@@ -28,6 +28,10 @@
         <label>成套班组：</label>
         <span class="item-info">{{ projectForm.setLeader }}</span>
       </el-col>
+      <el-col :xs="18" :sm="8" :md="8" :lg="6">
+        <label>项目生产负责人：</label>
+        <span class="item-info">{{ projectForm.productionMan }}</span>
+      </el-col>
     </el-row>
     <el-row :gutter="24" class="detail-item">
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
@@ -45,6 +49,10 @@
     </el-row>
     <el-row :gutter="24" class="detail-item">
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
+        <label>成本工时：</label>
+        <span class="item-info">{{ projectForm.costDay }}人/天</span>
+      </el-col>
+      <el-col :xs="18" :sm="8" :md="8" :lg="6">
         <label>成套计划工时：</label>
         <span class="item-info">{{ projectForm.setPlan }}人/天</span>
       </el-col>
@@ -52,9 +60,23 @@
         <label>成套剩余工时：</label>
         <span class="item-info">{{ projectForm.setRemaining }}人/天</span>
       </el-col>
+    </el-row>
+    <el-row :gutter="24" class="detail-item">
+      <el-col :xs="18" :sm="8" :md="8" :lg="6">
+        <label>项目状态：</label>
+        <span class="item-info">{{ projectForm.proStatus }}</span>
+      </el-col>
+      <el-col :xs="18" :sm="8" :md="8" :lg="6">
+        <label>发货状态：</label>
+        <span class="item-info">{{ projectForm.deliverStatus }}</span>
+      </el-col>
+      <el-col :xs="18" :sm="8" :md="8" :lg="6">
+        <label>项目风险等级：</label>
+        <span class="item-info">{{ projectForm.proRisk }}</span>
+      </el-col>
       <el-col :xs="18" :sm="8" :md="8" :lg="6">
         <label>反馈提货：</label>
-        <span class="item-info">{{ projectForm.feedbackPickup == '1' ? '是' : '否' }}</span>
+        <span class="item-info">{{ projectForm.feedbackPickup | formatFeedback }}</span>
       </el-col>
     </el-row>
     <el-row :gutter="24" class="detail-item">
@@ -90,7 +112,7 @@
       <el-tag
         v-for="(item, index) in ProStatusOption.DesignStatus"
         :key="index"
-        :type="projectForm[item.fields] | statusFilter"
+        :type="projectForm[item.fields] | formatStageStatus"
         class="status-tab"
         size="small"
       >{{ item.name }}</el-tag>
@@ -100,7 +122,7 @@
       <el-tag
         v-for="(item, index) in ProStatusOption.ProduceStatus"
         :key="index"
-        :type="projectForm[item.fields] | statusFilter"
+        :type="projectForm[item.fields] | formatStageStatus"
         class="status-tab"
         size="small"
       >{{ item.name }}</el-tag>
@@ -113,12 +135,16 @@
       <label>缺料反馈：</label>
       <span class="item-info">{{ projectForm.materialFeedback }}</span>
     </el-row>
+    <el-row :gutter="24" class="detail-item">
+      <label>备注：</label>
+      <span class="item-info">{{ projectForm.remark }}</span>
+    </el-row>
   </div>
 </template>
 
 <script>
 import PageBack from '@/components/PageBack'
-import { formatYYMMDD, workTimeH2D } from '@/utils/format'
+import { formatYYMMDD, workTimeH2D, formatProjectStatus, formatDeliverStatus, formatRisk, formatStageStatus, formatFeedback } from '@/utils/format'
 import { fetchImplPlanProDetail } from '@/api/implplan'
 import ProStatusOption from '@/utils/project-status'
 
@@ -127,13 +153,8 @@ export default {
     PageBack
   },
   filters: {
-    statusFilter(status) {
-      if (status === '1') {
-        return 'success'
-      } else if (status === '0') {
-        return 'info'
-      }
-    }
+    formatStageStatus,
+    formatFeedback
   },
   data() {
     return {
@@ -145,11 +166,16 @@ export default {
         saleMan: '',
         proEngineer: '',
         setLeader: '',
+        productionMan: '',
         cabinetNum: '',
         boxNum: '',
         standardCabinet: '',
+        costDay: '',
         setPlan: '',
         setRemaining: '',
+        proStatus: '',
+        deliverStatus: '',
+        proRisk: '',
         feedbackPickup: '',
         submissionDate: '',
         pickupTime: '',
@@ -157,6 +183,7 @@ export default {
         startTime: '',
         endTime: '',
         deliverTime: '',
+        deliverdDate: '',
         drawingDesign: 0,
         cabinetOrder: 0,
         materialMain: 0,
@@ -167,7 +194,8 @@ export default {
         powerTest: 0,
         packDelever: 0,
         problem: '',
-        materialFeedback: ''
+        materialFeedback: '',
+        remark: ''
       }
     }
   },
@@ -179,14 +207,19 @@ export default {
       const proNo = this.$route.params.id
       fetchImplPlanProDetail(proNo).then(response => {
         this.projectForm = Object.assign(response.data, {
+          costDay: workTimeH2D(response.data.costDay),
           setPlan: workTimeH2D(response.data.setPlan),
           setRemaining: workTimeH2D(response.data.setRemaining),
+          proStatus: formatProjectStatus(response.data.proStatus),
+          deliverStatus: formatDeliverStatus(response.data.deliverStatus),
+          proRisk: formatRisk(response.data.proRisk),
           submissionDate: formatYYMMDD(response.data.submissionDate),
           pickupTime: formatYYMMDD(response.data.pickupTime),
           arrivalTime: formatYYMMDD(response.data.arrivalTime),
           startTime: formatYYMMDD(response.data.startTime),
           endTime: formatYYMMDD(response.data.endTime),
-          deliverTime: formatYYMMDD(response.data.deliverTime)
+          deliverTime: formatYYMMDD(response.data.deliverTime),
+          deliverdDate: formatYYMMDD(response.data.deliverdDate)
         })
       })
     }

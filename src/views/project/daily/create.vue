@@ -30,8 +30,8 @@
       </el-row>
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <el-form-item label="当日总工时" label-width="110px" prop="targetDay">
-            <el-input v-model="projectForm.targetDay">
+          <el-form-item label="当日总工时" label-width="110px" prop="totalTime">
+            <el-input v-model="projectForm.totalTime">
               <template slot="append">人/天</template>
             </el-input>
           </el-form-item>
@@ -57,19 +57,6 @@ export default {
     PageBack
   },
   data() {
-    // 比较计划进度和完成进度
-    const compareNumber = (rule, value, callback) => {
-      const plan = this.projectForm.plan
-      const completion = this.projectForm.completion
-      // if (!plan) {
-      //   callback(new Error('请先选择计划进度'))
-      // }
-      if (completion > plan) {
-        this.projectForm.completion = this.projectForm.plan
-      } else {
-        callback()
-      }
-    }
     return {
       loading: false,
       proNoOption: [
@@ -80,9 +67,7 @@ export default {
       projectForm: {
         proNo: '',
         currentTime: '',
-        status: '',
-        plan: 0,
-        completion: 0,
+        totalTime: '',
         content: ''
       },
       rules: {
@@ -90,21 +75,10 @@ export default {
           { required: true, message: '请选择项目名称', trigger: 'blur' }
         ],
         currentTime: [
-          { required: true, message: '请选择创建时间', trigger: 'blur' }
+          { required: true, message: '请选择日期', trigger: 'blur' }
         ],
-        status: [
-          { required: true, message: '请选择项目状态', trigger: 'blur' }
-        ],
-        plan: [
-          { required: true, message: '请选择计划进度', trigger: 'blur' },
-          { validator: compareNumber, trigger: 'change' }
-        ],
-        completion: [
-          { required: true, message: '请选择完成进度', trigger: 'blur' },
-          { validator: compareNumber, trigger: 'change' }
-        ],
-        content: [
-          { required: true, message: '请填写工作内容', trigger: 'blur' }
+        totalTime: [
+          { required: true, message: '请填写当日总工时', trigger: 'blur' }
         ]
       }
     }
@@ -123,15 +97,12 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.loading = true
-          const formData = Object.assign(this.projectForm, {
-            plan: this.projectForm.plan / 100,
-            completion: this.projectForm.completion / 100
-          })
+          const formData = this.projectForm
           addProgressPlan(formData).then(response => {
             console.log(response)
             this.$message.success(response.message)
             this.loading = false
-            this.$router.push({ name: 'ProgressPlan' })
+            this.$router.push({ name: 'Daily' })
           }).catch(error => {
             console.log(error)
             this.loading = false

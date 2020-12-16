@@ -3,7 +3,7 @@ const workshopRouter = {
   name: 'Workshop',
   redirect: '/project/workshop/list',
   component: () => import('@/views/project/workshop/index'),
-  meta: { title: '车间成套项目' },
+  meta: { title: '进行中项目' },
   children: [
     {
       path: 'list',

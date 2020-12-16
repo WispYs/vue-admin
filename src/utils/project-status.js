@@ -1,4 +1,13 @@
 export default {
+  DeliverStatus: [
+    {
+      name: '未发货',
+      value: 0
+    }, {
+      name: '已发货',
+      value: 1
+    }
+  ],
   ProjectStatus: [
     {
       name: '未开始',

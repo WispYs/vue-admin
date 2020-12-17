@@ -1,0 +1,56 @@
+.detail-container {
+  padding: 40px;
+  position: relative;
+
+  &__item {
+    padding-top: 20px;
+    border-bottom: 2px dashed #ededed;
+    margin-bottom: 20px;
+
+    &:nth-last-of-type(1) {
+      border-bottom: 0;
+    }
+
+    h4 {
+      margin-bottom: 15px;
+      font-size: 18px;
+      color: #606266;
+    }
+
+    .item-content {
+      margin-left: 40px;
+    }
+
+    .detail-item {
+      margin-bottom: 22px;
+
+      label {
+        width: 125px;
+        display: inline-block;
+        text-align: right;
+        vertical-align: middle;
+        font-size: 14px;
+        color: #606266;
+        line-height: 40px;
+        padding: 0 12px 0 0;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+
+      .item-info {
+        display: inline-block;
+        line-height: 40px;
+        font-size: 14px;
+        color: #606266;
+      }
+
+      .el-tag {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.el-textarea {
+  width: 60%;
+}

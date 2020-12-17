@@ -26,15 +26,15 @@
       <el-row :gutter="24" class="detail-item">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <label>成本工时：</label>
-          <span class="item-info">{{ projectForm.costDay }}人/天</span>
+          <span class="item-info">{{ projectForm.costDay }} 人/天</span>
         </el-col>
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <label>预算目标工时：</label>
-          <span class="item-info">{{ projectForm.targetDay }}人/天</span>
+          <span class="item-info">{{ projectForm.targetDay }} 人/天</span>
         </el-col>
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <label>实际汇总工时：</label>
-          <span class="item-info">{{ projectForm.actualDay }}人/天</span>
+          <span class="item-info">{{ projectForm.actualDay }} 人/天</span>
         </el-col>
       </el-row>
       <el-row :gutter="24">

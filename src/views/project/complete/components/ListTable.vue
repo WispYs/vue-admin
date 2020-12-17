@@ -124,6 +124,11 @@ import ProStatusOption from '@/utils/project-status'
 import { formatYYMMDD, workTimeH2D, formatStageStatus } from '@/utils/format'
 
 export default {
+  filters: {
+    formatYYMMDD,
+    workTimeH2D,
+    formatStageStatus
+  },
   props: {
     list: {
       type: Array,
@@ -133,11 +138,6 @@ export default {
       type: Boolean,
       default: true
     }
-  },
-  filter: {
-    formatYYMMDD,
-    workTimeH2D,
-    formatStageStatus
   },
   data() {
     return {

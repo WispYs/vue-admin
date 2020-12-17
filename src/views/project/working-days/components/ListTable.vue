@@ -52,6 +52,10 @@
 <script>
 import { workTimeH2D, formatProjectStatus } from '@/utils/format'
 export default {
+  filters: {
+    workTimeH2D,
+    formatProjectStatus
+  },
   props: {
     list: {
       type: Array,
@@ -61,10 +65,6 @@ export default {
       type: Boolean,
       default: true
     }
-  },
-  filter: {
-    workTimeH2D,
-    formatProjectStatus
   },
   data() {
     return {

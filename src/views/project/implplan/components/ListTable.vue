@@ -22,26 +22,29 @@
           <el-form-item label="项目工程师">
             <span>{{ scope.row.proEngineer }}</span>
           </el-form-item>
+          <el-form-item label="项目生产负责人">
+            <span>{{ scope.row.productionMan }}</span>
+          </el-form-item>
           <el-form-item label="反馈提货">
             <span>{{ scope.row.feedbackPickup | formatFeedback }}</span>
           </el-form-item>
           <el-form-item label="成本工时">
-            <span>{{ scope.row.costDay | workTimeH2D }}人/天</span>
+            <span>{{ scope.row.costDay | workTimeH2D }} 人/天</span>
           </el-form-item>
           <el-form-item label="成套计划工时">
-            <span>{{ scope.row.setPlan | workTimeH2D }}人/天</span>
+            <span>{{ scope.row.setPlan | workTimeH2D }} 人/天</span>
           </el-form-item>
           <el-form-item label="成套剩余工时">
-            <span>{{ scope.row.setRemaining | workTimeH2D }}人/天</span>
+            <span>{{ scope.row.setRemaining | workTimeH2D }} 人/天</span>
           </el-form-item>
           <el-form-item label="项目状态">
-            <span>{{ scope.row.proStatus | formatProjectStatus }}人/天</span>
+            <span>{{ scope.row.proStatus | formatProjectStatus }}</span>
           </el-form-item>
           <el-form-item label="发货状态">
-            <span>{{ scope.row.deliverStatus | formatDeliverStatus }}人/天</span>
+            <span>{{ scope.row.deliverStatus | formatDeliverStatus }}</span>
           </el-form-item>
           <el-form-item label="项目风险等级">
-            <span>{{ scope.row.proRisk | formatRisk }}人/天</span>
+            <span>{{ scope.row.proRisk | formatRisk }}</span>
           </el-form-item>
           <el-form-item label="成套资料提交日期">
             <span>{{ scope.row.submissionDate | formatYYMMDD }}</span>
@@ -154,6 +157,15 @@ import ProStatusOption from '@/utils/project-status'
 import { formatYYMMDD, workTimeH2D, formatStageStatus, formatFeedback, formatProjectStatus, formatDeliverStatus, formatRisk } from '@/utils/format'
 
 export default {
+  filters: {
+    formatYYMMDD,
+    workTimeH2D,
+    formatStageStatus,
+    formatFeedback,
+    formatProjectStatus,
+    formatDeliverStatus,
+    formatRisk
+  },
   props: {
     list: {
       type: Array,
@@ -163,15 +175,6 @@ export default {
       type: Boolean,
       default: true
     }
-  },
-  filter: {
-    formatYYMMDD,
-    workTimeH2D,
-    formatStageStatus,
-    formatFeedback,
-    formatProjectStatus,
-    formatDeliverStatus,
-    formatRisk
   },
   data() {
     return {

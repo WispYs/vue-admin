@@ -29,10 +29,10 @@
             <span>{{ scope.row.proRisk | formatRisk }}</span>
           </el-form-item>
           <el-form-item label="成套计划工时">
-            <span>{{ scope.row.setPlan | workTimeH2D }}人/天</span>
+            <span>{{ scope.row.setPlan | workTimeH2D }} 人/天</span>
           </el-form-item>
           <el-form-item label="成套实际工时">
-            <span>{{ scope.row.setWork | workTimeH2D }}人/天</span>
+            <span>{{ scope.row.setWork | workTimeH2D }} 人/天</span>
           </el-form-item>
           <el-form-item label="成套资料提交日期">
             <span>{{ scope.row.submissionDate | formatYYMMDD }}</span>
@@ -122,6 +122,14 @@ import ProStatusOption from '@/utils/project-status'
 import { formatYYMMDD, formatFeedback, workTimeH2D, formatRisk, formatStageStatus, formatProjectStatus } from '@/utils/format'
 
 export default {
+  filters: {
+    formatYYMMDD,
+    formatFeedback,
+    workTimeH2D,
+    formatRisk,
+    formatStageStatus,
+    formatProjectStatus
+  },
   props: {
     list: {
       type: Array,
@@ -131,14 +139,6 @@ export default {
       type: Boolean,
       default: true
     }
-  },
-  filter: {
-    formatYYMMDD,
-    formatFeedback,
-    workTimeH2D,
-    formatRisk,
-    formatStageStatus,
-    formatProjectStatus
   },
   data() {
     return {

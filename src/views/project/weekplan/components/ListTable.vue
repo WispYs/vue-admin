@@ -23,10 +23,10 @@
             <span>{{ scope.row.proMan }}</span>
           </el-form-item>
           <el-form-item label="成套计划工时">
-            <span>{{ scope.row.setWork | workTimeH2D }}人/天</span>
+            <span>{{ scope.row.setWork | workTimeH2D }} 人/天</span>
           </el-form-item>
           <el-form-item label="成套剩余工时">
-            <span>{{ scope.row.setRemaining | workTimeH2D }}人/天</span>
+            <span>{{ scope.row.setRemaining | workTimeH2D }} 人/天</span>
           </el-form-item>
           <el-form-item label="项目风险预警">
             <span>{{ scope.row.proRisk | formatRisk }}</span>
@@ -102,6 +102,12 @@
 import ProStatusOption from '@/utils/project-status'
 import { formatYYMMDD, workTimeH2D, formatRisk, formatProjectStatus } from '@/utils/format'
 export default {
+  filters: {
+    formatYYMMDD,
+    workTimeH2D,
+    formatRisk,
+    formatProjectStatus
+  },
   props: {
     list: {
       type: Array,
@@ -111,12 +117,6 @@ export default {
       type: Boolean,
       default: true
     }
-  },
-  filter: {
-    formatYYMMDD,
-    workTimeH2D,
-    formatRisk,
-    formatProjectStatus
   },
   data() {
     return {

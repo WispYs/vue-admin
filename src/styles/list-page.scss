@@ -1,0 +1,11 @@
+.list-container {
+  padding: 20px;
+
+  .list-tip {
+    margin-bottom: 10px;
+
+    &__item {
+      margin-right: 8px;
+    }
+  }
+}

@@ -121,17 +121,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .filter-bar {
-    margin: 20px 0;
-    &__item {
-      display: inline-block;
-      margin: 0 40px 15px 0;
-      font-size: 14px;
-      label {
-        font-weight: normal;
-        font-size: 14px;
-        margin-right: 4px;
-      }
-    }
-  }
+  @import '~@/styles/list-filter.scss';
+
 </style>

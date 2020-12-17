@@ -149,20 +149,6 @@ export default {
 </script>
 
 <style lang="scss">
-  .el-table .pre-line {
-    background: #f5f7fa;
-  }
-
-  .el-table .orange-row {
-    background: oldlace;
-  }
-
-  .el-table .red-row {
-    background: #fef0f0;
-  }
-
-  .el-table .green-row {
-    background: #f0f9eb;
-  }
+  @import '~@/styles/list-table.scss';
 
 </style>

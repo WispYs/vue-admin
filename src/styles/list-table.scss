@@ -1,0 +1,76 @@
+.el-table {
+  .pre-line {
+    background: #f5f7fa;
+
+    .cell {
+      white-space: pre-line;
+    }
+  }
+
+  .table-expand {
+    .el-form-item {
+      font-size: 13px;
+      margin-right: 0;
+      margin-bottom: 0;
+      width: 50%;
+
+      &.lg-item {
+        width: 100%;
+      }
+
+      label {
+        position: relative;
+        width: 150px;
+        color: #999;
+
+        &::after {
+          position: absolute;
+          content: '：';
+          top: 50%;
+          right: 12px;
+          transform: translateY(-50%);
+        }
+      }
+
+      &__content {
+        font-size: 13px;
+        width: calc(100% - 150px);
+      }
+    }
+  }
+
+  .status-tab {
+    margin: 4px;
+  }
+
+  .delete {
+    color: #F56C6C;
+  }
+
+  .orange-row {
+    background: oldlace;
+  }
+
+  .red-row {
+    background: #fef0f0;
+  }
+
+  .green-row {
+    background: #f0f9eb;
+  }
+
+  .time-warning--red {
+    font-size: 12px;
+    color: #f56c6c;
+  }
+
+  .time-warning--orange {
+    font-size: 12px;
+    color: #e6a23c;
+  }
+
+  .time-warning--green {
+    font-size: 12px;
+    color: #67c23a;
+  }
+}

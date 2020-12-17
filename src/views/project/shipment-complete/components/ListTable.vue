@@ -130,7 +130,6 @@ export default {
 </script>
 
 <style lang="scss">
-  .el-table .pre-line {
-    background: #f5f7fa;
-  }
+  @import '~@/styles/list-table.scss';
+
 </style>

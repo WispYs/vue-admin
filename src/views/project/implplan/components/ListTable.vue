@@ -10,7 +10,7 @@
     :cell-style="cellStyle"
     header-cell-class-name="pre-line"
   >
-    <el-table-column type="expand">
+    <el-table-column type="expand" class="expand-ss">
       <template slot-scope="scope">
         <el-form label-position="left" inline class="table-expand">
           <el-form-item label="项目名称">
@@ -193,8 +193,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-  .el-table .pre-line {
-    background: #f5f7fa;
-  }
+<style lang="scss">
+  @import '~@/styles/list-table.scss';
+
 </style>

@@ -129,32 +129,6 @@ export default {
 </script>
 
 <style lang="scss">
-  .el-table {
-    .pre-line {
-      background: #f5f7fa;
-    }
-    .time-warning--red {
-      font-size: 12px;
-      color: #f56c6c;
-    }
-    .time-warning--orange {
-      font-size: 12px;
-      color: #e6a23c;
-    }
-    .time-warning--green {
-      font-size: 12px;
-      color: #67c23a;
-    }
-    .orange-row {
-      background: oldlace;
-    }
+  @import '~@/styles/list-table.scss';
 
-    .red-row {
-      background: #fef0f0;
-    }
-
-    .green-row {
-      background: #f0f9eb;
-    }
-  }
 </style>

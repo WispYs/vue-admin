@@ -138,53 +138,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
-  .list-container {
-    padding: 20px;
-    .list-tip {
-      margin-bottom: 10px;
-      &__item {
-        margin-right: 8px;
-      }
-    }
-  }
-  .status-tab {
-    margin: 4px;
-  }
-  .delete {
-    color: #F56C6C;
-  }
-  .table-expand {
-    .el-form-item {
-      font-size: 13px;
-      margin-right: 0;
-      margin-bottom: 0;
-      width: 50%;
-      &.lg-item {
-        width: 100%;
-      }
-      label {
-        position: relative;
-        width: 150px;
-        color: #999;
-        &::after {
-          position: absolute;
-          content: '：';
-          top: 50%;
-          right: 12px;
-          transform: translateY(-50%);
-        }
-      }
-      &__content {
-        font-size: 13px;
-        width: calc(100% - 150px);
-      }
-    }
-  }
-  .pre-line{
-    .cell {
-      white-space:pre-line;
-    }
-  }
+<style lang="scss" scoped>
+  @import '~@/styles/list-page.scss';
+
 </style>
 

@@ -55,19 +55,19 @@
         <el-row :gutter="24" class="detail-item">
           <el-col :xs="18" :sm="8" :md="6" :lg="6">
             <label>成套启动时间：</label>
-            <span class="item-info">{{ projectForm.startTime }}</span>
+            <span class="item-info">{{ projectForm.startTime | formatYYMMDD }}</span>
           </el-col>
           <el-col :xs="18" :sm="8" :md="6" :lg="6">
             <label>成套完成时间：</label>
-            <span class="item-info">{{ projectForm.endTime }}</span>
+            <span class="item-info">{{ projectForm.endTime | formatYYMMDD }}</span>
           </el-col>
           <el-col :xs="18" :sm="8" :md="6" :lg="6">
             <label>计划发货日期：</label>
-            <span class="item-info">{{ projectForm.deliverTime }}</span>
+            <span class="item-info">{{ projectForm.deliverTime | formatYYMMDD }}</span>
           </el-col>
           <el-col :xs="18" :sm="8" :md="6" :lg="6">
             <label>实际发货日期：</label>
-            <span class="item-info">{{ projectForm.deliverdDate }}</span>
+            <span class="item-info">{{ projectForm.deliverdDate | formatYYMMDD }}</span>
           </el-col>
         </el-row>
       </div>
@@ -78,7 +78,7 @@
         <el-row :gutter="24" class="detail-item">
           <el-col :xs="18" :sm="8" :md="6" :lg="6">
             <label>成套工时汇总：</label>
-            <span class="item-info">{{ projectForm.setWork }} 人/天</span>
+            <span class="item-info">{{ projectForm.setWork | workTimeH2D }} 人/天</span>
           </el-col>
         </el-row>
         <el-row :gutter="24" class="detail-item">
@@ -86,7 +86,7 @@
           <el-tag
             v-for="(item, index) in ProStatusOption.DesignStatus"
             :key="index"
-            :type="projectForm[item.fields] ? 'success' : 'info'"
+            :type="projectForm[item.fields] | formatStageStatus"
             class="status-tab"
             size="small"
           >{{ item.name }}</el-tag>
@@ -96,7 +96,7 @@
           <el-tag
             v-for="(item, index) in ProStatusOption.ProduceStatus"
             :key="index"
-            :type="projectForm[item.fields] ? 'success' : 'info'"
+            :type="projectForm[item.fields] | formatStageStatus"
             class="status-tab"
             size="small"
           >{{ item.name }}</el-tag>
@@ -122,7 +122,7 @@
 
 <script>
 import PageBack from '@/components/PageBack'
-import { formatYYMMDD, workTimeH2D } from '@/utils/format'
+import { formatYYMMDD, workTimeH2D, formatStageStatus } from '@/utils/format'
 import { fetchCompleteProDetail } from '@/api/complete'
 import ProStatusOption from '@/utils/project-status'
 
@@ -132,7 +132,8 @@ export default {
   },
   filters: {
     formatYYMMDD,
-    workTimeH2D
+    workTimeH2D,
+    formatStageStatus
   },
   data() {
     return {
@@ -174,26 +175,8 @@ export default {
       const proNo = this.$route.params.id
       fetchCompleteProDetail(proNo).then(response => {
         console.log(response)
-        this.projectForm = Object.assign(response.data, {
-          setWork: workTimeH2D(response.data.setWork),
-          startTime: formatYYMMDD(response.data.startTime),
-          endTime: formatYYMMDD(response.data.endTime),
-          deliverTime: formatYYMMDD(response.data.deliverTime),
-          deliverdDate: formatYYMMDD(response.data.deliverdDate),
-          drawingDesign: this.formatStr2Boolean(response.data.drawingDesign),
-          cabinetOrder: this.formatStr2Boolean(response.data.cabinetOrder),
-          materialMain: this.formatStr2Boolean(response.data.materialMain),
-          informationSubmit: this.formatStr2Boolean(response.data.informationSubmit),
-          materialAuxiliary: this.formatStr2Boolean(response.data.materialAuxiliary),
-          pickingLayout: this.formatStr2Boolean(response.data.pickingLayout),
-          wiringSet: this.formatStr2Boolean(response.data.wiringSet),
-          powerTest: this.formatStr2Boolean(response.data.powerTest),
-          packDelever: this.formatStr2Boolean(response.data.packDelever)
-        })
+        this.projectForm = response.data
       })
-    },
-    formatStr2Boolean(str) {
-      return str === '1'
     }
   }
 }
@@ -201,4 +184,5 @@ export default {
 
 <style lang="scss" scoped>
   @import "~@/styles/detail.scss";
+
 </style>

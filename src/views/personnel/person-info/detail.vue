@@ -1,7 +1,7 @@
 <template>
   <div class="detail-container">
     <page-back />
-    <el-form ref="userForm" :model="userForm" label-width="100px" class="demo-userForm">
+    <el-form ref="userForm" :model="userForm" label-width="100px" class="user-form">
       <el-row :gutter="24" class="detail-item">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <label>员工编号：</label>
@@ -48,52 +48,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .detail-container {
-    padding: 40px;
-    position: relative;
-    .detail-item {
-      margin-bottom: 22px;
-      label {
-        min-width: 100px;
-        display: inline-block;
-        text-align: right;
-        vertical-align: middle;
-        font-size: 14px;
-        color: #606266;
-        line-height: 40px;
-        padding: 0 12px 0 0;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-      }
-      .item-info {
-        display: inline-block;
-        line-height: 40px;
-        font-size: 14px;
-        color: #606266;
-      }
-      .el-tag {
-        margin-right: 10px;
-      }
-      &.text-item {
-        label {
-          float: left;
-        }
-        .item-info {
-          width: calc(100% - 125px);
-        }
-      }
-    }
-    .progress-slider {
-      display: inline-block;
-      width: calc(100% - 60px);
-      margin:0 10px;
-    }
-    .progress-item {
-      line-height: 38px;
-      float: right;
-    }
-  }
-  .el-textarea {
-    width: 60%;
-  }
+  @import "~@/styles/detail.scss";
+
 </style>

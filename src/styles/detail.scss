@@ -47,6 +47,27 @@
       .el-tag {
         margin-right: 10px;
       }
+
+      &.text-item {
+        label {
+          float: left;
+        }
+
+        .item-info {
+          width: calc(100% - 125px);
+        }
+      }
+    }
+
+    .progress-slider {
+      display: inline-block;
+      width: calc(100% - 60px);
+      margin: 0 10px;
+    }
+
+    .progress-item {
+      line-height: 38px;
+      float: right;
     }
   }
 }

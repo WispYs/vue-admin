@@ -1,7 +1,7 @@
 <template>
   <div class="detail-container">
     <page-back />
-    <el-form ref="projectForm" :model="projectForm" label-width="100px" class="demo-projectForm">
+    <el-form ref="projectForm" :model="projectForm" label-width="100px" class="project-form">
       <el-row :gutter="24" class="detail-item">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <label>项目L号：</label>

@@ -1,7 +1,7 @@
 <template>
   <div class="create-container">
     <page-back />
-    <el-form ref="userForm" :model="userForm" :rules="rules" label-width="100px" class="demo-userForm">
+    <el-form ref="userForm" :model="userForm" :rules="rules" label-width="100px" class="user-form">
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="员工编号" prop="userNo">

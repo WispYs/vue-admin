@@ -1,6 +1,6 @@
 <template>
   <div class="edit-container">
-    <el-form ref="projectForm" :model="projectForm" :rules="rules" label-width="100px" class="demo-projectForm">
+    <el-form ref="projectForm" :model="projectForm" :rules="rules" label-width="100px" class="project-form">
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="项目L号" prop="proNo">

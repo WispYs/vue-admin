@@ -1,7 +1,7 @@
 <template>
   <div class="edit-container">
     <page-back />
-    <el-form ref="projectForm" :model="projectForm" :rules="rules" label-width="100px" class="demo-projectForm">
+    <el-form ref="projectForm" :model="projectForm" :rules="rules" label-width="100px" class="project-form">
       <div class="edit-container__item">
         <h4>基本信息</h4>
         <div class="item-content">

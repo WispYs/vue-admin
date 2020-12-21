@@ -5,7 +5,7 @@
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="项目L号" prop="proNo">
-            <el-select v-model="projectForm.proNo" placeholder="请选择项目L号" style="width: 100%" @change="selectProNo">
+            <el-select v-model.trim="projectForm.proNo" placeholder="请选择项目L号" style="width: 100%" @change="selectProNo">
               <el-option v-for="(item, index) in proNoOption" :key="index" :label="item" :value="item" />
             </el-select>
           </el-form-item>
@@ -120,6 +120,7 @@ export default {
         this.loading = false
       })
     },
+
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {

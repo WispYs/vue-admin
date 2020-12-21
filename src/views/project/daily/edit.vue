@@ -1,5 +1,5 @@
 <template>
-  <div class="create-container">
+  <div class="edit-container">
     <page-back />
     <el-form ref="projectForm" :model="projectForm" :rules="rules" label-width="100px" class="project-form">
       <el-row :gutter="24">
@@ -41,7 +41,7 @@
         <el-input v-model="projectForm.content" type="textarea" :autosize="{ minRows: 3, maxRows: 6}" />
       </el-form-item>
       <el-form-item>
-        <el-button v-loading="loading" type="primary" @click="submitForm('projectForm')">添加工时</el-button>
+        <el-button v-loading="loading" type="primary" @click="submitForm('projectForm')">编辑</el-button>
         <el-button @click="resetForm('projectForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -50,7 +50,7 @@
 
 <script>
 import { workTimeD2H, workTimeH2D } from '@/utils/format'
-import { fetchProNo, fetchProDetail, addDailyWork } from '@/api/daily'
+import { fetchProNo, fetchProDetail, editDailyWork, fetchDailyWorkDetail } from '@/api/daily'
 import PageBack from '@/components/PageBack'
 
 export default {
@@ -89,9 +89,19 @@ export default {
     }
   },
   mounted() {
+    this.__getInfo()
     this.__getProNo()
   },
   methods: {
+    __getInfo() {
+      const proNo = this.$route.params.id
+      fetchDailyWorkDetail(proNo).then(response => {
+        console.log(response)
+        this.projectForm = Object.assign(response.data, {
+          totalTime: workTimeH2D(response.data.totalTime)
+        })
+      })
+    },
     // 获取所有项目编号
     __getProNo() {
       fetchProNo().then(response => {
@@ -107,37 +117,23 @@ export default {
         })
       })
     },
-    createDaily(formData) {
-      this.loading = true
-      addDailyWork(formData).then(response => {
-        console.log(response)
-        this.$message.success(response.message)
-        this.loading = false
-        this.$router.push({ name: 'Daily' })
-      }).catch(error => {
-        console.log(error)
-        this.projectForm.totalTime = workTimeH2D(this.projectForm.totalTime)
-        this.loading = false
-      })
-    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          if (!this.loading) {
-            this.$confirm('确定添加该条日工时?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            }).then(() => {
-              const formData = Object.assign(this.projectForm, {
-                totalTime: workTimeD2H(this.projectForm.totalTime)
-              })
-              console.log(formData)
-              this.createDaily(formData)
-            }).catch(() => {
-
-            })
-          }
+          this.loading = true
+          const proNo = this.$route.params.id
+          const formData = Object.assign(this.projectForm, {
+            totalTime: workTimeD2H(this.projectForm.totalTime)
+          })
+          editDailyWork(proNo, formData).then(response => {
+            console.log(response)
+            this.$message.success(response.message)
+            this.loading = false
+            this.$router.push({ name: 'Daily' })
+          }).catch(error => {
+            console.log(error)
+            this.loading = false
+          })
         } else {
           this.$message.error('请填写完整信息')
           return false
@@ -145,25 +141,16 @@ export default {
       })
     },
     resetForm(formName) {
-      this.$refs[formName].resetFields()
+      this.__getInfo()
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .create-container {
+  .edit-container {
     padding: 40px;
     position: relative;
-    .progress-slider {
-      display: inline-block;
-      width: calc(100% - 60px);
-      margin:0 10px;
-    }
-    .progress-item {
-      line-height: 38px;
-      float: right;
-    }
   }
   .el-textarea {
     width: 60%;

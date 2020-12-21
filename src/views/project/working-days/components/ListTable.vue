@@ -26,9 +26,9 @@
         {{ scope.row.proName }}
       </template>
     </el-table-column>
-    <el-table-column label="项目类型" prop="proType" width="150">
+    <el-table-column align="center" label="折算标准柜" prop="standardCabinet" width="150">
       <template slot-scope="scope">
-        {{ scope.row.proType }}
+        {{ scope.row.standardCabinet }}
       </template>
     </el-table-column>
     <el-table-column align="center" label="成套班组" width="150" prop="setLeader" sortable>
@@ -89,11 +89,22 @@ export default {
           return
         }
         const values = data.map(item => Number(item[column.property]))
-        if (!values.every(value => isNaN(value))) {
+        if (column.property === 'setWork') {
           sums[index] = values.reduce((prev, curr) => {
             const value = Number(curr)
+            const prevNum = Number(prev)
             if (!isNaN(value)) {
-              return prev + (curr / 8).toFixed(2)
+              return ((prevNum + curr) / 8).toFixed(2)
+            } else {
+              return prev
+            }
+          }, 0)
+        } else if (column.property === 'standardCabinet') {
+          sums[index] = values.reduce((prev, curr) => {
+            const value = Number(curr)
+            const prevNum = Number(prev)
+            if (!isNaN(value)) {
+              return Number(prevNum + curr).toFixed(2)
             } else {
               return prev
             }
@@ -102,7 +113,6 @@ export default {
           sums[index] = ''
         }
       })
-
       return sums
     }
 

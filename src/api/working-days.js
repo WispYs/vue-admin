@@ -5,7 +5,7 @@ import baseUrl from './url.js'
 // 列表
 export function fetchWorkingDays(page, size, filter) {
   return request({
-    url: `${baseUrl}/workingdays/search/${page}/${size}`,
+    url: `${baseUrl}/workinghour/querylastweekhourpage/${page}/${size}`,
     method: 'post',
     data: filter
   })

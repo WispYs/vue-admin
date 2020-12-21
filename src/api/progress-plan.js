@@ -5,7 +5,7 @@ import baseUrl from './url.js'
 // 列表
 export function fetchProgressPlan(page, size, filter) {
   return request({
-    url: `${baseUrl}/resourceload/search/${page}/${size}`,
+    url: `${baseUrl}/workingdays/search/${page}/${size}`,
     method: 'post',
     data: filter
   })

@@ -35,7 +35,7 @@
           </el-col>
           <el-col :xs="18" :sm="8" :md="8" :lg="6">
             <label>项目工程师：</label>
-            <span class="item-info">{{ projectForm.proEngineer }}</span>
+            <span class="item-info">{{ projectForm.proMan }}</span>
           </el-col>
           <el-col :xs="18" :sm="8" :md="8" :lg="6">
             <label>成套班组：</label>
@@ -154,7 +154,7 @@ export default {
         proName: '',
         proType: '',
         saleMan: '',
-        proEngineer: '',
+        proMan: '',
         setLeader: '',
         cabinetNum: '',
         boxNum: '',

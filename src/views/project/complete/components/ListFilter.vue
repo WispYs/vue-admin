@@ -11,8 +11,7 @@
     <div class="filter-bar__item">
       <label>发货状态：</label>
       <el-select v-model="deliverStatus" placeholder="请选择发货状态">
-        <el-option label="未发货" value="0" />
-        <el-option label="已发货" value="1" />
+        <el-option v-for="(item, index) in ProStatusOption.deliverStatus" :key="index" :label="item.name" :value="item.value" />
       </el-select>
     </div>
     <!-- <div class="filter-bar__item">
@@ -40,6 +39,8 @@
 </template>
 
 <script>
+import ProStatusOption from '@/utils/project-status'
+
 export default {
   props: {
     downloadLoading: {
@@ -49,6 +50,7 @@ export default {
   },
   data() {
     return {
+      ProStatusOption,
       proNo: '',
       proName: '',
       deliverStatus: '',

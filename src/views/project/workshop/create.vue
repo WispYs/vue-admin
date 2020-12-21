@@ -31,8 +31,8 @@
           </el-form-item>
         </el-col>
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <el-form-item label="项目工程师" prop="proEngineer">
-            <el-input v-model="projectForm.proEngineer" />
+          <el-form-item label="项目工程师" prop="proMan">
+            <el-input v-model="projectForm.proMan" />
           </el-form-item>
         </el-col>
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
@@ -145,7 +145,7 @@ export default {
         proName: '',
         proType: '',
         saleMan: '',
-        proEngineer: '',
+        proMan: '',
         setLeader: '',
         cabinetNum: '',
         boxNum: '',

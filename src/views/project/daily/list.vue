@@ -4,7 +4,7 @@
 
 <script>
 import ListPage from './components/ListPage'
-import { fetchWorkingDays } from '@/api/working-days'
+import { fetchDailyWork } from '@/api/daily'
 
 export default {
   components: { ListPage },
@@ -18,7 +18,7 @@ export default {
   methods: {
     __fetchlist(page, size, filter) {
       this.listLoading = true
-      fetchWorkingDays(page, size, filter).then(response => {
+      fetchDailyWork(page, size, filter).then(response => {
         this.list = response.data.rows || []
         this.total = response.data.total
         this.listLoading = false

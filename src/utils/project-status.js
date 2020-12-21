@@ -2,37 +2,37 @@ export default {
   DeliverStatus: [
     {
       name: '未发货',
-      value: 0
+      value: '0'
     }, {
       name: '已发货',
-      value: 1
+      value: '1'
     }
   ],
   ProjectStatus: [
     {
       name: '未开始',
-      value: 0
+      value: '0'
     }, {
       name: '进行中',
-      value: 1
+      value: '1'
     }, {
       name: '已完成',
-      value: 2
+      value: '2'
     }, {
       name: '已搁置',
-      value: 3
+      value: '3'
     }
   ],
   ProjectRisk: [
     {
       name: '有风险',
-      value: 0
+      value: '0'
     }, {
       name: '已延误',
-      value: 1
+      value: '1'
     }, {
       name: '正常',
-      value: 2
+      value: '2'
     }
   ],
   DesignStatus: [

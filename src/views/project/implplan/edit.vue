@@ -29,8 +29,8 @@
               </el-form-item>
             </el-col>
             <el-col :xs="18" :sm="8" :md="8" :lg="6">
-              <el-form-item label="项目工程师" prop="proEngineer">
-                <el-input v-model="projectForm.proEngineer" />
+              <el-form-item label="项目工程师" prop="proMan">
+                <el-input v-model="projectForm.proMan" />
               </el-form-item>
             </el-col>
             <el-col :xs="18" :sm="8" :md="8" :lg="6">
@@ -262,7 +262,7 @@ export default {
         proName: '',
         proType: '',
         saleMan: '',
-        proEngineer: '',
+        proMan: '',
         setLeader: '',
         productionMan: '',
         cabinetNum: '',
@@ -343,6 +343,9 @@ export default {
           costDay: workTimeH2D(response.data.costDay),
           setPlan: workTimeH2D(response.data.setPlan),
           setRemaining: workTimeH2D(response.data.setRemaining),
+          proStatus: Number(response.data.proStatus),
+          proRisk: Number(response.data.proRisk),
+          deliverStatus: Number(response.data.deliverStatus),
           feedbackPickup: Number(response.data.feedbackPickup),
           drawingDesign: Number(response.data.drawingDesign),
           cabinetOrder: Number(response.data.cabinetOrder),
@@ -367,6 +370,10 @@ export default {
         this.$router.push({ name: 'Implplan' })
       }).catch(error => {
         console.log(error)
+        this.projectForm.proStatus = +this.projectForm.proStatus
+        this.projectForm.costDay = workTimeH2D(this.projectForm.costDay)
+        this.projectForm.setPlan = workTimeH2D(this.projectForm.setPlan)
+        this.projectForm.setRemaining = workTimeH2D(this.projectForm.setRemaining)
         this.loading = false
       })
     },
@@ -381,6 +388,7 @@ export default {
             }).then(() => {
               const proNo = this.$route.params.id
               const formData = Object.assign(this.projectForm, {
+                proStatus: this.projectForm.proStatus + '',
                 costDay: workTimeD2H(this.projectForm.costDay),
                 setPlan: workTimeD2H(this.projectForm.setPlan),
                 setRemaining: workTimeD2H(this.projectForm.setRemaining)

@@ -29,8 +29,8 @@
               </el-form-item>
             </el-col>
             <el-col :xs="18" :sm="8" :md="8" :lg="6">
-              <el-form-item label="项目工程师" prop="proEngineer">
-                <el-input v-model="projectForm.proEngineer" />
+              <el-form-item label="项目工程师" prop="proMan">
+                <el-input v-model="projectForm.proMan" />
               </el-form-item>
             </el-col>
             <el-col :xs="18" :sm="8" :md="8" :lg="6">
@@ -220,7 +220,7 @@
 </template>
 
 <script>
-import { workTimeD2H } from '@/utils/format'
+import { workTimeD2H, workTimeH2D } from '@/utils/format'
 import { addImplPlanPro } from '@/api/implplan'
 import PageBack from '@/components/PageBack'
 import ProStatusOption from '@/utils/project-status'
@@ -262,7 +262,7 @@ export default {
         proName: '',
         proType: '',
         saleMan: '',
-        proEngineer: '',
+        proMan: '',
         setLeader: '',
         productionMan: '',
         cabinetNum: '',
@@ -341,6 +341,9 @@ export default {
         this.$router.push({ name: 'Implplan' })
       }).catch(error => {
         console.log(error)
+        this.projectForm.costDay = workTimeH2D(this.projectForm.costDay)
+        this.projectForm.setPlan = workTimeH2D(this.projectForm.setPlan)
+        this.projectForm.setRemaining = workTimeH2D(this.projectForm.setRemaining)
         this.loading = false
       })
     },

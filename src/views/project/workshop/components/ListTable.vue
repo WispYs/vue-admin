@@ -20,7 +20,7 @@
             <span>{{ scope.row.saleMan }}</span>
           </el-form-item>
           <el-form-item label="项目工程师">
-            <span>{{ scope.row.proEngineer }}</span>
+            <span>{{ scope.row.proMan }}</span>
           </el-form-item>
           <el-form-item label="反馈提货">
             <span>{{ scope.row.feedbackPickup | formatFeedback }}</span>

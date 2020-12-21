@@ -44,8 +44,8 @@
       <template slot-scope="scope">
         {{ scope.row.setWork | workTimeH2D }}
         <span v-if="compareTime(scope.row.costDay, scope.row.setPlan, scope.row.setWork) === 0" class="time-warning--green">（↑0）</span>
-        <span v-else-if="compareTime(scope.row.costDay, scope.row.setPlan, scope.row.setWork) === 1" class="time-warning--orange">（↑{{ scope.row.setWork - scope.row.setPlan }}）</span>
-        <span v-else-if="compareTime(scope.row.costDay, scope.row.setPlan, scope.row.setWork) === 2" class="time-warning--red">（↑{{ scope.row.setWork - scope.row.costDay }}）</span>
+        <span v-else-if="compareTime(scope.row.costDay, scope.row.setPlan, scope.row.setWork) === 1" class="time-warning--orange">（↑{{ computeOverTime(scope.row.setWork,scope.row.setPlan) }}）</span>
+        <span v-else-if="compareTime(scope.row.costDay, scope.row.setPlan, scope.row.setWork) === 2" class="time-warning--red">（↑{{ computeOverTime(scope.row.setWork, scope.row.costDay) }}）</span>
       </template>
     </el-table-column>
     <el-table-column align="center" label="成套班组" width="120" prop="setLeader" sortable>
@@ -82,9 +82,6 @@ export default {
     return {
     }
   },
-  computed: {
-
-  },
   methods: {
     // 成本工时：costDay , 计划工时：setPlan, 实际工时：setWork
     // 工时核算状态：正常  0 ；超预算  1； 超成本  2；
@@ -103,6 +100,10 @@ export default {
       if (setWork > costDay) {
         return 2
       }
+    },
+    // 计算超出工时 （小时转天）
+    computeOverTime(time1, time2) {
+      return Number((time1 - time2) / 8).toFixed(1)
     },
     tableRowClassName({ row, rowIndex }) {
       const costDay = Number(this.list[rowIndex].costDay)

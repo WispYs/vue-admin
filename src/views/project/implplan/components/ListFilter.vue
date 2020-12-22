@@ -14,7 +14,7 @@
     </div>
     <div class="filter-bar__item">
       <label>项目状态：</label>
-      <el-select v-model="proStatus" placeholder="请选择项目状态">
+      <el-select v-model="proStatus" placeholder="请选择项目状态" @change="search()">
         <el-option v-for="(item, index) in ProStatusOption.ProjectStatus" :key="index" :label="item.name" :value="item.value" />
       </el-select>
     </div>

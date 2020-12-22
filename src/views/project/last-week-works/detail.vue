@@ -52,7 +52,7 @@
 <script>
 import PageBack from '@/components/PageBack'
 import { formatProgress, workTimeH2D } from '@/utils/format'
-import { fetchWorkingDaysDetail } from '@/api/working-days'
+import { fetchWorkingDaysDetail } from '@/api/last-week-works'
 
 export default {
   components: {

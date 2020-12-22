@@ -54,7 +54,7 @@
 
 <script>
 import PageBack from '@/components/PageBack'
-import { addWorkingDays } from '@/api/working-days'
+import { addWorkingDays } from '@/api/last-week-works'
 
 export default {
   components: {

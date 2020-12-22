@@ -43,8 +43,9 @@ export default {
               radius: ['50%', '70%'],
               avoidLabelOverlap: false,
               label: {
-                show: false,
-                position: 'center'
+                show: true,
+                position: 'inner',
+                formatter: '{c}'
               },
               emphasis: {
                 label: {

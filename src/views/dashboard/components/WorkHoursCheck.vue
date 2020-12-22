@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Echart id="lastWeekChart" :options="options" />
+    <Echart id="workHoursCheck" :options="options" />
   </div>
 </template>
 
@@ -66,7 +66,7 @@ export default {
                 show: true,
                 position: 'insideRight'
               },
-              data: newData.targetDay
+              data: newData.setPlan
             },
             {
               name: '实际工时',
@@ -75,7 +75,7 @@ export default {
                 show: true,
                 position: 'insideRight'
               },
-              data: newData.actualDay
+              data: newData.setWork
             }
           ]
         }

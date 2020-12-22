@@ -11,7 +11,7 @@
     <div class="filter-bar__item">
       <label>发货状态：</label>
       <el-select v-model="deliverStatus" placeholder="请选择发货状态">
-        <el-option v-for="(item, index) in ProStatusOption.deliverStatus" :key="index" :label="item.name" :value="item.value" />
+        <el-option v-for="(item, index) in ProStatusOption.DeliverStatus" :key="index" :label="item.name" :value="item.value" />
       </el-select>
     </div>
     <!-- <div class="filter-bar__item">

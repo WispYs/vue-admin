@@ -18,7 +18,7 @@
 
 <script>
 import PageBack from '@/components/PageBack'
-import { fetchWorkingDaysDetail } from '@/api/working-days'
+import { fetchWorkingDaysDetail } from '@/api/last-week-works'
 
 export default {
   components: {

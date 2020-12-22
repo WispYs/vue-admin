@@ -4,7 +4,7 @@
 
 <script>
 import ListPage from './components/ListPage'
-import { fetchWorkingDays } from '@/api/working-days'
+import { fetchWorkingDays } from '@/api/last-week-works'
 
 export default {
   components: { ListPage },

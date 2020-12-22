@@ -23,7 +23,7 @@ import ExcelFields from '@/utils/excel-fields'
 import Pagination from '@/components/Pagination'
 import ListFilter from './ListFilter'
 import ListTable from './ListTable'
-import { deleteWorkingDays } from '@/api/working-days'
+import { deleteWorkingDays } from '@/api/last-week-works'
 
 export default {
   components: { Pagination, ListFilter, ListTable },

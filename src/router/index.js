@@ -11,7 +11,7 @@ import workshopRouter from './modules/workshop'
 import shipmentCompleteRouter from './modules/shipment-complete'
 import weekplanRouter from './modules/weekplan'
 import progressPlanRouter from './modules/progress-plan'
-import workingDaysRouter from './modules/working-days'
+import lastWeekWorksRouter from './modules/last-week-works'
 import dailyRouter from './modules/daily'
 import workAllotRouter from './modules/work-allot'
 import personInfoRouter from './modules/person-info'
@@ -77,7 +77,7 @@ export const constantRoutes = [
       shipmentCompleteRouter,
       weekplanRouter,
       progressPlanRouter,
-      workingDaysRouter,
+      lastWeekWorksRouter,
       dailyRouter
     ]
   },

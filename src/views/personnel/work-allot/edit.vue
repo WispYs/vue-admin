@@ -55,7 +55,7 @@
 <script>
 import PageBack from '@/components/PageBack'
 import { formatProgress } from '@/utils/format'
-import { fetchWorkingDaysDetail, editWorkingDays } from '@/api/working-days'
+import { fetchWorkingDaysDetail, editWorkingDays } from '@/api/last-week-works'
 
 export default {
   components: {

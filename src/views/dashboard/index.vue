@@ -59,24 +59,24 @@
       </el-col>
     </el-row>
     <el-row :gutter="32">
-      <el-col :xs="24" :md="8" :lg="8">
+      <el-col :xs="24" :md="12" :lg="12">
         <div class="chart-wrapper">
           <p class="chart-title">季度任务数</p>
           <quarter-count :cdata="quarterData" />
         </div>
       </el-col>
-      <el-col :xs="24" :md="8" :lg="8">
+      <el-col :xs="24" :md="12" :lg="12">
         <div class="chart-wrapper">
           <p class="chart-title">本周项目运行状态</p>
           <working-status :cdata="workingStatus" />
         </div>
       </el-col>
-      <el-col :xs="24" :md="8" :lg="8">
+      <!-- <el-col :xs="24" :md="8" :lg="8">
         <div class="chart-wrapper">
           <p class="chart-title">项目进度统计</p>
           <pro-progress :list="projectProgress" />
         </div>
-      </el-col>
+      </el-col> -->
       <!-- <el-col :xs="24" :md="8" :lg="8">
         <div class="chart-wrapper news-wrapper">
           <p class="chart-title">通知</p>
@@ -98,8 +98,8 @@
       </el-col>
       <el-col :xs="24" :md="12" :lg="12">
         <div class="chart-wrapper">
-          <p class="chart-title">上周工时</p>
-          <last-week-chart :cdata="lastWeekData" />
+          <p class="chart-title">项目人工核算（人/天）</p>
+          <work-hours-check :cdata="WorkHoursData" />
         </div>
       </el-col>
     </el-row>
@@ -119,7 +119,7 @@
 <script>
 import QuarterCount from './components/QuarterCount'
 import WorkingStatus from './components/WorkingStatus'
-import LastWeekChart from './components/LastWeekChart'
+import WorkHoursCheck from './components/WorkHoursCheck'
 // import ProCalendar from './components/ProCalendar'
 import WeekPlan from './components/WeekPlan'
 import ProProgress from './components/ProProgress'
@@ -127,7 +127,7 @@ import Footerbar from './components/Footerbar'
 import { fetchImplPlanPro } from '@/api/implplan'
 import { fetchCompletePro } from '@/api/complete'
 import { fetchShipmentComplete } from '@/api/shipment-complete'
-import { fetchWorkingDays } from '@/api/working-days'
+import { fetchProgressPlan } from '@/api/progress-plan'
 import { fetchWeekplanPro } from '@/api/weekplan'
 import { fetchProjectProgress, fetchWorkingStatus, fetchStandardCabinet, fetchQuarterCount } from '@/api/dashborad'
 
@@ -139,7 +139,7 @@ export default {
   components: {
     QuarterCount,
     WorkingStatus,
-    LastWeekChart,
+    WorkHoursCheck,
     // ProCalendar,
     WeekPlan,
     ProProgress,
@@ -162,7 +162,7 @@ export default {
       quarterData: null,
       workingStatus: null,
       projectProgress: null,
-      lastWeekData: null,
+      WorkHoursData: null,
       weekplanData: null,
       newsLists: mockDate.newsLists.item
     }
@@ -176,11 +176,11 @@ export default {
       data: [],
       name: []
     }
-    this.lastWeekData = {
+    this.WorkHoursData = {
       proName: [],
       costDay: [],
-      targetDay: [],
-      actualDay: []
+      setPlan: [],
+      setWork: []
     }
     this.__init()
   },
@@ -211,17 +211,18 @@ export default {
       // 折算标准柜累积量
       const nowYear = new Date().getFullYear() + '-01-01 00:00:00'
       fetchStandardCabinet({ 'deliverdDate': nowYear }).then(response => {
-        this.standardCabinetCount = Number(response.data[0].standardCabinet).toFixed(2)
+        const standardCabinetCount = Number(response.data[0].standardCabinet)
+        this.standardCabinetCount = standardCabinetCount ? standardCabinetCount.toFixed(2) : 0
       })
 
-      // 季度任务数量
+      // 季度任务数量(已发货项目)
       fetchQuarterCount({ 'deliverdDate': nowYear }).then(response => {
         const quarterCount = []
         const res = response.data
         // quarterNum ：季度数字，1 代表 1季度  2 代表2季度  3 代表 3季度  4 代表4季度。
         // 当不存在对应季度的项目时，不返回数值
         // 例：[{"quarterNum": "1","countNum": "2"},{"quarterNum": "4","countNum": "4"}]
-        // 后台返回的数据不全，前端对应补充
+        // 后台返回的数据不全，前端对应补充 ctmd
         for (let i = 1; i < 5; i++) {
           const itemCount = res.filter(it => it['quarterNum'] == i)
           if (itemCount[0]) {
@@ -262,22 +263,22 @@ export default {
       fetchWeekplanPro(page, size, filter).then(response => {
         this.weekplanData = response.data.rows
       })
-      // 上周工时
-      fetchWorkingDays(page, size, filter).then(response => {
+      // 项目人工核算
+      fetchProgressPlan(page, size, filter).then(response => {
         const lastWeekPro = response.data.rows.slice(0, 5)
         lastWeekPro.forEach(item => {
           for (const key in item) {
             if (key === 'proName') {
-              this.lastWeekData.proName.push(item[key])
+              this.WorkHoursData.proName.push(item[key])
             }
             if (key === 'costDay') {
-              this.lastWeekData.costDay.push(workTimeH2D(item[key]))
+              this.WorkHoursData.costDay.push(workTimeH2D(item[key]))
             }
-            if (key === 'targetDay') {
-              this.lastWeekData.targetDay.push(workTimeH2D(item[key]))
+            if (key === 'setPlan') {
+              this.WorkHoursData.setPlan.push(workTimeH2D(item[key]))
             }
-            if (key === 'actualDay') {
-              this.lastWeekData.actualDay.push(workTimeH2D(item[key]))
+            if (key === 'setWork') {
+              this.WorkHoursData.setWork.push(workTimeH2D(item[key]))
             }
           }
         })

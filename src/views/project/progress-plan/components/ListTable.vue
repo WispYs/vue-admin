@@ -87,14 +87,14 @@ export default {
     // 工时核算状态：正常  0 ；超预算  1； 超成本  2；
     // 这个状态后台没有存，只在前端计算后展示...我是真的服
     // 计划工时 < 成本工时（始终）
-    // 实际工时 < 计划工时 --- 正常  0
-    // 计划工时 < 实际工时 < 成本工时 --- 超预算  1
+    // 实际工时 <= 计划工时 --- 正常  0
+    // 计划工时 < 实际工时 <= 成本工时 --- 超预算  1
     // 实际工时 < 成本工时 --- 超成本  2
     compareTime(costDay, setPlan, setWork) {
-      if (setWork < setPlan) {
+      if (setWork <= setPlan) {
         return 0
       }
-      if (setWork > setPlan && setWork < costDay) {
+      if (setWork > setPlan && setWork <= costDay) {
         return 1
       }
       if (setWork > costDay) {
@@ -109,9 +109,9 @@ export default {
       const costDay = Number(this.list[rowIndex].costDay)
       const setPlan = Number(this.list[rowIndex].setPlan)
       const setWork = Number(this.list[rowIndex].setWork)
-      if (setWork < setPlan) {
+      if (setWork <= setPlan) {
         return 'green-row'
-      } else if (setWork > setPlan && setWork < costDay) {
+      } else if (setWork > setPlan && setWork <= costDay) {
         return 'orange-row'
       } else if (setWork > costDay) {
         return 'red-row'

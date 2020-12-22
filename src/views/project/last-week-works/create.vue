@@ -1,5 +1,5 @@
 <template>
-  <div class="edit-container">
+  <div class="create-container">
     <page-back />
     <el-form ref="projectForm" :model="projectForm" :rules="rules" label-width="100px" class="project-form">
       <el-row :gutter="24">
@@ -58,7 +58,7 @@
         </el-col>
       </el-row>
       <el-form-item>
-        <el-button v-loading="loading" type="primary" @click="submitForm('projectForm')">编辑</el-button>
+        <el-button v-loading="loading" type="primary" @click="submitForm('projectForm')">新建项目</el-button>
         <el-button @click="resetForm('projectForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -67,8 +67,8 @@
 
 <script>
 import PageBack from '@/components/PageBack'
-import { workTimeH2D, workTimeD2H, formatProgress } from '@/utils/format'
-import { fetchWorkingDaysDetail, editWorkingDays } from '@/api/working-days'
+import { addWorkingDays } from '@/api/last-week-works'
+import { workTimeD2H } from '@/utils/format'
 
 export default {
   components: {
@@ -123,34 +123,19 @@ export default {
       }
     }
   },
-  mounted() {
-    this.__getInfo()
-  },
   methods: {
-    __getInfo() {
-      const proNo = this.$route.params.id
-      fetchWorkingDaysDetail(proNo).then(response => {
-        console.log(response)
-        this.projectForm = Object.assign(response.data, {
-          costDay: workTimeH2D(response.data.costDay),
-          targetDay: workTimeH2D(response.data.targetDay),
-          actualDay: workTimeH2D(response.data.actualDay),
-          completionRate: formatProgress(response.data.completionRate)
-        })
-      })
-    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.loading = true
-          const proNo = this.$route.params.id
           const formData = Object.assign(this.projectForm, {
             costDay: workTimeD2H(this.projectForm.costDay),
             targetDay: workTimeD2H(this.projectForm.targetDay),
             actualDay: workTimeD2H(this.projectForm.actualDay),
             completionRate: this.projectForm.completionRate / 100
           })
-          editWorkingDays(proNo, formData).then(response => {
+          console.log(formData)
+          addWorkingDays(formData).then(response => {
             console.log(response)
             this.$message.success(response.message)
             this.loading = false
@@ -166,16 +151,25 @@ export default {
       })
     },
     resetForm(formName) {
-      this.__getInfo()
+      this.$refs[formName].resetFields()
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .edit-container {
+  .create-container {
     padding: 40px;
     position: relative;
+    .progress-slider {
+      display: inline-block;
+      width: calc(100% - 60px);
+      margin:0 10px;
+    }
+    .progress-item {
+      line-height: 38px;
+      float: right;
+    }
   }
   .el-textarea {
     width: 60%;

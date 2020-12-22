@@ -26,7 +26,7 @@
 
 <script>
 import PageBack from '@/components/PageBack'
-import { addWorkingDays } from '@/api/last-week-works'
+import { addPersonInfo } from '@/api/person-info'
 
 export default {
   components: {
@@ -50,21 +50,35 @@ export default {
     }
   },
   methods: {
+    create(formData) {
+      this.loading = true
+      console.log(formData)
+      addPersonInfo(formData).then(response => {
+        console.log(response)
+        this.$message.success(response.message)
+        this.loading = false
+        this.$router.push({ name: 'PersonInfo' })
+      }).catch(error => {
+        console.log(error)
+        this.loading = false
+      })
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.loading = true
-          const formData = this.userForm
-          console.log(formData)
-          addWorkingDays(formData).then(response => {
-            console.log(response)
-            this.$message.success(response.message)
-            this.loading = false
-            this.$router.push({ name: 'PersonInfo' })
-          }).catch(error => {
-            console.log(error)
-            this.loading = false
-          })
+          if (!this.loading) {
+            this.$confirm('确定添加该员工?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              const formData = this.userForm
+              console.log(formData)
+              this.create(formData)
+            }).catch(() => {
+
+            })
+          }
         } else {
           this.$message.error('请填写完整信息')
           return false

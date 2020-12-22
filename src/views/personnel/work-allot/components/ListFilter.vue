@@ -2,11 +2,11 @@
   <div class="filter-bar">
     <div class="filter-bar__item">
       <label>员工编号：</label>
-      <el-input v-model="proNo" class="filter-item" style="width: 150px" placeholder="请输入员工编号" />
+      <el-input v-model="userNo" class="filter-item" style="width: 150px" placeholder="请输入员工编号" />
     </div>
     <div class="filter-bar__item">
       <label>员工名称：</label>
-      <el-input v-model="proName" class="filter-item" style="width: 150px" placeholder="请输入员工名称" />
+      <el-input v-model="userName" class="filter-item" style="width: 150px" placeholder="请输入员工名称" />
     </div>
     <div class="filter-bar__item">
       <label>日报日期：</label>
@@ -46,11 +46,38 @@ export default {
   },
   data() {
     return {
-      proNo: '',
-      proName: '',
+      userNo: '',
+      userName: '',
       currentTimeArr: '',
       startTime: '',
-      endTime: ''
+      endTime: '',
+      pickerOptions: {
+        shortcuts: [{
+          text: '最近一周',
+          onClick(picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+            picker.$emit('pick', [start, end])
+          }
+        }, {
+          text: '最近一个月',
+          onClick(picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+            picker.$emit('pick', [start, end])
+          }
+        }, {
+          text: '最近三个月',
+          onClick(picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+            picker.$emit('pick', [start, end])
+          }
+        }]
+      }
     }
   },
   mounted() {
@@ -58,8 +85,8 @@ export default {
   },
   methods: {
     __initFilter() {
-      this.proNo = ''
-      this.proName = ''
+      this.userNo = ''
+      this.userName = ''
       this.currentTimeArr = ''
       this.startTime = ''
       this.endTime = ''
@@ -67,8 +94,8 @@ export default {
 
     __getFilter() {
       return {
-        proNo: this.proNo,
-        proName: this.proName,
+        userNo: this.userNo,
+        userName: this.userName,
         startTime: this.currentTimeArr[0] ? this.currentTimeArr[0] : '',
         endTime: this.currentTimeArr[0] ? this.currentTimeArr[1] : ''
       }

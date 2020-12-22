@@ -49,8 +49,8 @@ export default {
         size: 10
       },
       filter: {
-        proNo: '',
-        proName: ''
+        userNo: '',
+        userName: ''
       }
     }
   },
@@ -96,7 +96,7 @@ export default {
           })
         })
       } else {
-        this.$alert('请联系管理员（何经理、王经理）进行删除操作', '', {
+        this.$alert('请联系管理员（何经理）进行删除操作', '', {
           confirmButtonText: '确定'
         })
       }

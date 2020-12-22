@@ -26,7 +26,7 @@
 
 <script>
 import PageBack from '@/components/PageBack'
-import { fetchWorkingDaysDetail, editWorkingDays } from '@/api/last-week-works'
+import { fetchPersonInfoDetail, editPersonInfo } from '@/api/person-info'
 
 export default {
   components: {
@@ -55,26 +55,39 @@ export default {
   methods: {
     __getInfo() {
       const proNo = this.$route.params.id
-      fetchWorkingDaysDetail(proNo).then(response => {
+      fetchPersonInfoDetail(proNo).then(response => {
         console.log(response)
         this.userForm = response.data
+      })
+    },
+    edit(proNo, formData) {
+      this.loading = true
+      editPersonInfo(proNo, formData).then(response => {
+        console.log(response)
+        this.$message.success(response.message)
+        this.loading = false
+        this.$router.push({ name: 'PersonInfo' })
+      }).catch(error => {
+        console.log(error)
+        this.loading = false
       })
     },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.loading = true
-          const proNo = this.$route.params.id
-          const formData = this.userForm
-          editWorkingDays(proNo, formData).then(response => {
-            console.log(response)
-            this.$message.success(response.message)
-            this.loading = false
-            this.$router.push({ name: 'PersonInfo' })
-          }).catch(error => {
-            console.log(error)
-            this.loading = false
-          })
+          if (!this.loading) {
+            this.$confirm('确定编辑该员工?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              const proNo = this.$route.params.id
+              const formData = this.userForm
+              this.edit(proNo, formData)
+            }).catch(() => {
+
+            })
+          }
         } else {
           this.$message.error('请填写完整信息')
           return false

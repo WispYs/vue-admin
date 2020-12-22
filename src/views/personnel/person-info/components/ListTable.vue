@@ -64,6 +64,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+  @import '~@/styles/list-table.scss';
 
 </style>

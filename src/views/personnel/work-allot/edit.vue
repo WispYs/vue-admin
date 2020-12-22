@@ -5,7 +5,7 @@
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="员工编号" prop="userNo">
-            <el-select v-model="userForm.userNo" placeholder="请选择员工编号" style="width: 100%">
+            <el-select v-model.trim="userForm.userNo" placeholder="请选择员工编号" style="width: 100%">
               <el-option v-for="(item, index) in userNoOption" :key="index" :label="item" :value="item" />
             </el-select>
           </el-form-item>

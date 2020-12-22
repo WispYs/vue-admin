@@ -99,7 +99,6 @@ export default {
       })
     },
     selectProNo(val) {
-      console.log(val)
       fetchProDetail(val).then(response => {
         this.projectForm = Object.assign({}, this.projectForm, {
           proName: response.data[0].proName,

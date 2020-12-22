@@ -5,7 +5,7 @@
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="员工编号" prop="userNo">
-            <el-select v-model.trim="userForm.userNo" placeholder="请选择员工编号" style="width: 100%">
+            <el-select v-model.trim="userForm.userNo" placeholder="请选择员工编号" style="width: 100%" @change="selectPersonNo">
               <el-option v-for="(item, index) in userNoOption" :key="index" :label="item" :value="item" />
             </el-select>
           </el-form-item>
@@ -55,7 +55,7 @@
 <script>
 import PageBack from '@/components/PageBack'
 import { formatProgress } from '@/utils/format'
-import { fetchWorkingDaysDetail, editWorkingDays } from '@/api/last-week-works'
+import { fetchPersonNo, fetchPersonDetail, fetchWorkAllotDetail, editWorkAllot } from '@/api/work-allot'
 
 export default {
   components: {
@@ -64,17 +64,13 @@ export default {
   data() {
     return {
       loading: false,
-      userNoOption: [
-        'A20032',
-        'A20032',
-        'A20032'
-      ],
+      userNoOption: [],
       userForm: {
         userNo: '',
         userName: '',
         currentTime: '',
         content: '',
-        completion: '',
+        completion: 0,
         evaluation: ''
       },
       rules: {
@@ -101,34 +97,58 @@ export default {
   },
   mounted() {
     this.__getInfo()
+    this.__getPersonNo()
   },
   methods: {
     __getInfo() {
       const proNo = this.$route.params.id
-      fetchWorkingDaysDetail(proNo).then(response => {
-        console.log(response)
+      fetchWorkAllotDetail(proNo).then(response => {
         this.userForm = Object.assign(response.data, {
           completion: formatProgress(response.data.completion)
         })
       })
     },
+    // 获取所有员工编号
+    __getPersonNo() {
+      fetchPersonNo().then(response => {
+        this.userNoOption = response.data
+      })
+    },
+    selectPersonNo(val) {
+      fetchPersonDetail(val).then(response => {
+        this.userForm = Object.assign({}, this.userForm, {
+          userName: response.data[0]
+        })
+      })
+    },
+    async editWork(proNo, formData) {
+      try {
+        const response = await editWorkAllot(proNo, formData)
+        this.$message.success(response.message)
+        this.loading = false
+        this.$router.push({ name: 'WorkAllot' })
+      } catch (error) {
+        console.log(error)
+        this.loading = false
+      }
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.loading = true
-          const proNo = this.$route.params.id
-          const formData = Object.assign(this.userForm, {
-            completion: this.userForm.completion / 100
-          })
-          editWorkingDays(proNo, formData).then(response => {
-            console.log(response)
-            this.$message.success(response.message)
-            this.loading = false
-            this.$router.push({ name: 'WorkingDays' })
-          }).catch(error => {
-            console.log(error)
-            this.loading = false
-          })
+          if (!this.loading) {
+            this.$confirm('确定编辑该工作安排?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.loading = true
+              const proNo = this.$route.params.id
+              const formData = Object.assign(this.userForm, {
+                completion: this.userForm.completion / 100
+              })
+              this.editWork(proNo, formData)
+            })
+          }
         } else {
           this.$message.error('请填写完整信息')
           return false

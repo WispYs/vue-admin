@@ -50,18 +50,16 @@ export default {
     }
   },
   methods: {
-    create(formData) {
-      this.loading = true
-      console.log(formData)
-      addPersonInfo(formData).then(response => {
-        console.log(response)
+    async createPerson(formData) {
+      try {
+        const response = await addPersonInfo(formData)
         this.$message.success(response.message)
         this.loading = false
         this.$router.push({ name: 'PersonInfo' })
-      }).catch(error => {
+      } catch (error) {
         console.log(error)
         this.loading = false
-      })
+      }
     },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
@@ -72,11 +70,10 @@ export default {
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
+              this.loading = true
               const formData = this.userForm
               console.log(formData)
-              this.create(formData)
-            }).catch(() => {
-
+              this.createPerson(formData)
             })
           }
         } else {

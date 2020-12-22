@@ -60,17 +60,16 @@ export default {
         this.userForm = response.data
       })
     },
-    edit(proNo, formData) {
-      this.loading = true
-      editPersonInfo(proNo, formData).then(response => {
-        console.log(response)
+    async editPerson(proNo, formData) {
+      try {
+        const response = await editPersonInfo(proNo, formData)
         this.$message.success(response.message)
         this.loading = false
         this.$router.push({ name: 'PersonInfo' })
-      }).catch(error => {
+      } catch (error) {
         console.log(error)
         this.loading = false
-      })
+      }
     },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
@@ -81,11 +80,10 @@ export default {
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
+              this.loading = true
               const proNo = this.$route.params.id
               const formData = this.userForm
-              this.edit(proNo, formData)
-            }).catch(() => {
-
+              this.editPerson(proNo, formData)
             })
           }
         } else {

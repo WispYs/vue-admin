@@ -332,20 +332,19 @@ export default {
     }
   },
   methods: {
-    createProject(formData) {
-      this.loading = true
-      addImplPlanPro(formData).then(response => {
-        console.log(response)
+    async createProject(formData) {
+      try {
+        const response = await addImplPlanPro(formData)
         this.$message.success(response.message)
         this.loading = false
         this.$router.push({ name: 'Implplan' })
-      }).catch(error => {
+      } catch (error) {
         console.log(error)
         this.projectForm.costDay = workTimeH2D(this.projectForm.costDay)
         this.projectForm.setPlan = workTimeH2D(this.projectForm.setPlan)
         this.projectForm.setRemaining = workTimeH2D(this.projectForm.setRemaining)
         this.loading = false
-      })
+      }
     },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
@@ -356,6 +355,7 @@ export default {
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
+              this.loading = true
               const formData = Object.assign(this.projectForm, {
                 costDay: workTimeD2H(this.projectForm.costDay),
                 setPlan: workTimeD2H(this.projectForm.setPlan),
@@ -363,8 +363,6 @@ export default {
               })
               console.log(formData)
               this.createProject(formData)
-            }).catch(() => {
-
             })
           }
         } else {

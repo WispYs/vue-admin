@@ -111,6 +111,17 @@ export default {
         })
       })
     },
+    async createWork(formData) {
+      try {
+        const response = await addWorkAllot(formData)
+        this.$message.success(response.message)
+        this.loading = false
+        this.$router.push({ name: 'WorkAllot' })
+      } catch (error) {
+        console.log(error)
+        this.loading = false
+      }
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -125,15 +136,7 @@ export default {
                 completion: this.userForm.completion / 100
               })
               console.log(formData)
-              addWorkAllot(formData)
-            }).then(response => {
-              console.log(response)
-              this.$message.success(response.message)
-              this.loading = false
-              this.$router.push({ name: 'WorkAllot' })
-            }).catch(error => {
-              console.log(error)
-              this.loading = false
+              this.createWork(formData)
             })
           }
         } else {

@@ -358,21 +358,20 @@ export default {
         })
       })
     },
-    editProject(proNo, formData) {
-      this.loading = true
-      editImplPlanPro(proNo, formData).then(response => {
-        console.log(response)
+    async editProject(proNo, formData) {
+      try {
+        const response = await editImplPlanPro(proNo, formData)
         this.$message.success(response.message)
         this.loading = false
         this.$router.push({ name: 'Implplan' })
-      }).catch(error => {
+      } catch (error) {
         console.log(error)
         this.projectForm.proStatus = +this.projectForm.proStatus
         this.projectForm.costDay = workTimeH2D(this.projectForm.costDay)
         this.projectForm.setPlan = workTimeH2D(this.projectForm.setPlan)
         this.projectForm.setRemaining = workTimeH2D(this.projectForm.setRemaining)
         this.loading = false
-      })
+      }
     },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
@@ -383,6 +382,7 @@ export default {
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
+              this.loading = true
               const proNo = this.$route.params.id
               const formData = Object.assign(this.projectForm, {
                 proStatus: this.projectForm.proStatus + '',
@@ -394,8 +394,6 @@ export default {
               })
               console.log(formData)
               this.editProject(proNo, formData)
-            }).catch(() => {
-
             })
           }
         } else {

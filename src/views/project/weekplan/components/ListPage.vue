@@ -7,8 +7,8 @@
       @export-click="exportExcel"
     />
     <div class="list-tip">
-      <el-tag class="list-tip__item" size="small" type="warning">有风险</el-tag>
       <el-tag class="list-tip__item" size="small" type="danger">已延期</el-tag>
+      <el-tag class="list-tip__item" size="small" type="warning">有风险</el-tag>
       <el-tag class="list-tip__item" size="small" type="success">正常</el-tag>
     </div>
     <list-table :list="list" :list-loading="listLoading" @delete-click="delClick" />

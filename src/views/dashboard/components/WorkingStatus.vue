@@ -35,7 +35,7 @@ export default {
             left: 10,
             data: newData.name
           },
-          color: ['#e6a23c', '#409EFF', '#f56c6c', '#67c23a'],
+          color: ['#e6a23c', '#409EFF', '#67c23a', '#f56c6c'],
           series: [
             {
               name: '项目进度',

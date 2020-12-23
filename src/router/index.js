@@ -39,7 +39,15 @@ import personInfoRouter from './modules/person-info'
 export const constantRoutes = [
   {
     path: '/login',
+    name: 'Login',
     component: () => import('@/views/login/index'),
+    hidden: true
+  },
+
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import('@/views/register/index'),
     hidden: true
   },
 

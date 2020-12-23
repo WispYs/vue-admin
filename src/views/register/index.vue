@@ -3,8 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 v-if="loginRole === 1" class="title">{{ title1 }}</h3>
-        <h3 v-else class="title">{{ title2 }}</h3>
+        <h3 class="title">{{ title }}</h3>
       </div>
       <el-form-item prop="username">
         <span class="svg-container">
@@ -34,20 +33,38 @@
           name="password"
           tabindex="2"
           auto-complete="on"
-          @keyup.enter.native="handleLogin"
+          @keyup.enter.native="handleRegister"
         />
-        <span class="show-pwd" @click="showPwd">
+        <span class="show-pwd" @click="showPwd()">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
 
+      <el-form-item prop="password2">
+        <span class="svg-container">
+          <svg-icon icon-class="password" />
+        </span>
+        <el-input
+          :key="passwordType2"
+          ref="password2"
+          v-model="loginForm.password2"
+          :type="passwordType2"
+          placeholder="确认密码"
+          name="password2"
+          tabindex="2"
+          auto-complete="on"
+          @keyup.enter.native="handleRegister"
+        />
+        <span class="show-pwd" @click="showPwd2()">
+          <svg-icon :icon-class="passwordType2 === 'password' ? 'eye' : 'eye-open'" />
+        </span>
+      </el-form-item>
+
       <div class="tips">
-        <span v-if="loginRole === 1" @click="toggleRole(0)">切换管理员登录</span>
-        <span v-else @click="toggleRole(1)">切换常规登录</span>
-        <span @click="$router.push({name: 'Register'})">注册</span>
+        <span @click="$router.push({name: 'Login'})">登录</span>
       </div>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;letter-spacing:5px" @click.native.prevent="handleLogin">登录</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;letter-spacing:5px" @click.native.prevent="handleRegister">注册</el-button>
 
     </el-form>
   </div>
@@ -55,7 +72,6 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
-import { setToken } from '@/utils/auth'
 
 export default {
   name: 'Login',
@@ -74,20 +90,31 @@ export default {
         callback()
       }
     }
+    const comparePassWord = (rule, value, callback) => {
+      if (value !== this.loginForm.password) {
+        callback(new Error('请确定两次输入的密码一致'))
+      } else {
+        callback()
+      }
+    }
     return {
-      loginRole: 1,
-      title1: '上海泷得自动化后台管理系统',
-      title2: '泷得管理员登录',
+      title: '账号注册',
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: '',
+        password: '',
+        password2: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }],
+        password2: [
+          { required: true, trigger: 'blur', validator: validatePassword },
+          { validator: comparePassWord, trigger: 'blur' }
+        ]
       },
       loading: false,
       passwordType: 'password',
+      passwordType2: 'password',
       redirect: undefined
     }
   },
@@ -100,14 +127,6 @@ export default {
     }
   },
   methods: {
-    toggleRole(val) {
-      console.log(val)
-      this.loginRole = val
-      this.loginForm = {
-        username: '',
-        password: ''
-      }
-    },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -118,11 +137,20 @@ export default {
         this.$refs.password.focus()
       })
     },
-    handleLogin() {
+    showPwd2() {
+      if (this.passwordType2 === 'password') {
+        this.passwordType2 = ''
+      } else {
+        this.passwordType2 = 'password'
+      }
+      this.$nextTick(() => {
+        this.$refs.password2.focus()
+      })
+    },
+    handleRegister() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          setToken('xs6d7sfs1a212')
           this.$router.push({ path: this.redirect || '/' })
           this.loading = false
           // this.$store.dispatch('user/login', this.loginForm).then(() => {
@@ -225,7 +253,7 @@ $light_gray:#eee;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
-      letter-spacing: 1px;
+      letter-spacing: 4px;
     }
   }
 

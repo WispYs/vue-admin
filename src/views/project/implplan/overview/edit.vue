@@ -1,8 +1,8 @@
 <template>
-  <div class="create-container">
+  <div class="edit-container">
     <page-back />
     <el-form ref="projectForm" :model="projectForm" :rules="rules" label-width="100px" class="project-form">
-      <div class="create-container__item">
+      <div class="edit-container__item">
         <h4>基本信息</h4>
         <div class="item-content">
           <el-row :gutter="24">
@@ -61,9 +61,11 @@
               </el-form-item>
             </el-col>
           </el-row>
+
         </div>
+
       </div>
-      <div class="create-container__item">
+      <div class="edit-container__item">
         <h4>相关日期</h4>
         <div class="item-content">
           <el-row :gutter="24">
@@ -106,8 +108,9 @@
             </el-col>
           </el-row>
         </div>
+
       </div>
-      <div class="create-container__item">
+      <div class="edit-container__item">
         <h4>完成情况</h4>
         <div class="item-content">
           <el-row :gutter="24">
@@ -173,8 +176,6 @@
                   :true-label="1"
                   :false-label="0"
                 />
-                <!-- <el-checkbox v-model="projectForm.drawingDesign" label="图纸设计" name="drawingDesign" :true-label="1" :false-label="0" /> -->
-                <!-- ... -->
               </el-form-item>
             </el-col>
           </el-row>
@@ -190,14 +191,13 @@
                   :true-label="1"
                   :false-label="0"
                 />
-                <!-- <el-checkbox v-model="projectForm.pickingLayout" label="领料排版" name="pickingLayout" :true-label="1" :false-label="0" /> -->
-                <!-- ... -->
               </el-form-item>
             </el-col>
           </el-row>
         </div>
+
       </div>
-      <div class="create-container__item">
+      <div class="edit-container__item">
         <h4>其他信息</h4>
         <div class="item-content">
           <el-form-item label="项目问题汇总" prop="problem">
@@ -212,7 +212,7 @@
         </div>
       </div>
       <el-form-item>
-        <el-button v-loading="loading" type="primary" @click="submitForm('projectForm')">新建项目</el-button>
+        <el-button v-loading="loading" type="primary" @click="submitForm('projectForm')">编辑</el-button>
         <el-button @click="resetForm('projectForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -221,8 +221,8 @@
 
 <script>
 import { workTimeD2H, workTimeH2D } from '@/utils/format'
-import { addImplPlanPro } from '@/api/implplan'
 import PageBack from '@/components/PageBack'
+import { fetchImplPlanProDetail, editImplPlanPro } from '@/api/implplan'
 import ProStatusOption from '@/utils/project-status'
 
 export default {
@@ -331,15 +331,42 @@ export default {
       }
     }
   },
+  mounted() {
+    this.__getInfo()
+  },
   methods: {
-    async createProject(formData) {
+    __getInfo() {
+      const proNo = this.$route.params.id
+      fetchImplPlanProDetail(proNo).then(response => {
+        console.log(response)
+        this.projectForm = Object.assign(response.data, {
+          costDay: workTimeH2D(response.data.costDay),
+          setPlan: workTimeH2D(response.data.setPlan),
+          setRemaining: workTimeH2D(response.data.setRemaining),
+          feedbackPickup: Number(response.data.feedbackPickup),
+          drawingDesign: Number(response.data.drawingDesign),
+          cabinetOrder: Number(response.data.cabinetOrder),
+          materialMain: Number(response.data.materialMain),
+          informationSubmit: Number(response.data.informationSubmit),
+          materialAuxiliary: Number(response.data.materialAuxiliary),
+          pickingLayout: Number(response.data.pickingLayout),
+          wiringSet: Number(response.data.wiringSet),
+          powerTest: Number(response.data.powerTest),
+          packDelever: Number(response.data.packDelever)
+          // drawingDesign: this.formatStr2Boolean(response.data.drawingDesign),
+          // ...
+        })
+      })
+    },
+    async editProject(proNo, formData) {
       try {
-        const response = await addImplPlanPro(formData)
+        const response = await editImplPlanPro(proNo, formData)
         this.$message.success(response.message)
         this.loading = false
-        this.$router.push({ name: 'Implplan' })
+        this.$router.push({ name: 'Overview' })
       } catch (error) {
         console.log(error)
+        this.projectForm.proStatus = +this.projectForm.proStatus
         this.projectForm.costDay = workTimeH2D(this.projectForm.costDay)
         this.projectForm.setPlan = workTimeH2D(this.projectForm.setPlan)
         this.projectForm.setRemaining = workTimeH2D(this.projectForm.setRemaining)
@@ -350,19 +377,23 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (!this.loading) {
-            this.$confirm('确定添加该项目?', '提示', {
+            this.$confirm('确定编辑该项目?', '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
               this.loading = true
+              const proNo = this.$route.params.id
               const formData = Object.assign(this.projectForm, {
+                proStatus: this.projectForm.proStatus + '',
                 costDay: workTimeD2H(this.projectForm.costDay),
                 setPlan: workTimeD2H(this.projectForm.setPlan),
                 setRemaining: workTimeD2H(this.projectForm.setRemaining)
+                // drawingDesign: this.formatBoolean2Str(this.projectForm.drawingDesign),
+                // ...
               })
               console.log(formData)
-              this.createProject(formData)
+              this.editProject(proNo, formData)
             })
           }
         } else {
@@ -372,14 +403,20 @@ export default {
       })
     },
     resetForm(formName) {
-      this.$refs[formName].resetFields()
+      this.__getInfo()
     }
+    // formatStr2Boolean(str) {
+    //   return str === '1'
+    // },
+    // formatBoolean2Str(str) {
+    //   return str === true ? '1' : '0'
+    // }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .create-container {
+  .edit-container {
     padding: 40px;
     position: relative;
     &__item {
@@ -399,7 +436,6 @@ export default {
         margin-left: 40px;
       }
     }
-
   }
   .el-textarea {
     width: 60%;

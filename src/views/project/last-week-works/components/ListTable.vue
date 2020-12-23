@@ -73,9 +73,6 @@ export default {
     }
   },
   methods: {
-    delClick(id) {
-      this.$emit('delete-click', id)
-    },
     // 表格单元格样式
     cellStyle() {
       return 'font-size: 13px'
@@ -106,7 +103,6 @@ export default {
       })
       return sums
     }
-
   }
 }
 </script>

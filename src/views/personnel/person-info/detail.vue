@@ -18,7 +18,7 @@
 
 <script>
 import PageBack from '@/components/PageBack'
-import { fetchWorkingDaysDetail } from '@/api/last-week-works'
+import { fetchPersonInfoDetail } from '@/api/person-info'
 
 export default {
   components: {
@@ -38,7 +38,7 @@ export default {
   methods: {
     __getInfo() {
       const proNo = this.$route.params.id
-      fetchWorkingDaysDetail(proNo).then(response => {
+      fetchPersonInfoDetail(proNo).then(response => {
         console.log(response)
         this.userForm = response.data
       })

@@ -13,20 +13,6 @@ const weekplanRouter = {
       hidden: true
     },
     {
-      path: 'create',
-      name: 'WeekplanCreate',
-      component: () => import('@/views/project/weekplan/create'),
-      meta: { title: '新建项目', noCache: true, activeMenu: '/project/weekplan' },
-      hidden: true
-    },
-    {
-      path: 'edit/:id(\\w+)',
-      name: 'WeekplanEdit',
-      component: () => import('@/views/project/weekplan/edit'),
-      meta: { title: '编辑项目', noCache: true, activeMenu: '/project/weekplan' },
-      hidden: true
-    },
-    {
       path: 'detail/:id(\\w+)',
       name: 'WeekplanDetail',
       component: () => import('@/views/project/weekplan/detail'),

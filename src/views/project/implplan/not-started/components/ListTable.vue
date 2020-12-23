@@ -145,8 +145,6 @@
     <el-table-column label="操作" width="150" align="center">
       <template slot-scope="scope">
         <el-button type="text" size="small" @click="$router.push({name: 'NotStartedDetail', params: {id: scope.row.id}})">查看</el-button>
-        <!-- <el-button type="text" size="small" @click="$router.push({name: 'ImplplanEdit', params: {id: scope.row.id}})">编辑</el-button>
-        <el-button class="delete" type="text" size="small" @click="delClick(scope.row.id)">删除</el-button> -->
       </template>
     </el-table-column>
   </el-table>

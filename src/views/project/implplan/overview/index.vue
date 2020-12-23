@@ -1,5 +1,5 @@
 <template>
-  <div class="implplan-wrapper">
+  <div class="page-wrapper">
     <router-view />
   </div>
 </template>

@@ -8,15 +8,10 @@
       <label>项目名称：</label>
       <el-input v-model="proName" class="filter-item" style="width: 240px" placeholder="请输入项目名称" />
     </div>
-    <!-- <div class="filter-bar__item">
-      <label>生产负责人：</label>
-      <el-input v-model="productionMan" class="filter-item" style="width: 200px" placeholder="请输入生产负责人" />
-    </div> -->
     <div class="filter-bar__item">
       <el-button type="primary" size="medium" @click="search()">搜索</el-button>
       <el-button type="primary" size="medium" @click="reset()">重置</el-button>
       <!--<el-button type="primary" size="medium" :loading="downloadLoading" @click="handleExport()">导出数据</el-button> -->
-      <!-- <el-button type="primary" size="medium" @click="$router.push({name: 'WorkingDaysCreate'})">新建项目</el-button> -->
     </div>
   </div>
 </template>

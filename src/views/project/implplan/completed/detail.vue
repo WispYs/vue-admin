@@ -5,42 +5,43 @@
       <h4>基本信息</h4>
       <div class="item-content">
         <el-row :gutter="24" class="detail-item">
-          <el-col :xs="18" :sm="8" :md="8" :lg="6">
+          <el-col :xs="18" :sm="8" :md="6" :lg="6">
             <label>项目L号：</label>
             <span class="item-info">{{ projectForm.proNo }}</span>
           </el-col>
-          <el-col :xs="18" :sm="8" :md="8" :lg="6">
+          <el-col :xs="18" :sm="8" :md="6" :lg="6">
             <label>项目类型：</label>
             <span class="item-info">{{ projectForm.proType }}</span>
           </el-col>
-          <el-col :xs="18" :sm="8" :md="8" :lg="12">
+          <el-col :xs="18" :sm="8" :md="6" :lg="12">
             <label>项目名称：</label>
             <span class="item-info">{{ projectForm.proName }}</span>
           </el-col>
         </el-row>
         <el-row :gutter="24" class="detail-item">
-          <el-col :xs="18" :sm="8" :md="8" :lg="6">
-            <label>柜体数量：</label>
-            <span class="item-info">{{ projectForm.cabinetNum }}</span>
+          <el-col :xs="18" :sm="8" :md="6" :lg="6">
+            <label>项目销售人：</label>
+            <span class="item-info">{{ projectForm.saleMan }}</span>
           </el-col>
-          <el-col :xs="18" :sm="8" :md="8" :lg="6">
-            <label>箱体数量：</label>
-            <span class="item-info">{{ projectForm.boxNum }}</span>
+          <el-col :xs="18" :sm="8" :md="6" :lg="6">
+            <label>项目负责人：</label>
+            <span class="item-info">{{ projectForm.proMan }}</span>
           </el-col>
         </el-row>
         <el-row :gutter="24" class="detail-item">
-          <el-col :xs="18" :sm="8" :md="8" :lg="6">
-            <label>销售负责人：</label>
-            <span class="item-info">{{ projectForm.saleMan }}</span>
+          <el-col :xs="18" :sm="8" :md="6" :lg="6">
+            <label>柜体数量：</label>
+            <span class="item-info">{{ projectForm.cabinetNum }}</span>
           </el-col>
-          <el-col :xs="18" :sm="8" :md="8" :lg="6">
-            <label>项目工程师：</label>
-            <span class="item-info">{{ projectForm.proMan }}</span>
+          <el-col :xs="18" :sm="8" :md="6" :lg="6">
+            <label>箱体数量：</label>
+            <span class="item-info">{{ projectForm.boxNum }}</span>
           </el-col>
-          <el-col :xs="18" :sm="8" :md="8" :lg="6">
-            <label>成套班组：</label>
-            <span class="item-info">{{ projectForm.setLeader }}</span>
+          <el-col :xs="18" :sm="8" :md="6" :lg="6">
+            <label>折算标准柜：</label>
+            <span class="item-info">{{ projectForm.standardCabinet }}</span>
           </el-col>
+
         </el-row>
       </div>
     </div>
@@ -48,27 +49,21 @@
       <h4>相关日期</h4>
       <div class="item-content">
         <el-row :gutter="24" class="detail-item">
-          <el-col :xs="18" :sm="8" :md="8" :lg="6">
-            <label style="width: 140px">成套资料提交日期：</label>
-            <span class="item-info">{{ projectForm.submissionDate | formatYYMMDD }}</span>
-          </el-col>
-          <el-col :xs="18" :sm="8" :md="8" :lg="6">
-            <label style="width: 140px">材料要求到货日期：</label>
-            <span class="item-info">{{ projectForm.arrivalTime | formatYYMMDD }}</span>
-          </el-col>
-          <el-col :xs="18" :sm="8" :md="8" :lg="6">
-            <label style="width: 140px">成套计划启动时间：</label>
+          <el-col :xs="18" :sm="8" :md="6" :lg="6">
+            <label>成套启动时间：</label>
             <span class="item-info">{{ projectForm.startTime | formatYYMMDD }}</span>
           </el-col>
-        </el-row>
-        <el-row :gutter="24" class="detail-item">
-          <el-col :xs="18" :sm="8" :md="8" :lg="6">
-            <label style="width: 140px">成套计划完成时间：</label>
+          <el-col :xs="18" :sm="8" :md="6" :lg="6">
+            <label>成套完成时间：</label>
             <span class="item-info">{{ projectForm.endTime | formatYYMMDD }}</span>
           </el-col>
-          <el-col :xs="18" :sm="8" :md="8" :lg="6">
-            <label style="width: 140px">计划发货日期：</label>
+          <el-col :xs="18" :sm="8" :md="6" :lg="6">
+            <label>计划发货日期：</label>
             <span class="item-info">{{ projectForm.deliverTime | formatYYMMDD }}</span>
+          </el-col>
+          <el-col :xs="18" :sm="8" :md="6" :lg="6">
+            <label>实际发货日期：</label>
+            <span class="item-info">{{ projectForm.deliverdDate | formatYYMMDD }}</span>
           </el-col>
         </el-row>
       </div>
@@ -77,28 +72,20 @@
       <h4>完成情况</h4>
       <div class="item-content">
         <el-row :gutter="24" class="detail-item">
-          <el-col :xs="18" :sm="8" :md="8" :lg="6">
-            <label>成套计划工时：</label>
-            <span class="item-info">{{ projectForm.setPlan | workTimeH2D }} 人/天</span>
-          </el-col>
-          <el-col :xs="18" :sm="8" :md="8" :lg="6">
-            <label>成套实际工时：</label>
+          <el-col :xs="18" :sm="8" :md="6" :lg="6">
+            <label>成套工时汇总：</label>
             <span class="item-info">{{ projectForm.setWork | workTimeH2D }} 人/天</span>
           </el-col>
         </el-row>
         <el-row :gutter="24" class="detail-item">
-          <el-col :xs="18" :sm="8" :md="8" :lg="6">
-            <label>项目状态：</label>
-            <span class="item-info">{{ projectForm.proStatus | formatProjectStatus }}</span>
-          </el-col>
-          <el-col :xs="18" :sm="8" :md="8" :lg="6">
-            <label>项目风险预警：</label>
-            <span class="item-info">{{ projectForm.proRisk | formatRisk }}</span>
-          </el-col>
-          <el-col :xs="18" :sm="8" :md="8" :lg="6">
-            <label>反馈提货：</label>
-            <span class="item-info">{{ projectForm.feedbackPickup | formatFeedback }}</span>
-          </el-col>
+          <label>设计阶段：</label>
+          <el-tag
+            v-for="(item, index) in ProStatusOption.DesignStatus"
+            :key="index"
+            :type="projectForm[item.fields] | formatStageStatus"
+            class="status-tab"
+            size="small"
+          >{{ item.name }}</el-tag>
         </el-row>
         <el-row :gutter="24" class="detail-item">
           <label>生产阶段：</label>
@@ -120,18 +107,19 @@
           <span class="item-info">{{ projectForm.problem }}</span>
         </el-row>
         <el-row :gutter="24" class="detail-item">
-          <label>缺料反馈：</label>
-          <span class="item-info">{{ projectForm.materialFeedback }}</span>
+          <label>备注：</label>
+          <span class="item-info">{{ projectForm.remark }}</span>
         </el-row>
       </div>
     </div>
+
   </div>
 </template>
 
 <script>
 import PageBack from '@/components/PageBack'
-import { formatYYMMDD, formatRisk, workTimeH2D, formatFeedback, formatStageStatus, formatProjectStatus } from '@/utils/format'
-import { fetchWorkshopProDetail } from '@/api/workshop'
+import { formatYYMMDD, workTimeH2D, formatStageStatus } from '@/utils/format'
+import { fetchCompletedProDetail } from '@/api/completed'
 import ProStatusOption from '@/utils/project-status'
 
 export default {
@@ -141,9 +129,6 @@ export default {
   filters: {
     formatYYMMDD,
     workTimeH2D,
-    formatProjectStatus,
-    formatRisk,
-    formatFeedback,
     formatStageStatus
   },
   data() {
@@ -155,25 +140,25 @@ export default {
         proType: '',
         saleMan: '',
         proMan: '',
-        setLeader: '',
         cabinetNum: '',
         boxNum: '',
-        setPlan: '',
+        standardCabinet: '',
         setWork: '',
-        proStatus: '',
-        proRisk: '', // 0:有风险,1:已延误，2：正常
-        feedbackPickup: 0,
-        submissionDate: '',
-        arrivalTime: '',
         startTime: '',
         endTime: '',
         deliverTime: '',
+        deliverdDate: '',
+        drawingDesign: 0,
+        cabinetOrder: 0,
+        materialMain: 0,
+        informationSubmit: 0,
+        materialAuxiliary: 0,
         pickingLayout: 0,
         wiringSet: 0,
         powerTest: 0,
         packDelever: 0,
         problem: '',
-        materialFeedback: ''
+        remark: ''
       }
     }
   },
@@ -183,7 +168,7 @@ export default {
   methods: {
     __getInfo() {
       const proNo = this.$route.params.id
-      fetchWorkshopProDetail(proNo).then(response => {
+      fetchCompletedProDetail(proNo).then(response => {
         console.log(response)
         this.projectForm = response.data
       })

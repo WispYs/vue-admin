@@ -6,12 +6,7 @@
       @reset-click="queryData"
       @export-click="exportExcel"
     />
-    <div class="list-tip">
-      <el-tag class="list-tip__item" size="small" type="warning">有风险</el-tag>
-      <el-tag class="list-tip__item" size="small" type="danger">已延期</el-tag>
-      <el-tag class="list-tip__item" size="small" type="success">正常</el-tag>
-    </div>
-    <list-table :list="list" :list-loading="listLoading" @delete-click="delClick" />
+    <list-table :list="list" :list-loading="listLoading" />
     <pagination
       v-show="total>0"
       :total="total"
@@ -28,7 +23,6 @@ import ExcelFields from '@/utils/excel-fields'
 import Pagination from '@/components/Pagination'
 import ListFilter from './ListFilter'
 import ListTable from './ListTable'
-import { deleteWorkshopPro } from '@/api/workshop'
 
 export default {
   components: { Pagination, ListFilter, ListTable },
@@ -78,33 +72,6 @@ export default {
     queryData(filter) {
       this.filter = Object.assign(this.filter, filter)
       this.__getList()
-    },
-
-    // 删除操作
-    delClick(id) {
-      const limit = 1
-      if (limit === 1) {
-        this.$confirm('是否删除该项目?', '提示', {
-          confirmButtonText: '删除',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          deleteWorkshopPro(id).then(response => {
-            console.log(response)
-            this.$message.success(response.message)
-            this.__getList()
-          })
-        }).catch(() => {
-          // this.$message({
-          //   type: 'info',
-          //   message: '已取消删除'
-          // })
-        })
-      } else {
-        this.$alert('请联系管理员（何经理）进行删除操作', '', {
-          confirmButtonText: '确定'
-        })
-      }
     },
 
     // 导出Excel

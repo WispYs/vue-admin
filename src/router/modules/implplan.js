@@ -1,8 +1,8 @@
 import overviewRouter from './overview'
 import notStartedRouter from './not-started'
-import workshopRouter from './workshop'
-import completeRouter from './complete'
-import shipmentCompleteRouter from './shipment-complete'
+import workingRouter from './working'
+import completedRouter from './completed'
+import deliveredRouter from './delivered'
 import shelvedRouter from './shelved'
 const implplanRouter = {
   path: 'implplan',
@@ -13,9 +13,9 @@ const implplanRouter = {
   children: [
     overviewRouter,
     notStartedRouter,
-    workshopRouter,
-    completeRouter,
-    shipmentCompleteRouter,
+    workingRouter,
+    completedRouter,
+    deliveredRouter,
     shelvedRouter
   ]
 }

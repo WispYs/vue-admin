@@ -104,18 +104,11 @@
         {{ scope.row.setWork | workTimeH2D }}
       </template>
     </el-table-column>
-    <!-- <el-table-column align="center" label="项目干系人" width="120" prop="setLeader" sortable>
-      <template slot-scope="scope">
-        {{ scope.row.setLeader }}
-      </template>
-    </el-table-column> -->
     <el-table-column label="操作" width="80" align="center">
       <template slot-scope="scope">
-        <el-button type="text" size="small" @click="$router.push({name: 'CompleteDetail', params: {id: scope.row.id}})">查看</el-button>
-        <!-- <el-button type="text" size="small" @click="$router.push({name: 'CompleteEdit', params: {id: scope.row.id}})">编辑</el-button>
-        <el-button class="delete" type="text" size="small" @click="delClick(scope.row.id)">删除</el-button>
-      </template> -->
-      </template></el-table-column>
+        <el-button type="text" size="small" @click="$router.push({name: 'CompletedDetail', params: {id: scope.row.id}})">查看</el-button>
+      </template>
+    </el-table-column>
   </el-table>
 </template>
 
@@ -145,9 +138,6 @@ export default {
     }
   },
   methods: {
-    delClick(id) {
-      this.$emit('delete-click', id)
-    },
     // 表格单元格样式
     cellStyle() {
       return 'font-size: 13px'

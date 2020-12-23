@@ -31,7 +31,7 @@
           </div>
           <div class="statistic-info">
             <p>成套已完成项目</p>
-            <b>{{ completeCount }}</b>
+            <b>{{ completedCount }}</b>
           </div>
         </div>
       </el-col>
@@ -42,7 +42,7 @@
           </div>
           <div class="statistic-info">
             <p>已发货项目</p>
-            <b>{{ shipmentCompleteCount }}</b>
+            <b>{{ deliveredCount }}</b>
           </div>
         </div>
       </el-col>
@@ -122,11 +122,11 @@ import WorkingStatus from './components/WorkingStatus'
 import WorkHoursCheck from './components/WorkHoursCheck'
 // import ProCalendar from './components/ProCalendar'
 import WeekPlan from './components/WeekPlan'
-import ProProgress from './components/ProProgress'
+// import ProProgress from './components/ProProgress'
 import Footerbar from './components/Footerbar'
 import { fetchImplPlanPro } from '@/api/implplan'
-import { fetchCompletePro } from '@/api/complete'
-import { fetchShipmentComplete } from '@/api/shipment-complete'
+import { fetchCompletedPro } from '@/api/completed'
+import { fetchDelivered } from '@/api/delivered'
 import { fetchProgressPlan } from '@/api/progress-plan'
 import { fetchWeekplanPro } from '@/api/weekplan'
 import { fetchProjectProgress, fetchWorkingStatus, fetchStandardCabinet, fetchQuarterCount } from '@/api/dashborad'
@@ -142,7 +142,7 @@ export default {
     WorkHoursCheck,
     // ProCalendar,
     WeekPlan,
-    ProProgress,
+    // ProProgress,
     Footerbar
   },
   data() {
@@ -156,8 +156,8 @@ export default {
       ],
       filterYear: '2020',
       implPlanCount: 0, // 总计划实施项目
-      completeCount: 0, // 成套已完成项目
-      shipmentCompleteCount: 0, // 发货已完成项目
+      completedCount: 0, // 成套已完成项目
+      deliveredCount: 0, // 发货已完成项目
       standardCabinetCount: 0, // 折算标准柜累积量
       quarterData: null,
       workingStatus: null,
@@ -201,12 +201,12 @@ export default {
         this.implPlanCount = response.data.total
       })
       // 成套已完成项目总数
-      fetchCompletePro(page, size, filter).then(response => {
-        this.completeCount = response.data.total
+      fetchCompletedPro(page, size, filter).then(response => {
+        this.completedCount = response.data.total
       })
       // 发货已完成项目总数
-      fetchShipmentComplete(page, size, filter).then(response => {
-        this.shipmentCompleteCount = response.data.total
+      fetchDelivered(page, size, filter).then(response => {
+        this.deliveredCount = response.data.total
       })
       // 折算标准柜累积量
       const nowYear = new Date().getFullYear() + '-01-01 00:00:00'

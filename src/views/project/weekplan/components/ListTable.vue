@@ -91,8 +91,6 @@
     <el-table-column label="操作" width="80" align="center">
       <template slot-scope="scope">
         <el-button type="text" size="small" @click="$router.push({name: 'WeekplanDetail', params: {id: scope.row.id}})">查看</el-button>
-        <!-- <el-button type="text" size="small" @click="$router.push({name: 'WeekplanEdit', params: {id: scope.row.id}})">编辑</el-button>
-        <el-button class="delete" type="text" size="small" @click="delClick(scope.row.id)">删除</el-button> -->
       </template>
     </el-table-column>
   </el-table>
@@ -124,9 +122,6 @@ export default {
     }
   },
   methods: {
-    delClick(id) {
-      this.$emit('delete-click', id)
-    },
     // 表格单元格样式
     cellStyle() {
       return 'font-size: 13px'

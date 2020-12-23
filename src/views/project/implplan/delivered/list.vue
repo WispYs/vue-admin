@@ -4,7 +4,7 @@
 
 <script>
 import ListPage from './components/ListPage'
-import { fetchWorkshopPro } from '@/api/workshop'
+import { fetchDelivered } from '@/api/delivered'
 
 export default {
   components: { ListPage },
@@ -18,7 +18,7 @@ export default {
   methods: {
     __fetchlist(page, size, filter) {
       this.listLoading = true
-      fetchWorkshopPro(page, size, filter).then(response => {
+      fetchDelivered(page, size, filter).then(response => {
         this.list = response.data.rows
         this.total = response.data.total
         this.listLoading = false

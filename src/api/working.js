@@ -3,7 +3,7 @@ import baseUrl from './url.js'
 
 // 车间成套项目
 // 列表
-export function fetchWorkshopPro(page, size, filter) {
+export function fetchWorkingPro(page, size, filter) {
   return request({
     url: `${baseUrl}/workshopproject/search/${page}/${size}`,
     method: 'post',
@@ -11,14 +11,14 @@ export function fetchWorkshopPro(page, size, filter) {
   })
 }
 // 详情
-export function fetchWorkshopProDetail(id) {
+export function fetchWorkingProDetail(id) {
   return request({
     url: `${baseUrl}/workshopproject/${id}`,
     method: 'get'
   })
 }
 // 新建
-export function addWorkshopPro(data) {
+export function addWorkingPro(data) {
   return request({
     url: `${baseUrl}/workshopproject`,
     method: 'post',
@@ -26,7 +26,7 @@ export function addWorkshopPro(data) {
   })
 }
 // 编辑
-export function editWorkshopPro(id, data) {
+export function editWorkingPro(id, data) {
   return request({
     url: `${baseUrl}/workshopproject/${id}`,
     method: 'put',
@@ -34,7 +34,7 @@ export function editWorkshopPro(id, data) {
   })
 }
 // 删除
-export function deleteWorkshopPro(id) {
+export function deleteWorkingPro(id) {
   return request({
     url: `${baseUrl}/workshopproject/${id}`,
     method: 'delete'

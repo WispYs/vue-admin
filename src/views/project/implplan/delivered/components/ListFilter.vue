@@ -15,14 +15,11 @@
     <div class="filter-bar__item">
       <el-button type="primary" size="medium" @click="search()">搜索</el-button>
       <el-button type="primary" size="medium" @click="reset()">重置</el-button>
-      <!--<el-button type="primary" size="medium" :loading="downloadLoading" @click="handleExport()">导出数据</el-button> -->
     </div>
   </div>
 </template>
 
 <script>
-import ProStatusOption from '@/utils/project-status'
-
 export default {
   props: {
     downloadLoading: {
@@ -32,7 +29,6 @@ export default {
   },
   data() {
     return {
-      ProStatusOption,
       proNo: '',
       proName: '',
       setLeader: ''
@@ -52,8 +48,7 @@ export default {
       return {
         proNo: this.proNo,
         proName: this.proName,
-        setLeader: this.setLeader,
-        proStatus: '0'
+        setLeader: this.setLeader
       }
     },
     search() {

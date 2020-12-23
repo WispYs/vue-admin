@@ -3,7 +3,7 @@ import baseUrl from './url.js'
 
 // 成套已完成项目
 // 列表
-export function fetchCompletePro(page, size, filter) {
+export function fetchCompletedPro(page, size, filter) {
   return request({
     url: `${baseUrl}/completeproject/searchcompleted/${page}/${size}`,
     method: 'post',
@@ -11,14 +11,14 @@ export function fetchCompletePro(page, size, filter) {
   })
 }
 // 详情
-export function fetchCompleteProDetail(id) {
+export function fetchCompletedProDetail(id) {
   return request({
     url: `${baseUrl}/completeproject/${id}`,
     method: 'get'
   })
 }
 // 新建
-export function addCompletePro(data) {
+export function addCompletedPro(data) {
   return request({
     url: `${baseUrl}/completeproject`,
     method: 'post',
@@ -26,7 +26,7 @@ export function addCompletePro(data) {
   })
 }
 // 编辑
-export function editCompletePro(id, data) {
+export function editCompletedPro(id, data) {
   return request({
     url: `${baseUrl}/completeproject/${id}`,
     method: 'put',
@@ -34,7 +34,7 @@ export function editCompletePro(id, data) {
   })
 }
 // 删除
-export function deleteCompletePro(id) {
+export function deleteCompletedPro(id) {
   return request({
     url: `${baseUrl}/completeproject/${id}`,
     method: 'delete'

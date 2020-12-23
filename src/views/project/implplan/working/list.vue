@@ -4,7 +4,7 @@
 
 <script>
 import ListPage from './components/ListPage'
-import { fetchShipmentComplete } from '@/api/shipment-complete'
+import { fetchWorkingPro } from '@/api/working'
 
 export default {
   components: { ListPage },
@@ -18,7 +18,7 @@ export default {
   methods: {
     __fetchlist(page, size, filter) {
       this.listLoading = true
-      fetchShipmentComplete(page, size, filter).then(response => {
+      fetchWorkingPro(page, size, filter).then(response => {
         this.list = response.data.rows
         this.total = response.data.total
         this.listLoading = false

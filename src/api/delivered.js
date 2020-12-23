@@ -3,7 +3,7 @@ import baseUrl from './url.js'
 
 // 发货已完成项目
 // 列表
-export function fetchShipmentComplete(page, size, filter) {
+export function fetchDelivered(page, size, filter) {
   return request({
     url: `${baseUrl}/shipmentcomplete/searchcompleted/${page}/${size}`,
     method: 'post',
@@ -11,14 +11,14 @@ export function fetchShipmentComplete(page, size, filter) {
   })
 }
 // 详情
-export function fetchShipmentCompleteDetail(id) {
+export function fetchDeliveredDetail(id) {
   return request({
     url: `${baseUrl}/shipmentcomplete/${id}`,
     method: 'get'
   })
 }
 // 新建
-export function addShipmentComplete(data) {
+export function addDelivered(data) {
   return request({
     url: `${baseUrl}/shipmentcomplete`,
     method: 'post',
@@ -26,7 +26,7 @@ export function addShipmentComplete(data) {
   })
 }
 // 编辑
-export function editShipmentComplete(id, data) {
+export function editDelivered(id, data) {
   return request({
     url: `${baseUrl}/shipmentcomplete/${id}`,
     method: 'put',
@@ -34,7 +34,7 @@ export function editShipmentComplete(id, data) {
   })
 }
 // 删除
-export function deleteShipmentComplete(id) {
+export function deleteDelivered(id) {
   return request({
     url: `${baseUrl}/shipmentcomplete/${id}`,
     method: 'delete'

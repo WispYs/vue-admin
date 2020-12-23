@@ -8,7 +8,6 @@
     fit
     :cell-style="cellStyle"
     header-cell-class-name="pre-line"
-    :row-class-name="tableRowClassName"
   >
     <el-table-column type="expand">
       <template slot-scope="scope">
@@ -19,49 +18,22 @@
           <el-form-item label="销售负责人">
             <span>{{ scope.row.saleMan }}</span>
           </el-form-item>
-          <el-form-item label="项目工程师">
+          <el-form-item label="项目责任人">
             <span>{{ scope.row.proMan }}</span>
           </el-form-item>
-          <el-form-item label="反馈提货">
-            <span>{{ scope.row.feedbackPickup | formatFeedback }}</span>
-          </el-form-item>
-          <el-form-item label="项目风险预警">
-            <span>{{ scope.row.proRisk | formatRisk }}</span>
-          </el-form-item>
-          <el-form-item label="成套计划工时">
-            <span>{{ scope.row.setPlan | workTimeH2D }} 人/天</span>
-          </el-form-item>
-          <el-form-item label="成套实际工时">
-            <span>{{ scope.row.setWork | workTimeH2D }} 人/天</span>
-          </el-form-item>
-          <el-form-item label="成套资料提交日期">
-            <span>{{ scope.row.submissionDate | formatYYMMDD }}</span>
-          </el-form-item>
-          <el-form-item label="材料要求到货日期">
-            <span>{{ scope.row.arrivalTime | formatYYMMDD }}</span>
-          </el-form-item>
-          <el-form-item label="成套计划启动时间">
-            <span>{{ scope.row.startTime | formatYYMMDD }}</span>
-          </el-form-item>
-          <el-form-item label="成套计划完成时间">
-            <span>{{ scope.row.endTime | formatYYMMDD }}</span>
+          <el-form-item label="">
+            <span />
           </el-form-item>
           <el-form-item label="计划发货日期">
             <span>{{ scope.row.deliverTime | formatYYMMDD }}</span>
           </el-form-item>
-          <el-form-item label="生产阶段-项目计划">
-            <el-tag
-              v-for="(item, index) in ProStatusOption.ProduceStatus"
-              :key="index"
-              :type="scope.row[item.fields] | formatStageStatus"
-              class="status-tab"
-              size="small"
-            >{{ item.name }}</el-tag>
+          <el-form-item label="实际发货日期">
+            <span>{{ scope.row.deliverdDate | formatYYMMDD }}</span>
           </el-form-item>
           <el-form-item label="项目问题汇总" class="lg-item">
             <span>{{ scope.row.problem }}</span>
           </el-form-item>
-          <el-form-item label="缺料反馈" class="lg-item">
+          <el-form-item label="发货遗留问题" class="lg-item">
             <span>{{ scope.row.materialFeedback }}</span>
           </el-form-item>
         </el-form>
@@ -97,21 +69,24 @@
         {{ scope.row.boxNum }}
       </template>
     </el-table-column>
+    <el-table-column align="center" label="折算标准柜" width="120" prop="standardCabinet">
+      <template slot-scope="scope">
+        {{ scope.row.standardCabinet }}
+      </template>
+    </el-table-column>
+    <el-table-column align="center" label="成套工时（人/天）" width="140" prop="setWork">
+      <template slot-scope="scope">
+        {{ scope.row.setWork | workTimeH2D }}
+      </template>
+    </el-table-column>
     <el-table-column align="center" label="成套班组" width="120" prop="setLeader" sortable>
       <template slot-scope="scope">
         {{ scope.row.setLeader }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="项目状态" width="120" prop="proStatus" sortable>
-      <template slot-scope="scope">
-        {{ scope.row.proStatus | formatProjectStatus }}
-      </template>
-    </el-table-column>
     <el-table-column label="操作" width="80" align="center">
       <template slot-scope="scope">
-        <el-button type="text" size="small" @click="$router.push({name: 'WorkshopDetail', params: {id: scope.row.id}})">查看</el-button>
-        <!-- <el-button type="text" size="small" @click="$router.push({name: 'WorkshopEdit', params: {id: scope.row.id}})">编辑</el-button>
-        <el-button class="delete" type="text" size="small" @click="delClick(scope.row.id)">删除</el-button> -->
+        <el-button type="text" size="small" @click="$router.push({name: 'DeliveredDetail', params: {id: scope.row.id}})">查看</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -119,16 +94,11 @@
 
 <script>
 import ProStatusOption from '@/utils/project-status'
-import { formatYYMMDD, formatFeedback, workTimeH2D, formatRisk, formatStageStatus, formatProjectStatus } from '@/utils/format'
-
+import { formatYYMMDD, workTimeH2D } from '@/utils/format'
 export default {
   filters: {
     formatYYMMDD,
-    formatFeedback,
-    workTimeH2D,
-    formatRisk,
-    formatStageStatus,
-    formatProjectStatus
+    workTimeH2D
   },
   props: {
     list: {
@@ -146,25 +116,9 @@ export default {
     }
   },
   methods: {
-    delClick(id) {
-      this.$emit('delete-click', id)
-    },
     // 表格单元格样式
     cellStyle() {
       return 'font-size: 13px'
-    },
-    // 表格中行根据项目状态添加 class
-    // 0:有风险,1:已延误，2：正常
-    tableRowClassName({ row, rowIndex }) {
-      const proRisk = Number(this.list[rowIndex].proRisk)
-      if (proRisk === 0) {
-        return 'orange-row'
-      } else if (proRisk === 1) {
-        return 'red-row'
-      } else if (proRisk === 2) {
-        return 'green-row'
-      }
-      return ''
     }
   }
 }

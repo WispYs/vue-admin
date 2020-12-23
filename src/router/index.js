@@ -5,10 +5,7 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
-import completeRouter from './modules/complete'
 import implplanRouter from './modules/implplan'
-import workshopRouter from './modules/workshop'
-import shipmentCompleteRouter from './modules/shipment-complete'
 import weekplanRouter from './modules/weekplan'
 import progressPlanRouter from './modules/progress-plan'
 import lastWeekWorksRouter from './modules/last-week-works'
@@ -72,9 +69,6 @@ export const constantRoutes = [
     meta: { title: '项目成套管理', icon: 'el-icon-s-help' },
     children: [
       implplanRouter,
-      completeRouter,
-      workshopRouter,
-      shipmentCompleteRouter,
       weekplanRouter,
       progressPlanRouter,
       lastWeekWorksRouter,

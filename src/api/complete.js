@@ -5,7 +5,7 @@ import baseUrl from './url.js'
 // 列表
 export function fetchCompletePro(page, size, filter) {
   return request({
-    url: `${baseUrl}/completeproject/search/${page}/${size}`,
+    url: `${baseUrl}/completeproject/searchcompleted/${page}/${size}`,
     method: 'post',
     data: filter
   })

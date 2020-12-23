@@ -5,7 +5,7 @@ import baseUrl from './url.js'
 // 列表
 export function fetchShipmentComplete(page, size, filter) {
   return request({
-    url: `${baseUrl}/shipmentcomplete/search/${page}/${size}`,
+    url: `${baseUrl}/shipmentcomplete/searchcompleted/${page}/${size}`,
     method: 'post',
     data: filter
   })

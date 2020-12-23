@@ -5,7 +5,7 @@ import baseUrl from './url.js'
 // 列表
 export function fetchWeekplanPro(page, size, filter) {
   return request({
-    url: `${baseUrl}/weekplanshipment/search/${page}/${size}`,
+    url: `${baseUrl}/weekplanshipment/searchweekplan/${page}/${size}`,
     method: 'post',
     data: filter
   })

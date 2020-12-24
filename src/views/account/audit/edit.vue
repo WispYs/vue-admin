@@ -25,6 +25,15 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <el-row :gutter="24">
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
+          <el-form-item label="角色分配" prop="auditStatus">
+            <el-select v-model="accountForm.role" placeholder="请选择账号角色">
+              <el-option v-for="(item, index) in roleOption" :key="index" :label="item.name" :value="item.value" />
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
       <el-form-item>
         <el-button v-loading="loading" type="primary" @click="submitForm('accountForm')">审核</el-button>
         <el-button @click="resetForm('accountForm')">重置</el-button>
@@ -46,20 +55,36 @@ export default {
     return {
       loading: false,
       ProStatusOption,
+      roleOption: [
+        {
+          name: '子管理员',
+          value: '1'
+        }, {
+          name: '操作人员',
+          value: '2'
+        }, {
+          name: '访客',
+          value: '3'
+        }
+      ],
       accountForm: {
         accountName: '',
         accountPassword: '',
-        auditStatus: ''
+        auditStatus: '',
+        role: ''
       },
       rules: {
-        accountNo: [
-          { required: true, message: '请填写员工编号', trigger: 'blur' }
-        ],
         accountName: [
-          { required: true, message: '请填写员工名字', trigger: 'blur' }
+          { required: true, message: '请填写账号名称', trigger: 'blur' }
+        ],
+        accountPassword: [
+          { required: true, message: '请填写账号密码', trigger: 'blur' }
         ],
         auditStatus: [
           { required: true, message: '请选择审核状态', trigger: 'blur' }
+        ],
+        role: [
+          { required: true, message: '请选择账号角色', trigger: 'blur' }
         ]
       }
     }

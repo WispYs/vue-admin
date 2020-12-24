@@ -18,6 +18,12 @@
           </el-row>
           <el-row :gutter="24" class="detail-item">
             <el-col :xs="18" :sm="8" :md="8" :lg="6">
+              <label>账号角色：</label>
+              <span class="item-info">{{ accountForm.role | formatRole }}</span>
+            </el-col>
+          </el-row>
+          <el-row :gutter="24" class="detail-item">
+            <el-col :xs="18" :sm="8" :md="8" :lg="6">
               <label>审核状态：</label>
               <span class="item-info">{{ accountForm.auditStatus | formatAuditStatus }}</span>
             </el-col>
@@ -32,21 +38,23 @@
 <script>
 import PageBack from '@/components/PageBack'
 import { fetchPersonInfoDetail } from '@/api/person-info'
-import { formatAuditStatus } from '@/utils/format'
+import { formatAuditStatus, formatRole } from '@/utils/format'
 
 export default {
   components: {
     PageBack
   },
   filters: {
-    formatAuditStatus
+    formatAuditStatus,
+    formatRole
   },
   data() {
     return {
       accountForm: {
         accountName: '',
         accountPassword: '',
-        auditStatus: ''
+        auditStatus: '',
+        role: ''
       }
     }
   },

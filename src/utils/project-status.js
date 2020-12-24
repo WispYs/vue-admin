@@ -1,4 +1,5 @@
 export default {
+  // 账号审核状态
   auditStatus: [
     {
       name: '审核中',

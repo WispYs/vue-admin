@@ -24,9 +24,14 @@
         {{ scope.row.accountPassword }}
       </template>
     </el-table-column>
+    <el-table-column label="账号角色" prop="role">
+      <template slot-scope="scope">
+        {{ scope.row.role | formatRole }}
+      </template>
+    </el-table-column>
     <el-table-column label="审核状态" prop="auditStatus">
       <template slot-scope="scope">
-        {{ scope.row.auditStatus }}
+        {{ scope.row.auditStatus | formatAuditStatus }}
       </template>
     </el-table-column>
     <el-table-column label="操作" width="250" align="center">
@@ -40,7 +45,13 @@
 </template>
 
 <script>
+import { formatAuditStatus, formatRole } from '@/utils/format'
+
 export default {
+  filters: {
+    formatAuditStatus,
+    formatRole
+  },
   props: {
     list: {
       type: Array,

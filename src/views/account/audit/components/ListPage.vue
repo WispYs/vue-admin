@@ -49,8 +49,7 @@ export default {
         size: 10
       },
       filter: {
-        userNo: '',
-        userName: ''
+        accountName: ''
       }
     }
   },
@@ -79,7 +78,7 @@ export default {
     delClick(id) {
       const limit = 1
       if (limit === 1) {
-        this.$confirm('是否删除该员工?', '提示', {
+        this.$confirm('是否删除该账号?', '提示', {
           confirmButtonText: '删除',
           cancelButtonText: '取消',
           type: 'warning'

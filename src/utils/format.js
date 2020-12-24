@@ -22,6 +22,15 @@ export function formatAuditStatus(type) {
   }
 }
 
+export function formatRole(type) {
+  switch (Number(type)) {
+    case 1: return '子管理员'
+    case 2: return '操作人员'
+    case 3: return '访客'
+    default: return '无'
+  }
+}
+
 export function formatDeliverStatus(type) {
   switch (Number(type)) {
     case 0: return '未发货'

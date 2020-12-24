@@ -63,8 +63,8 @@ export default {
   },
   methods: {
     __getInfo() {
-      const proNo = this.$route.params.id
-      fetchPersonInfoDetail(proNo).then(response => {
+      const accountNo = this.$route.params.id
+      fetchPersonInfoDetail(accountNo).then(response => {
         console.log(response)
         this.accountForm = response.data
       })

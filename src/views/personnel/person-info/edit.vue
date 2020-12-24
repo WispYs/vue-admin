@@ -54,15 +54,15 @@ export default {
   },
   methods: {
     __getInfo() {
-      const proNo = this.$route.params.id
-      fetchPersonInfoDetail(proNo).then(response => {
+      const userNo = this.$route.params.id
+      fetchPersonInfoDetail(userNo).then(response => {
         console.log(response)
         this.userForm = response.data
       })
     },
-    async editPerson(proNo, formData) {
+    async editPerson(userNo, formData) {
       try {
-        const response = await editPersonInfo(proNo, formData)
+        const response = await editPersonInfo(userNo, formData)
         this.$message.success(response.message)
         this.loading = false
         this.$router.push({ name: 'PersonInfo' })
@@ -81,9 +81,9 @@ export default {
               type: 'warning'
             }).then(() => {
               this.loading = true
-              const proNo = this.$route.params.id
+              const userNo = this.$route.params.id
               const formData = this.userForm
-              this.editPerson(proNo, formData)
+              this.editPerson(userNo, formData)
             })
           }
         } else {

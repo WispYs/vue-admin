@@ -78,8 +78,8 @@ export default {
   },
   methods: {
     __getInfo() {
-      const proNo = this.$route.params.id
-      fetchWorkAllotDetail(proNo).then(response => {
+      const workNo = this.$route.params.id
+      fetchWorkAllotDetail(workNo).then(response => {
         console.log(response)
         this.userForm = response.data
       })

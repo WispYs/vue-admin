@@ -94,15 +94,15 @@ export default {
   },
   methods: {
     __getInfo() {
-      const proNo = this.$route.params.id
-      fetchPersonInfoDetail(proNo).then(response => {
+      const accountNo = this.$route.params.id
+      fetchPersonInfoDetail(accountNo).then(response => {
         console.log(response)
         this.accountForm = response.data
       })
     },
-    async editPerson(proNo, formData) {
+    async editPerson(accountNo, formData) {
       try {
-        const response = await editPersonInfo(proNo, formData)
+        const response = await editPersonInfo(accountNo, formData)
         this.$message.success(response.message)
         this.loading = false
         this.$router.push({ name: 'Audit' })
@@ -121,9 +121,9 @@ export default {
               type: 'warning'
             }).then(() => {
               this.loading = true
-              const proNo = this.$route.params.id
+              const accountNo = this.$route.params.id
               const formData = this.accountForm
-              this.editPerson(proNo, formData)
+              this.editPerson(accountNo, formData)
             })
           }
         } else {

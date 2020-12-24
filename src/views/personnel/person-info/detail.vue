@@ -44,8 +44,8 @@ export default {
   },
   methods: {
     __getInfo() {
-      const proNo = this.$route.params.id
-      fetchPersonInfoDetail(proNo).then(response => {
+      const userNo = this.$route.params.id
+      fetchPersonInfoDetail(userNo).then(response => {
         console.log(response)
         this.userForm = response.data
       })

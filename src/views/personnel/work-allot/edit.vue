@@ -101,8 +101,8 @@ export default {
   },
   methods: {
     __getInfo() {
-      const proNo = this.$route.params.id
-      fetchWorkAllotDetail(proNo).then(response => {
+      const workNo = this.$route.params.id
+      fetchWorkAllotDetail(workNo).then(response => {
         this.userForm = Object.assign(response.data, {
           completion: formatProgress(response.data.completion)
         })
@@ -121,9 +121,9 @@ export default {
         })
       })
     },
-    async editWork(proNo, formData) {
+    async editWork(workNo, formData) {
       try {
-        const response = await editWorkAllot(proNo, formData)
+        const response = await editWorkAllot(workNo, formData)
         this.$message.success(response.message)
         this.loading = false
         this.$router.push({ name: 'WorkAllot' })
@@ -142,11 +142,11 @@ export default {
               type: 'warning'
             }).then(() => {
               this.loading = true
-              const proNo = this.$route.params.id
+              const workNo = this.$route.params.id
               const formData = Object.assign(this.userForm, {
                 completion: this.userForm.completion / 100
               })
-              this.editWork(proNo, formData)
+              this.editWork(workNo, formData)
             })
           }
         } else {

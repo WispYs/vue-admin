@@ -1,0 +1,134 @@
+<template>
+  <div class="edit-container">
+    <page-back />
+    <el-form ref="accountForm" :model="accountForm" :rules="rules" label-width="100px" class="account-form">
+      <el-row :gutter="24">
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
+          <el-form-item label="账号名称" prop="accountName">
+            <el-input v-model="accountForm.accountName" />
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="24">
+        <el-col :xs="18" :sm="18" :md="8" :lg="6">
+          <el-form-item label="账号密码" prop="accountPassword">
+            <el-input v-model="accountForm.accountPassword" />
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="24">
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
+          <el-form-item label="审核状态" prop="auditStatus">
+            <el-select v-model="accountForm.auditStatus" placeholder="请选择项目状态">
+              <el-option v-for="(item, index) in ProStatusOption.auditStatus" :key="index" :label="item.name" :value="item.value" />
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-form-item>
+        <el-button v-loading="loading" type="primary" @click="submitForm('accountForm')">审核</el-button>
+        <el-button @click="resetForm('accountForm')">重置</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
+</template>
+
+<script>
+import PageBack from '@/components/PageBack'
+import { fetchPersonInfoDetail, editPersonInfo } from '@/api/person-info'
+import ProStatusOption from '@/utils/project-status'
+
+export default {
+  components: {
+    PageBack
+  },
+  data() {
+    return {
+      loading: false,
+      ProStatusOption,
+      accountForm: {
+        accountName: '',
+        accountPassword: '',
+        auditStatus: ''
+      },
+      rules: {
+        accountNo: [
+          { required: true, message: '请填写员工编号', trigger: 'blur' }
+        ],
+        accountName: [
+          { required: true, message: '请填写员工名字', trigger: 'blur' }
+        ],
+        auditStatus: [
+          { required: true, message: '请选择审核状态', trigger: 'blur' }
+        ]
+      }
+    }
+  },
+  mounted() {
+    this.__getInfo()
+  },
+  methods: {
+    __getInfo() {
+      const proNo = this.$route.params.id
+      fetchPersonInfoDetail(proNo).then(response => {
+        console.log(response)
+        this.accountForm = response.data
+      })
+    },
+    async editPerson(proNo, formData) {
+      try {
+        const response = await editPersonInfo(proNo, formData)
+        this.$message.success(response.message)
+        this.loading = false
+        this.$router.push({ name: 'Audit' })
+      } catch (error) {
+        console.log(error)
+        this.loading = false
+      }
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          if (!this.loading) {
+            this.$confirm('确定审核该账号?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.loading = true
+              const proNo = this.$route.params.id
+              const formData = this.accountForm
+              this.editPerson(proNo, formData)
+            })
+          }
+        } else {
+          this.$message.error('请填写完整信息')
+          return false
+        }
+      })
+    },
+    resetForm(formName) {
+      this.__getInfo()
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+  .edit-container {
+    padding: 40px;
+    position: relative;
+    .progress-slider {
+      display: inline-block;
+      width: calc(100% - 60px);
+      margin:0 10px;
+    }
+    .progress-item {
+      line-height: 38px;
+      float: right;
+    }
+  }
+  .el-textarea {
+    width: 60%;
+  }
+</style>

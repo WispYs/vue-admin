@@ -12,6 +12,7 @@ import lastWeekWorksRouter from './modules/last-week-works'
 import dailyRouter from './modules/daily'
 import workAllotRouter from './modules/work-allot'
 import personInfoRouter from './modules/person-info'
+import auditRouter from './modules/audit'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -92,6 +93,16 @@ export const constantRoutes = [
     children: [
       workAllotRouter,
       personInfoRouter
+    ]
+  },
+  {
+    path: '/account',
+    component: Layout,
+    redirect: '/account/audit/list',
+    name: 'Account',
+    meta: { title: '账号管理', icon: 'user' },
+    children: [
+      auditRouter
     ]
   },
   // {

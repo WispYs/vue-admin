@@ -13,6 +13,15 @@ export function formatProjectStatus(type) {
   }
 }
 
+export function formatAuditStatus(type) {
+  switch (Number(type)) {
+    case 0: return '审核中'
+    case 1: return '审核成功'
+    case 2: return '审核失败'
+    default: return ''
+  }
+}
+
 export function formatDeliverStatus(type) {
   switch (Number(type)) {
     case 0: return '未发货'

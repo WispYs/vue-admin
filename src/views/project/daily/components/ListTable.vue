@@ -29,9 +29,9 @@
         {{ scope.row.proType }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="工时登记日期" width="250" prop="currentTime" sortable>
+    <el-table-column align="center" label="工时登记日期" width="250" prop="createTime" sortable>
       <template slot-scope="scope">
-        {{ scope.row.currentTime | formatYYMMDD }}
+        {{ scope.row.createTime | formatYYMMDD }}
       </template>
     </el-table-column>
     <el-table-column align="center" label="当日总工时（人/天）" width="200" prop="totalTime">

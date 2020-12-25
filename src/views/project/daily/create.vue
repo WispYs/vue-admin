@@ -21,13 +21,13 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="24">
+      <!-- <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="工时登记日期" prop="currentTime" label-width="110px">
             <el-date-picker v-model="projectForm.currentTime" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="选择日期" style="width: 100%;" />
           </el-form-item>
         </el-col>
-      </el-row>
+      </el-row> -->
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
           <el-form-item label="当日总工时" label-width="110px" prop="totalTime">
@@ -70,7 +70,7 @@ export default {
       proNoOption: [],
       projectForm: {
         proNo: '',
-        currentTime: '',
+        // currentTime: '',
         totalTime: '',
         content: ''
       },
@@ -78,9 +78,9 @@ export default {
         proNo: [
           { required: true, message: '请选择项目名称', trigger: 'blur' }
         ],
-        currentTime: [
-          { required: true, message: '请选择日期', trigger: 'blur' }
-        ],
+        // currentTime: [
+        //   { required: true, message: '请选择日期', trigger: 'blur' }
+        // ],
         totalTime: [
           { required: true, message: '请填写当日总工时', trigger: 'blur' },
           { validator: isNumber, trigger: 'blur' }

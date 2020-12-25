@@ -9,7 +9,7 @@
       <el-input v-model="userName" class="filter-item" style="width: 150px" placeholder="请输入员工名称" />
     </div>
     <!-- <div class="filter-bar__item">
-      <label>日报日期：</label>
+      <label>考核日期：</label>
       <el-date-picker
         v-model="currentTimeArr"
         class="filter-item"
@@ -31,7 +31,7 @@
       <el-button type="primary" size="medium" @click="search()">搜索</el-button>
       <el-button type="primary" size="medium" @click="reset()">重置</el-button>
       <!--<el-button type="primary" size="medium" :loading="downloadLoading" @click="handleExport()">导出数据</el-button> -->
-      <el-button type="primary" size="medium" @click="$router.push({name: 'WorkAllotCreate'})">添加工作</el-button>
+      <el-button type="primary" size="medium" @click="$router.push({name: 'WorkAllotCreate'})">添加考核</el-button>
     </div>
   </div>
 </template>

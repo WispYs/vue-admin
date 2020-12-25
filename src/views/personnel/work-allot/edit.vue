@@ -18,7 +18,7 @@
       </el-row>
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <el-form-item label="日报日期" prop="currentTime">
+          <el-form-item label="考核日期" prop="currentTime">
             <el-date-picker v-model="userForm.currentTime" value-format="yyyy-MM-dd HH:mm:ss" type="date" placeholder="选择日期" style="width: 100%;" />
           </el-form-item>
         </el-col>
@@ -81,7 +81,7 @@ export default {
           { required: true, message: '请填写员工名字', trigger: 'blur' }
         ],
         currentTime: [
-          { required: true, message: '请选择日报日期', trigger: 'blur' }
+          { required: true, message: '请选择考核日期', trigger: 'blur' }
         ],
         content: [
           { required: true, message: '请填写工作内容', trigger: 'blur' }
@@ -136,7 +136,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (!this.loading) {
-            this.$confirm('确定编辑该工作安排?', '提示', {
+            this.$confirm('确定编辑该考核?', '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
               type: 'warning'

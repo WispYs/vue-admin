@@ -16,7 +16,7 @@
           </el-row>
           <el-row :gutter="24" class="detail-item">
             <el-col :xs="18" :sm="8" :md="8" :lg="6">
-              <label>日报日期：</label>
+              <label>考核日期：</label>
               <span class="item-info">{{ userForm.currentTime | formatYYMMDD }}</span>
             </el-col>
           </el-row>

@@ -79,7 +79,7 @@ export default {
     delClick(id) {
       const limit = 1
       if (limit === 1) {
-        this.$confirm('是否删除该工作安排?', '提示', {
+        this.$confirm('是否删除该考核?', '提示', {
           confirmButtonText: '删除',
           cancelButtonText: '取消',
           type: 'warning'

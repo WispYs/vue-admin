@@ -3,7 +3,7 @@ const workAllotRouter = {
   name: 'WorkAllot',
   redirect: '/personnel/work-allot/list',
   component: () => import('@/views/personnel/work-allot/index'),
-  meta: { title: '工作安排' },
+  meta: { title: '工作考核' },
   children: [
     {
       path: 'list',
@@ -16,21 +16,21 @@ const workAllotRouter = {
       path: 'create',
       name: 'WorkAllotCreate',
       component: () => import('@/views/personnel/work-allot/create'),
-      meta: { title: '新建项目', noCache: true, activeMenu: '/personnel/work-allot' },
+      meta: { title: '添加考核', noCache: true, activeMenu: '/personnel/work-allot' },
       hidden: true
     },
     {
       path: 'edit/:id(\\w+)',
       name: 'WorkAllotEdit',
       component: () => import('@/views/personnel/work-allot/edit'),
-      meta: { title: '编辑项目', noCache: true, activeMenu: '/personnel/work-allot' },
+      meta: { title: '编辑考核', noCache: true, activeMenu: '/personnel/work-allot' },
       hidden: true
     },
     {
       path: 'detail/:id(\\w+)',
       name: 'WorkAllotDetail',
       component: () => import('@/views/personnel/work-allot/detail'),
-      meta: { title: '查看项目', noCache: true, activeMenu: '/personnel/work-allot' },
+      meta: { title: '查看考核', noCache: true, activeMenu: '/personnel/work-allot' },
       hidden: true
     }
   ]

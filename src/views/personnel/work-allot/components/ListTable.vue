@@ -24,7 +24,7 @@
         {{ scope.row.userName }}
       </template>
     </el-table-column>
-    <el-table-column align="center" label="日报日期" prop="currentTime" width="150" sortable>
+    <el-table-column align="center" label="考核日期" prop="currentTime" width="150" sortable>
       <template slot-scope="scope">
         {{ formatYYMMDD(scope.row.currentTime) }}
       </template>

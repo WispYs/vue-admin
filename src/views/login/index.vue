@@ -3,18 +3,33 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 v-if="loginRole === 1" class="title">{{ title1 }}</h3>
+        <h3 v-if="loginRole === 0" class="title">{{ title1 }}</h3>
         <h3 v-else class="title">{{ title2 }}</h3>
       </div>
-      <el-form-item prop="username">
+
+      <el-form-item v-if="loginRole === 0" prop="mobile">
+        <span class="svg-container">
+          <i class="el-icon-mobile-phone" style="font-size: 16px;margin-left: -1px" />
+        </span>
+        <el-input
+          ref="mobile"
+          v-model="loginForm.mobile"
+          placeholder="手机号码"
+          name="mobile"
+          type="text"
+          tabindex="1"
+          auto-complete="on"
+        />
+      </el-form-item>
+      <el-form-item v-else prop="loginname">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="账号"
-          name="username"
+          ref="mobile"
+          v-model="loginForm.loginname"
+          placeholder="账号昵称"
+          name="loginname"
           type="text"
           tabindex="1"
           auto-complete="on"
@@ -54,36 +69,37 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
-import { setToken } from '@/utils/auth'
+import { isMobile, validUserPassword } from '@/utils/validate'
 
 export default {
   name: 'Login',
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('请输入正确的用户名'))
+    const validateMobile = (rule, value, callback) => {
+      if (!isMobile(value)) {
+        callback(new Error('请输入正确的手机号码'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('请输入不少于六位数的密码'))
+      if (!validUserPassword(value)) {
+        callback(new Error('只能输入3-20个字母、数字、下划线'))
       } else {
         callback()
       }
     }
     return {
-      loginRole: 1,
+      loginRole: 0, // 0 - 普通账号登录；1 - 管理员登录
       title1: '上海泷得自动化后台管理系统',
       title2: '泷得管理员登录',
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        mobile: '',
+        loginname: '',
+        password: ''
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        mobile: [{ required: true, trigger: 'blur', validator: validateMobile }],
+        loginname: [{ required: true, message: '请输入账号昵称', trigger: 'blur' }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,
@@ -99,12 +115,18 @@ export default {
       immediate: true
     }
   },
+  mounted() {
+    console.log('mobile=' + this.$store.getters.mobile)
+    this.$set(this.loginForm, 'mobile', this.$store.getters.mobile)
+  },
   methods: {
+    // 切换登录角色
+    // 0 - 普通账号登录；1 - 管理员登录
     toggleRole(val) {
       console.log(val)
       this.loginRole = val
       this.loginForm = {
-        username: '',
+        mobile: '',
         password: ''
       }
     },
@@ -121,16 +143,16 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
+          // 后台用户登录和管理员登录为不同接口
+          const loginUrl = this.loginRole ? 'user/adminLogin' : 'user/login'
           this.loading = true
-          setToken('xs6d7sfs1a212')
-          this.$router.push({ path: this.redirect || '/' })
-          this.loading = false
-          // this.$store.dispatch('user/login', this.loginForm).then(() => {
-          //   this.$router.push({ path: this.redirect || '/' })
-          //   this.loading = false
-          // }).catch(() => {
-          //   this.loading = false
-          // })
+          this.$store.dispatch(loginUrl, this.loginForm).then((response) => {
+            this.$message.success(response.message)
+            this.$router.push({ path: this.redirect || '/' })
+            this.loading = false
+          }).catch(() => {
+            this.loading = false
+          })
         } else {
           console.log('error submit!!')
           return false

@@ -23,7 +23,7 @@ import ExcelFields from '@/utils/excel-fields'
 import Pagination from '@/components/Pagination'
 import ListFilter from './ListFilter'
 import ListTable from './ListTable'
-import { deletePersonInfo } from '@/api/person-info'
+import { deleteAccount } from '@/api/account'
 
 export default {
   components: { Pagination, ListFilter, ListTable },
@@ -83,7 +83,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          deletePersonInfo(id).then(response => {
+          deleteAccount(id).then(response => {
             console.log(response)
             this.$message.success(response.message)
             this.__getList()

@@ -4,7 +4,7 @@
 
 <script>
 import ListPage from './components/ListPage'
-import { fetchPersonInfo } from '@/api/person-info'
+import { fetchAccountList } from '@/api/account'
 
 export default {
   components: { ListPage },
@@ -18,7 +18,7 @@ export default {
   methods: {
     __fetchlist(page, size, filter) {
       this.listLoading = true
-      fetchPersonInfo(page, size, filter).then(response => {
+      fetchAccountList(page, size, filter).then(response => {
         this.list = response.data.rows
         this.total = response.data.total
         this.listLoading = false

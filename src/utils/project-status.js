@@ -1,17 +1,4 @@
 export default {
-  // 账号审核状态
-  auditStatus: [
-    {
-      name: '审核中',
-      value: '0'
-    }, {
-      name: '审核成功',
-      value: '1'
-    }, {
-      name: '审核失败',
-      value: '2'
-    }
-  ],
   DeliverStatus: [
     {
       name: '未发货',

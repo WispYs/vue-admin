@@ -1,13 +1,13 @@
 <template>
   <div class="filter-bar">
     <div class="filter-bar__item">
-      <label>账号名称：</label>
-      <el-input v-model="accountName" class="filter-item" style="width: 150px" placeholder="请输入账号名称" />
+      <label>账号昵称：</label>
+      <el-input v-model="nickname" class="filter-item" style="width: 150px" placeholder="请输入账号昵称" />
     </div>
     <div class="filter-bar__item">
       <label>审核状态：</label>
-      <el-select v-model="auditStatus" placeholder="请选择审核状态" @change="search()">
-        <el-option v-for="(item, index) in ProStatusOption.auditStatus" :key="index" :label="item.name" :value="item.value" />
+      <el-select v-model="state" placeholder="请选择审核状态" @change="search()">
+        <el-option v-for="(item, index) in auditOption" :key="index" :label="item.name" :value="item.value" />
       </el-select>
     </div>
     <div class="filter-bar__item">
@@ -32,8 +32,17 @@ export default {
   data() {
     return {
       ProStatusOption,
-      accountName: '',
-      auditStatus: ''
+      auditOption: [
+        {
+          name: '未启用',
+          value: '0'
+        }, {
+          name: '已启用',
+          value: '1'
+        }
+      ],
+      nickname: '',
+      state: ''
     }
   },
   mounted() {
@@ -41,14 +50,14 @@ export default {
   },
   methods: {
     __initFilter() {
-      this.accountName = ''
-      this.auditStatus = ''
+      this.nickname = ''
+      this.state = ''
     },
 
     __getFilter() {
       return {
-        accountName: this.accountName,
-        auditStatus: this.auditStatus
+        nickname: this.nickname,
+        state: this.state
       }
     },
     search() {

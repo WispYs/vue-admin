@@ -1,18 +1,33 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+    <el-form ref="registerForm" :model="registerForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
         <h3 class="title">{{ title }}</h3>
       </div>
+      <el-form-item prop="mobile">
+        <span class="svg-container">
+          <svg-icon icon-class="user" />
+        </span>
+        <el-input
+          ref="mobile"
+          v-model="registerForm.mobile"
+          placeholder="请输入手机号"
+          name="mobile"
+          type="text"
+          tabindex="1"
+          auto-complete="on"
+        />
+      </el-form-item>
+
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
           ref="username"
-          v-model="loginForm.username"
-          placeholder="账号"
+          v-model="registerForm.username"
+          placeholder="请输入昵称"
           name="username"
           type="text"
           tabindex="1"
@@ -27,9 +42,9 @@
         <el-input
           :key="passwordType"
           ref="password"
-          v-model="loginForm.password"
+          v-model="registerForm.password"
           :type="passwordType"
-          placeholder="密码"
+          placeholder="请输入密码"
           name="password"
           tabindex="2"
           auto-complete="on"
@@ -37,26 +52,6 @@
         />
         <span class="show-pwd" @click="showPwd()">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-        </span>
-      </el-form-item>
-
-      <el-form-item prop="password2">
-        <span class="svg-container">
-          <svg-icon icon-class="password" />
-        </span>
-        <el-input
-          :key="passwordType2"
-          ref="password2"
-          v-model="loginForm.password2"
-          :type="passwordType2"
-          placeholder="确认密码"
-          name="password2"
-          tabindex="2"
-          auto-complete="on"
-          @keyup.enter.native="handleRegister"
-        />
-        <span class="show-pwd" @click="showPwd2()">
-          <svg-icon :icon-class="passwordType2 === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
 
@@ -71,52 +66,54 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
+import { mapGetters } from 'vuex'
+import { isMobile, validUsername, validUserPassword } from '@/utils/validate'
 
 export default {
-  name: 'Login',
+  name: 'Register',
   data() {
+    const validateMobile = (rule, value, callback) => {
+      if (!isMobile(value)) {
+        callback(new Error('请输入正确的手机号码'))
+      } else {
+        callback()
+      }
+    }
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('请输入正确的用户名'))
+        callback(new Error('昵称长度不得超过20个'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('请输入不少于六位数的密码'))
-      } else {
-        callback()
-      }
-    }
-    const comparePassWord = (rule, value, callback) => {
-      if (value !== this.loginForm.password) {
-        callback(new Error('请确定两次输入的密码一致'))
+      if (!validUserPassword(value)) {
+        callback(new Error('只能输入3-20个字母、数字、下划线'))
       } else {
         callback()
       }
     }
     return {
       title: '账号注册',
-      loginForm: {
+      registerForm: {
+        mobile: '',
         username: '',
-        password: '',
-        password2: ''
+        password: ''
       },
       loginRules: {
+        mobile: [{ required: true, trigger: 'blur', validator: validateMobile }],
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }],
-        password2: [
-          { required: true, trigger: 'blur', validator: validatePassword },
-          { validator: comparePassWord, trigger: 'blur' }
-        ]
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,
       passwordType: 'password',
-      passwordType2: 'password',
       redirect: undefined
     }
+  },
+  computed: {
+    ...mapGetters([
+      'mobile'
+    ])
   },
   watch: {
     $route: {
@@ -137,28 +134,17 @@ export default {
         this.$refs.password.focus()
       })
     },
-    showPwd2() {
-      if (this.passwordType2 === 'password') {
-        this.passwordType2 = ''
-      } else {
-        this.passwordType2 = 'password'
-      }
-      this.$nextTick(() => {
-        this.$refs.password2.focus()
-      })
-    },
     handleRegister() {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.registerForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$router.push({ path: this.redirect || '/' })
-          this.loading = false
-          // this.$store.dispatch('user/login', this.loginForm).then(() => {
-          //   this.$router.push({ path: this.redirect || '/' })
-          //   this.loading = false
-          // }).catch(() => {
-          //   this.loading = false
-          // })
+          this.$store.dispatch('user/register', this.registerForm).then((response) => {
+            this.$message.success(response.message)
+            this.loading = false
+            this.$router.push({ name: 'Login' })
+          }).catch(() => {
+            this.loading = false
+          })
         } else {
           console.log('error submit!!')
           return false

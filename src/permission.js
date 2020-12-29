@@ -3,7 +3,7 @@ import store from './store'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
-import { getToken } from '@/utils/auth' // get token from cookie
+import { getToken, getUserRoles } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
@@ -29,19 +29,23 @@ router.beforeEach(async(to, from, next) => {
       if (hasGetUserInfo) {
         next()
       } else {
-        next()
-        // try {
-        //   // get user info
-        //   await store.dispatch('user/getInfo')
-
-        //   next()
-        // } catch (error) {
-        //   // remove token and go to login page to re-login
-        //   await store.dispatch('user/resetToken')
-        //   Message.error(error || 'Has Error')
-        //   next(`/login?redirect=${to.path}`)
-        //   NProgress.done()
-        // }
+        try {
+          const roles = getUserRoles()
+          console.log('roles=' + roles)
+          // 后台获取用户登录和管理员登录为不同接口
+          if (roles === 'admin') {
+            await store.dispatch('user/getAdminInfo')
+          } else {
+            await store.dispatch('user/getInfo')
+          }
+          next()
+        } catch (error) {
+          // remove token and go to login page to re-login
+          await store.dispatch('user/resetToken')
+          Message.error(error || 'Has Error')
+          next(`/login?redirect=${to.path}`)
+          NProgress.done()
+        }
       }
     }
   } else {

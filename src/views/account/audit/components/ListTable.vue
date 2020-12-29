@@ -14,29 +14,40 @@
         {{ scope.$index+1 }}
       </template>
     </el-table-column>
-    <el-table-column label="账号名称" prop="accountName">
+    <el-table-column label="账号ID" prop="id" width="200px">
       <template slot-scope="scope">
-        {{ scope.row.accountName }}
+        {{ scope.row.id }}
       </template>
     </el-table-column>
-    <el-table-column label="账号密码" prop="accountPassword">
+    <el-table-column label="账号昵称" prop="nickname">
       <template slot-scope="scope">
-        {{ scope.row.accountPassword }}
+        {{ scope.row.nickname }}
       </template>
     </el-table-column>
-    <el-table-column label="账号角色" prop="role">
+    <el-table-column align="center" label="手机号码" prop="mobile">
       <template slot-scope="scope">
-        {{ scope.row.role | formatRole }}
+        {{ scope.row.mobile }}
       </template>
     </el-table-column>
-    <el-table-column label="审核状态" prop="auditStatus">
+
+    <el-table-column align="center" label="账号角色" prop="rolename">
       <template slot-scope="scope">
-        {{ scope.row.auditStatus | formatAuditStatus }}
+        {{ scope.row.rolename | formatRole }}
+      </template>
+    </el-table-column>
+    <el-table-column align="center" label="最后登录时间" prop="lastdate" width="200px">
+      <template slot-scope="scope">
+        {{ scope.row.lastdate }}
+      </template>
+    </el-table-column>
+    <el-table-column align="center" label="审核状态" prop="state">
+      <template slot-scope="scope">
+        {{ scope.row.state | formatAuditStatus }}
       </template>
     </el-table-column>
     <el-table-column label="操作" width="250" align="center">
       <template slot-scope="scope">
-        <!-- <el-button type="text" size="small" @click="$router.push({name: 'PersonInfoDetail', params: {id: scope.row.id}})">查看</el-button> -->
+        <el-button type="text" size="small" @click="$router.push({name: 'AuditDetail', params: {id: scope.row.id}})">查看</el-button>
         <el-button type="text" size="small" @click="$router.push({name: 'AuditEdit', params: {id: scope.row.id}})">审核</el-button>
         <el-button class="delete" type="text" size="small" @click="delClick(scope.row.id)">删除</el-button>
       </template>

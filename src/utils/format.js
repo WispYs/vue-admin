@@ -15,18 +15,17 @@ export function formatProjectStatus(type) {
 
 export function formatAuditStatus(type) {
   switch (Number(type)) {
-    case 0: return '审核中'
-    case 1: return '审核成功'
-    case 2: return '审核失败'
+    case 0: return '未启用'
+    case 1: return '已启用'
     default: return ''
   }
 }
 
 export function formatRole(type) {
-  switch (Number(type)) {
-    case 1: return '子管理员'
-    case 2: return '操作人员'
-    case 3: return '访客'
+  switch (type) {
+    case 'admin': return '管理员'
+    case 'operator': return '操作人员'
+    case 'visitor': return '访客'
     default: return '无'
   }
 }

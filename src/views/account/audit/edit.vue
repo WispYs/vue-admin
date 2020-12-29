@@ -4,32 +4,39 @@
     <el-form ref="accountForm" :model="accountForm" :rules="rules" label-width="100px" class="account-form">
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <el-form-item label="账号名称" prop="accountName">
-            <el-input v-model="accountForm.accountName" />
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="24">
-        <el-col :xs="18" :sm="18" :md="8" :lg="6">
-          <el-form-item label="账号密码" prop="accountPassword">
-            <el-input v-model="accountForm.accountPassword" />
+          <el-form-item label="手机号码" prop="mobile">
+            <el-input v-model="accountForm.mobile" />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <el-form-item label="审核状态" prop="auditStatus">
-            <el-select v-model="accountForm.auditStatus" placeholder="请选择项目状态">
-              <el-option v-for="(item, index) in ProStatusOption.auditStatus" :key="index" :label="item.name" :value="item.value" />
+          <el-form-item label="账号昵称" prop="nickname">
+            <el-input v-model="accountForm.nickname" />
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <!-- <el-row :gutter="24">
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
+          <el-form-item label="账号密码" prop="password">
+            <el-input v-model="accountForm.password" />
+          </el-form-item>
+        </el-col>
+      </el-row> -->
+      <el-row :gutter="24">
+        <el-col :xs="18" :sm="8" :md="8" :lg="6">
+          <el-form-item label="账号角色" prop="rolename">
+            <el-select v-model="accountForm.rolename" placeholder="请选择账号角色">
+              <el-option v-for="(item, index) in roleOption" :key="index" :label="item.name" :value="item.value" />
             </el-select>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="24">
         <el-col :xs="18" :sm="8" :md="8" :lg="6">
-          <el-form-item label="角色分配" prop="auditStatus">
-            <el-select v-model="accountForm.role" placeholder="请选择账号角色">
-              <el-option v-for="(item, index) in roleOption" :key="index" :label="item.name" :value="item.value" />
+          <el-form-item label="审核状态" prop="state">
+            <el-select v-model="accountForm.state" placeholder="请选择审核状态">
+              <el-option v-for="(item, index) in auditOption" :key="index" :label="item.name" :value="item.value" />
             </el-select>
           </el-form-item>
         </el-col>
@@ -44,8 +51,7 @@
 
 <script>
 import PageBack from '@/components/PageBack'
-import { fetchPersonInfoDetail, editPersonInfo } from '@/api/person-info'
-import ProStatusOption from '@/utils/project-status'
+import { fetchAccountDetail, auditAccount } from '@/api/account'
 
 export default {
   components: {
@@ -54,37 +60,49 @@ export default {
   data() {
     return {
       loading: false,
-      ProStatusOption,
       roleOption: [
         {
-          name: '子管理员',
-          value: '1'
+          name: '管理员',
+          value: 'admin'
         }, {
           name: '操作人员',
-          value: '2'
+          value: 'operator'
         }, {
           name: '访客',
-          value: '3'
+          value: 'visitor'
+        }
+      ],
+      auditOption: [
+        {
+          name: '未启用',
+          value: '0'
+        }, {
+          name: '已启用',
+          value: '1'
         }
       ],
       accountForm: {
-        accountName: '',
-        accountPassword: '',
-        auditStatus: '',
-        role: ''
+        mobile: '',
+        nickname: '',
+        password: '',
+        rolename: '',
+        state: ''
       },
       rules: {
-        accountName: [
-          { required: true, message: '请填写账号名称', trigger: 'blur' }
+        mobile: [
+          { required: true, message: '请填写账号手机号', trigger: 'blur' }
         ],
-        accountPassword: [
+        nickname: [
+          { required: true, message: '请填写账号昵称', trigger: 'blur' }
+        ],
+        password: [
           { required: true, message: '请填写账号密码', trigger: 'blur' }
         ],
-        auditStatus: [
-          { required: true, message: '请选择审核状态', trigger: 'blur' }
-        ],
-        role: [
+        rolename: [
           { required: true, message: '请选择账号角色', trigger: 'blur' }
+        ],
+        state: [
+          { required: true, message: '请选择审核状态', trigger: 'blur' }
         ]
       }
     }
@@ -95,14 +113,14 @@ export default {
   methods: {
     __getInfo() {
       const accountNo = this.$route.params.id
-      fetchPersonInfoDetail(accountNo).then(response => {
+      fetchAccountDetail(accountNo).then(response => {
         console.log(response)
         this.accountForm = response.data
       })
     },
     async editPerson(accountNo, formData) {
       try {
-        const response = await editPersonInfo(accountNo, formData)
+        const response = await auditAccount(accountNo, formData)
         this.$message.success(response.message)
         this.loading = false
         this.$router.push({ name: 'Audit' })

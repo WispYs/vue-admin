@@ -52,7 +52,7 @@ const actions = {
         commit('SET_ID', data.id)
         setToken(data.token)
         setUserId(data.id)
-        setUserRoles(data.role)
+        setUserRoles(data.roles)
         resolve(response)
       }).catch(error => {
         reject(error)
@@ -93,7 +93,6 @@ const actions = {
 
   // 获取用户信息
   getInfo({ commit, state }) {
-    console.log('getInfo')
     return new Promise((resolve, reject) => {
       getInfo(state.id).then(response => {
         const { data } = response
@@ -114,7 +113,6 @@ const actions = {
 
   // 获取管理员信息
   getAdminInfo({ commit, state }) {
-    console.log('getAdminInfo')
     return new Promise((resolve, reject) => {
       getAdminInfo(state.id).then(response => {
         const { data } = response

@@ -62,7 +62,7 @@ export default {
       loading: false,
       roleOption: [
         {
-          name: '管理员',
+          name: '子管理员',
           value: 'admin'
         }, {
           name: '操作人员',
@@ -84,7 +84,6 @@ export default {
       accountForm: {
         mobile: '',
         nickname: '',
-        password: '',
         rolename: '',
         state: ''
       },
@@ -94,9 +93,6 @@ export default {
         ],
         nickname: [
           { required: true, message: '请填写账号昵称', trigger: 'blur' }
-        ],
-        password: [
-          { required: true, message: '请填写账号密码', trigger: 'blur' }
         ],
         rolename: [
           { required: true, message: '请选择账号角色', trigger: 'blur' }
@@ -140,7 +136,12 @@ export default {
             }).then(() => {
               this.loading = true
               const accountNo = this.$route.params.id
-              const formData = this.accountForm
+              const formData = {
+                mobile: this.accountForm.mobile,
+                nickname: this.accountForm.nickname,
+                rolename: this.accountForm.rolename,
+                state: this.accountForm.state
+              }
               this.editPerson(accountNo, formData)
             })
           }

@@ -9,7 +9,6 @@ export function getToken() {
 }
 
 export function setToken(token) {
-  console.log(token)
   return Cookies.set(TokenKey, token)
 }
 
@@ -22,7 +21,6 @@ export function getUserId() {
 }
 
 export function setUserId(id) {
-  console.log(id)
   return Cookies.set(IdKey, id)
 }
 
@@ -37,7 +35,6 @@ export function getUserRoles() {
 }
 
 export function setUserRoles(roles) {
-  console.log(roles)
   return Cookies.set(RolesKey, roles)
 }
 

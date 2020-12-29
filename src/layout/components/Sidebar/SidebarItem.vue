@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!item.hidden">
+  <div v-if="!item.hidden && showMenu(item.name,item.meta)">
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
@@ -30,6 +30,7 @@ import { isExternal } from '@/utils/validate'
 import Item from './Item'
 import AppLink from './Link'
 import FixiOSBug from './FixiOSBug'
+import { getUserRoles } from '@/utils/auth'
 
 export default {
   name: 'SidebarItem',
@@ -57,6 +58,19 @@ export default {
     return {}
   },
   methods: {
+    showMenu(name, meta) {
+      const routeName = name
+      let roles
+      if (meta) {
+        roles = meta.roles === undefined ? '' : meta.roles
+      }
+      const userRoles = getUserRoles()
+      if (routeName === 'Account') {
+        return roles.indexOf(userRoles) > -1
+      } else {
+        return true
+      }
+    },
     hasOneShowingChild(children = [], parent) {
       const showingChildren = children.filter(item => {
         if (item.hidden) {

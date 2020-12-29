@@ -1,11 +1,11 @@
 import request from '@/utils/request'
 const userUrl = 'http://192.168.50.104:9007'
 
-// 账号管理(普通用户)
+// 账号管理(管理员)
 // 列表
 export function fetchAccountList(page, size, filter) {
   return request({
-    url: `${userUrl}/user/search/${page}/${size}`,
+    url: `${userUrl}/admin/search/${page}/${size}`,
     method: 'post',
     data: filter
   })
@@ -13,14 +13,14 @@ export function fetchAccountList(page, size, filter) {
 // 详情
 export function fetchAccountDetail(id) {
   return request({
-    url: `${userUrl}/user/${id}`,
+    url: `${userUrl}/admin/${id}`,
     method: 'get'
   })
 }
 // 新建
 export function addAccount(data) {
   return request({
-    url: `${userUrl}/user`,
+    url: `${userUrl}/admin`,
     method: 'post',
     data
   })
@@ -28,7 +28,7 @@ export function addAccount(data) {
 // 审核
 export function auditAccount(id, data) {
   return request({
-    url: `${userUrl}/user/${id}`,
+    url: `${userUrl}/admin/${id}`,
     method: 'put',
     data
   })
@@ -36,7 +36,7 @@ export function auditAccount(id, data) {
 // 删除
 export function deleteAccount(id) {
   return request({
-    url: `${userUrl}/user/${id}`,
+    url: `${userUrl}/admin/${id}`,
     method: 'delete'
   })
 }

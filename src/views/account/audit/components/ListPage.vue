@@ -89,10 +89,7 @@ export default {
             this.__getList()
           })
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })
+
         })
       } else {
         this.$alert('请联系管理员（何经理）进行删除操作', '', {

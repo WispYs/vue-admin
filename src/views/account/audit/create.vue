@@ -62,7 +62,7 @@ export default {
       loading: false,
       roleOption: [
         {
-          name: '管理员',
+          name: '子管理员',
           value: 'admin'
         }, {
           name: '操作人员',

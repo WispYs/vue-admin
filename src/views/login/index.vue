@@ -100,7 +100,7 @@ export default {
       loginRules: {
         mobile: [{ required: true, trigger: 'blur', validator: validateMobile }],
         loginname: [{ required: true, message: '请输入账号昵称', trigger: 'blur' }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        password: [{ required: true, trigger: 'blur' }]
       },
       loading: false,
       passwordType: 'password',
@@ -116,14 +116,12 @@ export default {
     }
   },
   mounted() {
-    console.log('mobile=' + this.$store.getters.mobile)
     this.$set(this.loginForm, 'mobile', this.$store.getters.mobile)
   },
   methods: {
     // 切换登录角色
     // 0 - 普通账号登录；1 - 管理员登录
     toggleRole(val) {
-      console.log(val)
       this.loginRole = val
       this.loginForm = {
         mobile: '',
@@ -148,7 +146,8 @@ export default {
           this.loading = true
           this.$store.dispatch(loginUrl, this.loginForm).then((response) => {
             this.$message.success(response.message)
-            this.$router.push({ path: this.redirect || '/' })
+            // this.$router.push({ path: this.redirect || '/' })
+            this.$router.push({ path: '/' })
             this.loading = false
           }).catch(() => {
             this.loading = false

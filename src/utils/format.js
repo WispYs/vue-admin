@@ -23,7 +23,7 @@ export function formatAuditStatus(type) {
 
 export function formatRole(type) {
   switch (type) {
-    case 'admin': return '管理员'
+    case 'admin': return '子管理员'
     case 'operator': return '操作人员'
     case 'visitor': return '访客'
     default: return '无'

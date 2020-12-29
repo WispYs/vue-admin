@@ -15,35 +15,6 @@ import workAllotRouter from './modules/work-allot'
 import personInfoRouter from './modules/person-info'
 import auditRouter from './modules/audit'
 
-const roles = getUserRoles()
-let accountRouter
-console.log('-- router ---')
-console.log(roles)
-if (roles === 'admin') {
-  accountRouter = {
-    path: '/account',
-    component: Layout,
-    redirect: '/account/audit/list',
-    name: 'Account',
-    meta: { title: '账号管理', icon: 'user' },
-    hidden: false,
-    children: [
-      auditRouter
-    ]
-  }
-} else {
-  accountRouter = {
-    path: '/account',
-    component: Layout,
-    redirect: '/account/audit/list',
-    name: 'Account',
-    meta: { title: '账号管理', icon: 'user' },
-    hidden: true,
-    children: [
-      auditRouter
-    ]
-  }
-}
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -131,7 +102,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/account/audit/list',
     name: 'Account',
-    meta: { title: '账号管理', icon: 'user', roles: 'admin' },
+    meta: { title: '账号管理', icon: 'user', roles: 'Administrator' },
     children: [
       auditRouter
     ]

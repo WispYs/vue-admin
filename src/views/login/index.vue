@@ -57,8 +57,8 @@
       </el-form-item>
 
       <div class="tips">
-        <span v-if="loginRole === 1" @click="toggleRole(0)">切换管理员登录</span>
-        <span v-else @click="toggleRole(1)">切换常规登录</span>
+        <span v-if="loginRole === 0" @click="toggleRole(1)">切换到管理员登录</span>
+        <span v-else @click="toggleRole(0)">切换到常规登录</span>
         <span @click="$router.push({name: 'Register'})">注册</span>
       </div>
 
@@ -100,7 +100,7 @@ export default {
       loginRules: {
         mobile: [{ required: true, trigger: 'blur', validator: validateMobile }],
         loginname: [{ required: true, message: '请输入账号昵称', trigger: 'blur' }],
-        password: [{ required: true, trigger: 'blur' }]
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,
       passwordType: 'password',

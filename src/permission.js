@@ -32,7 +32,7 @@ router.beforeEach(async(to, from, next) => {
         try {
           const roles = getUserRoles()
           // 后台获取用户登录和管理员登录为不同接口
-          if (roles === 'admin') {
+          if (roles === 'Administrator') {
             await store.dispatch('user/getAdminInfo')
           } else {
             await store.dispatch('user/getInfo')

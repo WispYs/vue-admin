@@ -41,8 +41,8 @@
     </el-table-column>
     <el-table-column label="操作" width="150" align="center">
       <template slot-scope="scope">
-        <el-button type="text" size="small" @click="$router.push({name: 'DailyEdit', params: {id: scope.row.id}})">编辑</el-button>
-        <el-button class="delete" type="text" size="small" @click="delClick(scope.row.id)">删除</el-button>
+        <el-button v-if="roles!=='visitor'" type="text" size="small" @click="$router.push({name: 'DailyEdit', params: {id: scope.row.id}})">编辑</el-button>
+        <el-button v-if="roles==='admin' || roles==='Administrator'" class="delete" type="text" size="small" @click="delClick(scope.row.id)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -50,6 +50,8 @@
 
 <script>
 import { workTimeH2D, formatYYMMDD } from '@/utils/format'
+import { getUserRoles } from '@/utils/auth'
+
 export default {
   filters: {
     workTimeH2D,
@@ -67,8 +69,11 @@ export default {
   },
   data() {
     return {
-
+      roles: ''
     }
+  },
+  mounted() {
+    this.roles = getUserRoles()
   },
   methods: {
     delClick(id) {

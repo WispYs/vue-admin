@@ -145,8 +145,8 @@
     <el-table-column label="操作" width="150" align="center">
       <template slot-scope="scope">
         <el-button type="text" size="small" @click="$router.push({name: 'OverviewDetail', params: {id: scope.row.id}})">查看</el-button>
-        <el-button type="text" size="small" @click="$router.push({name: 'OverviewEdit', params: {id: scope.row.id}})">编辑</el-button>
-        <el-button class="delete" type="text" size="small" @click="delClick(scope.row.id)">删除</el-button>
+        <el-button v-if="roles!=='visitor'" type="text" size="small" @click="$router.push({name: 'OverviewEdit', params: {id: scope.row.id}})">编辑</el-button>
+        <el-button v-if="roles==='admin' || roles==='Administrator'" class="delete" type="text" size="small" @click="delClick(scope.row.id)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -155,6 +155,7 @@
 <script>
 import ProStatusOption from '@/utils/project-status'
 import { formatYYMMDD, workTimeH2D, formatStageStatus, formatFeedback, formatProjectStatus, formatDeliverStatus, formatRisk } from '@/utils/format'
+import { getUserRoles } from '@/utils/auth'
 
 export default {
   filters: {
@@ -178,8 +179,12 @@ export default {
   },
   data() {
     return {
+      roles: '',
       ProStatusOption // 项目状态字段配置表
     }
+  },
+  mounted() {
+    this.roles = getUserRoles()
   },
   methods: {
     delClick(id) {

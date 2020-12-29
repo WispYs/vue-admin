@@ -37,13 +37,14 @@
       <el-button type="primary" size="medium" @click="search()">搜索</el-button>
       <el-button type="primary" size="medium" @click="reset()">重置</el-button>
       <!--<el-button type="primary" size="medium" :loading="downloadLoading" @click="handleExport()">导出数据</el-button> -->
-      <el-button type="primary" size="medium" @click="$router.push({name: 'OverviewCreate'})">新建项目</el-button>
+      <el-button v-if="roles!=='visitor'" type="primary" size="medium" @click="$router.push({name: 'OverviewCreate'})">新建项目</el-button>
     </div>
   </div>
 </template>
 
 <script>
 import ProStatusOption from '@/utils/project-status'
+import { getUserRoles } from '@/utils/auth'
 
 export default {
   props: {
@@ -54,6 +55,7 @@ export default {
   },
   data() {
     return {
+      roles: '',
       ProStatusOption,
       proNo: '',
       proName: '',
@@ -92,7 +94,7 @@ export default {
     }
   },
   mounted() {
-
+    this.roles = getUserRoles()
   },
   methods: {
     __initFilter() {

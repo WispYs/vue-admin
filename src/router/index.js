@@ -91,7 +91,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/personnel/work-allot/list',
     name: 'Personnel',
-    meta: { title: '员工管理', icon: 'user' },
+    meta: { title: '员工管理', icon: 'user', roles: 'Administrator, admin' },
     children: [
       workAllotRouter,
       personInfoRouter

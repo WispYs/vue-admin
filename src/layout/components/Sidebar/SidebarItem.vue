@@ -67,6 +67,8 @@ export default {
       const userRoles = getUserRoles()
       if (routeName === 'Account') {
         return roles.indexOf(userRoles) > -1
+      } else if (routeName === 'Personnel') {
+        return roles.indexOf(userRoles) > -1
       } else {
         return true
       }

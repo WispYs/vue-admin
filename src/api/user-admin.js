@@ -1,6 +1,7 @@
 import request from '@/utils/request'
-const userUrl = 'http://192.168.50.104:9007'
+import { userUrl } from './url.js'
 
+// 用户注册登录(管理员)
 export function adminLogin(data) {
   return request({
     url: `${userUrl}/admin/login`,

@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import baseUrl from './url.js'
+import { baseUrl } from './url.js'
 
 // 日工时登记表
 // 获取项目编号列表

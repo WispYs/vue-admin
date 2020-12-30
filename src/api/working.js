@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import baseUrl from './url.js'
+import { baseUrl } from './url.js'
 
 // 车间成套项目
 // 列表

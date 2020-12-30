@@ -1,8 +1,8 @@
 import request from '@/utils/request'
-import baseUrl from './url.js'
+import { baseUrl } from './url.js'
 
+// 首页
 export function fetchNewsList() {
-  console.log(baseUrl)
   return request({
     url: `${baseUrl}/news`,
     method: 'get'

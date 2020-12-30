@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { getUserRoles } from '@/utils/auth' // get token from cookie
 
 Vue.use(Router)
 

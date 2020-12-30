@@ -57,8 +57,8 @@
       </el-form-item>
 
       <div class="tips">
-        <span v-if="loginRole === 0" @click="toggleRole(1)">切换到管理员登录</span>
-        <span v-else @click="toggleRole(0)">切换到常规登录</span>
+        <span v-if="loginRole === 0" @click="toggleRole(1)">超级管理员登录</span>
+        <span v-else @click="toggleRole(0)">其他用户登录</span>
         <span @click="$router.push({name: 'Register'})">注册</span>
       </div>
 
@@ -91,7 +91,7 @@ export default {
     return {
       loginRole: 0, // 0 - 普通账号登录；1 - 管理员登录
       title1: '上海泷得自动化后台管理系统',
-      title2: '泷得管理员登录',
+      title2: '超级管理员登录',
       loginForm: {
         mobile: '',
         loginname: '',

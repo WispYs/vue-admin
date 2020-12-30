@@ -52,12 +52,27 @@
 <script>
 import PageBack from '@/components/PageBack'
 import { fetchAccountDetail, auditAccount } from '@/api/account'
+import { isMobile, validUsername } from '@/utils/validate'
 
 export default {
   components: {
     PageBack
   },
   data() {
+    const validateMobile = (rule, value, callback) => {
+      if (!isMobile(value)) {
+        callback(new Error('请输入正确的手机号码'))
+      } else {
+        callback()
+      }
+    }
+    const validateUsername = (rule, value, callback) => {
+      if (!validUsername(value)) {
+        callback(new Error('昵称长度在1-20范围内'))
+      } else {
+        callback()
+      }
+    }
     return {
       loading: false,
       roleOption: [
@@ -89,10 +104,10 @@ export default {
       },
       rules: {
         mobile: [
-          { required: true, message: '请填写账号手机号', trigger: 'blur' }
+          { required: true, trigger: 'blur', validator: validateMobile }
         ],
         nickname: [
-          { required: true, message: '请填写账号昵称', trigger: 'blur' }
+          { required: true, trigger: 'blur', validator: validateUsername }
         ],
         rolename: [
           { required: true, message: '请选择账号角色', trigger: 'blur' }

@@ -19,7 +19,7 @@ export function isMobile(str) {
 }
 
 export function validUsername(str) {
-  return str.length < 20
+  return str.length < 20 && str.length > 0
 }
 
 // 只能输入3-20个字母、数字、下划线

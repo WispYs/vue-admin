@@ -81,7 +81,7 @@ export default {
     }
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('昵称长度不得超过20个'))
+        callback(new Error('昵称长度在1-20范围内'))
       } else {
         callback()
       }

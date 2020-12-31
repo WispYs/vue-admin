@@ -101,7 +101,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/account/audit/list',
     name: 'Account',
-    meta: { title: '账号管理', icon: 'user', roles: 'Administrator' },
+    meta: { title: '账号管理', icon: 'peoples', roles: 'Administrator' },
     children: [
       auditRouter
     ]
